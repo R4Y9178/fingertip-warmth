@@ -1,0 +1,6 @@
+# 本地生成的分享二维码（对应临时隧道地址，不参与正式部署）
+Demo_Share_QR.png
+Demo_Share_QR_*.png
+
+# 本地临时文件
+.tmp/
