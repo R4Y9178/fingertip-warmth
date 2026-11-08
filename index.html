@@ -671,7 +671,7 @@
     .card-cover {
       position: relative;
       overflow: hidden;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 4 / 3;
       background: #e8e5df;
     }
 
@@ -732,7 +732,7 @@
     }
 
     .card-cover.is-fallback::after {
-      content: "材料包示意图";
+      content: "材料包参考图";
       position: absolute;
       top: 50%;
       left: 50%;
@@ -918,11 +918,23 @@
     .card-actions {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: space-between;
       gap: 12px;
       margin-top: 11px;
       padding-top: 11px;
       border-top: 1px solid var(--line);
+    }
+
+    .card-material-count {
+      min-width: 0;
+      color: var(--muted);
+      font-size: 9.5px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .tutorial-card[data-card-id] {
+      cursor: pointer;
     }
 
     .view-button {
@@ -1432,7 +1444,7 @@
     .detail-cover {
       position: relative;
       overflow: hidden;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 4 / 3;
       background: #e8e5df;
     }
 
@@ -1443,7 +1455,7 @@
     }
 
     .detail-cover.is-fallback::after {
-      content: "教程封面示意图";
+      content: "材料包封面参考图";
       position: absolute;
       top: 50%;
       left: 50%;
@@ -1492,6 +1504,179 @@
       color: var(--muted);
       font-size: 13px;
       line-height: 1.8;
+    }
+
+    .detail-summary {
+      margin-top: 13px;
+      padding: 11px 12px;
+      border-left: 3px solid var(--brand);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      background: var(--brand-soft);
+    }
+
+    .detail-summary-label {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 3px;
+      color: var(--brand);
+      font-size: 9.5px;
+      font-weight: 750;
+      letter-spacing: 0.08em;
+      line-height: 1.5;
+    }
+
+    .detail-summary-note {
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .detail-summary p {
+      margin: 0;
+      color: var(--ink);
+      font-size: 12px;
+      line-height: 1.75;
+    }
+
+    .detail-section {
+      margin-top: 16px;
+      padding-top: 15px;
+      border-top: 1px solid var(--line);
+    }
+
+    .detail-section h3 {
+      display: flex;
+      align-items: baseline;
+      gap: 7px;
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 750;
+      line-height: 1.5;
+    }
+
+    .detail-section-index {
+      flex: 0 0 auto;
+      color: var(--brand);
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .detail-section > p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.8;
+    }
+
+    .detail-material-list {
+      display: grid;
+      gap: 6px;
+      margin: 0;
+      padding-left: 1.4em;
+      color: var(--muted-strong);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .detail-material-list li {
+      padding-left: 2px;
+    }
+
+    .detail-material-list li::marker {
+      color: var(--brand);
+      font-weight: 700;
+    }
+
+    .detail-materials-note {
+      margin-top: 9px;
+      padding: 8px 9px;
+      border: 1px dashed var(--line-strong);
+      border-radius: var(--radius-sm);
+      color: var(--muted);
+      font-size: 10.5px;
+      line-height: 1.7;
+    }
+
+    .component-group + .component-group {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--line);
+    }
+
+    .component-group h4 {
+      margin: 0 0 4px;
+      color: var(--brand-dark);
+      font-size: 11.5px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .component-group ul {
+      display: grid;
+      gap: 4px;
+      margin: 0;
+      padding-left: 1.15em;
+      color: var(--muted-strong);
+      font-size: 11.5px;
+      line-height: 1.7;
+    }
+
+    .component-group li::marker {
+      color: var(--line-strong);
+    }
+
+    .detail-highlight {
+      display: grid;
+      gap: 7px;
+      padding: 10px 11px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: var(--surface-soft);
+    }
+
+    .detail-highlight p {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin: 0;
+      color: var(--muted-strong);
+      font-size: 11.5px;
+      line-height: 1.7;
+    }
+
+    .detail-highlight svg {
+      flex: 0 0 auto;
+      width: 13px;
+      height: 13px;
+      margin-top: 2px;
+      color: var(--green);
+    }
+
+    .detail-gallery {
+      margin: 0;
+    }
+
+    .detail-gallery img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--surface-soft);
+    }
+
+    .detail-gallery figcaption {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.65;
     }
 
     .detail-facts {
@@ -1816,6 +2001,7 @@
     }
 
     .phone-shell.is-large-text .card-meta,
+    .phone-shell.is-large-text .card-material-count,
     .phone-shell.is-large-text .progress-row,
     .phone-shell.is-large-text .feedback-pending {
       font-size: 12.5px;
@@ -1852,6 +2038,27 @@
 
     .phone-shell.is-large-text .detail-desc {
       font-size: 14.5px;
+    }
+
+    .phone-shell.is-large-text .detail-summary p,
+    .phone-shell.is-large-text .detail-section > p,
+    .phone-shell.is-large-text .detail-material-list {
+      font-size: 14px;
+    }
+
+    .phone-shell.is-large-text .detail-section h3 {
+      font-size: 16px;
+    }
+
+    .phone-shell.is-large-text .component-group h4 {
+      font-size: 13px;
+    }
+
+    .phone-shell.is-large-text .component-group ul,
+    .phone-shell.is-large-text .detail-highlight p,
+    .phone-shell.is-large-text .detail-materials-note,
+    .phone-shell.is-large-text .detail-gallery figcaption {
+      font-size: 13px;
     }
 
     .phone-shell.is-large-text .detail-note li {
@@ -2081,7 +2288,7 @@
         <path d="M12 4.1 21 20H3L12 4.1Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
         <path d="M12 9.2v4.6M12 16.8h.01" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
       </svg>
-      <p><strong>内部测试版 (2026/10):</strong> <span>仅供小组及指导老师评审。请勿外传。</span></p>
+      <p><strong>内部测试版</strong> <span>仅供小组及指导老师评审。请勿外传。</span></p>
     </div>
 
     <!-- ==================== 项目名称与主页入口 ==================== -->
@@ -2149,17 +2356,17 @@
           <p class="section-eyebrow">项目概览 / PROJECT BRIEF</p>
           <span class="version-badge">V0.3 内测</span>
         </div>
-        <h2 class="overview-title" id="overviewTitle">让每一份手工材料包，都有可远程陪伴的教程支持。</h2>
-        <p class="overview-lead">项目面向视障、听障、肢体及认知障碍群体，围绕非遗手作与康复训练设计材料包，并提供语音、手语、字幕与分步图文教程。当前为参赛申报前的阶段性原型。</p>
+        <h2 class="overview-title" id="overviewTitle">让不同身体条件下的创作者，都能独立完成一件有温度的手作。</h2>
+        <p class="overview-lead">首批 6 套材料包覆盖视障、听障与肢体 / 单手操作人群。每套材料包都围绕真实制作难点，重新安排材料、工具与教学支持。</p>
 
         <dl class="overview-stats">
           <div>
             <dt>适配方向</dt>
-            <dd>4 类</dd>
+            <dd>3 类</dd>
           </div>
           <div>
             <dt>首批材料包</dt>
-            <dd>4 套</dd>
+            <dd>6 套</dd>
           </div>
           <div>
             <dt>学生项目组</dt>
@@ -2169,12 +2376,12 @@
 
         <p class="overview-milestone">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-            <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/>
-            <path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 3.8h9l3 3V20a.8.8 0 0 1-.8.8H6a.8.8 0 0 1-.8-.8V4.6a.8.8 0 0 1 .8-.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M9 9h6M9 12.5h6M9 16h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
           </svg>
-          <span><strong>下一里程碑：</strong>完成 4 套材料包线下试做与教程录制。</span>
+          <span><strong>资料说明：</strong>本页依据团队导出的材料包图文与聊天记录整理，实物图片为对应材料包参考图。</span>
         </p>
-        <p class="overview-updated">内部评审用 · 资料持续更新</p>
+        <p class="overview-updated">首批 6 套资料已归档 · 内部评审用</p>
       </section>
 
       <!-- 材料包列表 -->
@@ -2184,9 +2391,9 @@
             <p class="section-eyebrow">MATERIAL PACKS</p>
             <h2 id="tutorialsTitle">首批材料包</h2>
           </div>
-          <p class="result-count" id="resultCount" aria-live="polite" aria-atomic="true">共 4 套</p>
+          <p class="result-count" id="resultCount" aria-live="polite" aria-atomic="true">共 6 套</p>
         </div>
-        <p class="section-desc">4 个适配方向各 1 套，卡片内标注当前资料进度，便于组内核对。</p>
+        <p class="section-desc">6 套真实材料包，覆盖 3 类适配方向；点击卡片查看完整设计资料。</p>
 
         <div id="tutorial-panel" role="tabpanel" aria-labelledby="tab-all" tabindex="-1">
           <div class="tutorial-list" id="tutorialList" aria-label="材料包列表"></div>
@@ -2238,8 +2445,8 @@
       <!-- 正规署名 -->
       <footer class="site-footer">
         <p class="site-footer-main">项目申报单位：（代填写） <span>|</span> 技术开发：线上技术支持组R4Y <span>|</span> 2026年</p>
-        <p class="site-footer-meta">版本 V0.3 · 内部评审材料 · 部分示意图来自 Unsplash / Pexels / Wikimedia Commons</p>
-        <p class="site-footer-meta">正式版将替换为团队实拍素材 · 内容仍在持续校对</p>
+        <p class="site-footer-meta">版本 V0.3 · 内部评审材料 · 内容整理：范俊辰、祈盐牙兽兽、TvTing</p>
+        <p class="site-footer-meta">实物参考图来自团队材料包资料 · 最终以实物打样为准</p>
       </footer>
     </main>
 
@@ -2289,33 +2496,52 @@
 
         <div class="detail-scroll" id="detailScroll">
           <div class="detail-cover" id="detailCover">
-            <img id="detailImage" alt="" width="900" height="506">
+            <img id="detailImage" alt="" width="900" height="675">
             <span class="detail-code" id="detailCode">MP-01</span>
           </div>
 
           <div class="detail-content">
             <div class="tag-row" id="detailTags" role="group" aria-label="材料包标签"></div>
             <h2 class="detail-title" id="detailTitle">材料包名称</h2>
-            <p class="detail-desc" id="detailDesc">材料包简介。</p>
 
-            <dl class="detail-facts" id="detailFacts"></dl>
-
-            <p class="detail-progress-label">当前资料进度</p>
-            <div class="progress-row" id="detailProgress"></div>
-
-            <div class="detail-note">
-              <h3>
-                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-                  <path d="M12 20.8s-7-4.2-7-9.8A4.6 4.6 0 0 1 12 7.7a4.6 4.6 0 0 1 7 3.3c0 5.6-7 9.8-7 9.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
-                  <path d="M9 12.1h2l.9-1.7 1.2 3.2.8-1.5H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                材料与支持
-              </h3>
-              <ul id="detailSupports"></ul>
+            <div class="detail-summary">
+              <div class="detail-summary-label">
+                <span>PPT 简介短句</span>
+                <span class="detail-summary-note" id="detailSummaryNote" hidden>根据设计理念整理</span>
+              </div>
+              <p id="detailSummary">材料包简介。</p>
             </div>
 
-            <div class="detail-placeholder" id="detailPlaceholder"></div>
-            <button class="primary-button" id="detailAction" type="button">获取内测资料</button>
+            <section class="detail-section" aria-labelledby="detailConceptHeading">
+              <h3 id="detailConceptHeading"><span class="detail-section-index">01</span>灵感与设计理念</h3>
+              <p id="detailConcept"></p>
+            </section>
+
+            <section class="detail-section" aria-labelledby="detailMaterialsHeading">
+              <h3 id="detailMaterialsHeading"><span class="detail-section-index">02</span>材料清单</h3>
+              <ol class="detail-material-list" id="detailMaterials"></ol>
+              <p class="detail-materials-note" id="detailMaterialsNote" hidden></p>
+            </section>
+
+            <section class="detail-section" aria-labelledby="detailComponentsHeading">
+              <h3 id="detailComponentsHeading"><span class="detail-section-index">03</span>组件结构拆解</h3>
+              <div id="detailComponents"></div>
+            </section>
+
+            <section class="detail-section" id="detailGallerySection" aria-labelledby="detailGalleryHeading" hidden>
+              <h3 id="detailGalleryHeading"><span class="detail-section-index">04</span>工艺原型参考</h3>
+              <figure class="detail-gallery">
+                <img id="detailGalleryImage" alt="">
+                <figcaption id="detailGalleryCaption"></figcaption>
+              </figure>
+            </section>
+
+            <section class="detail-section" aria-labelledby="detailHighlightsHeading">
+              <h3 id="detailHighlightsHeading"><span class="detail-section-index" id="detailHighlightsIndex">04</span>无障碍设计亮点</h3>
+              <div class="detail-highlight" id="detailHighlights"></div>
+            </section>
+
+            <button class="primary-button" id="detailAction" type="button">返回材料包列表</button>
           </div>
         </div>
       </section>
@@ -2374,112 +2600,274 @@
        ============================================================ */
     const tutorials = [
       {
-        id: 'bead-bag',
+        id: 'paper-ball',
         code: 'MP-01',
-        title: '非遗串珠福袋材料包',
+        title: '非遗纸杯绣球挂件',
         category: 'vision',
-        desc: '以非遗串珠工艺为基础，材料按颜色与步骤分袋包装；配套语音讲解，触摸即可分辨珠型和摆放位置。',
-        featureTags: ['无障碍语音讲解已配'],
-        difficulty: 2,
-        duration: '约 50 分钟',
-        materialCount: 6,
-        image: 'https://images.pexels.com/photos/7585825/pexels-photo-7585825.jpeg?auto=compress&cs=tinysrgb&w=900',
-        imagePosition: 'center',
-        alt: '创作者在木质分格盒前穿制珠饰',
-        progress: {
-          tone: 'done',
-          icon: '🎥',
-          label: '教程视频已上传',
-          meta: '已归档'
-        },
-        supports: [
-          '语音讲解已录制，材料袋上配二维码',
-          '珠子按颜色、尺寸分袋，附触觉识别标签',
-          '福袋收口改为大孔穿绳，减少穿针步骤'
+        featureTags: ['触觉定位', '语音讲解', '预贴背胶'],
+        countLabel: '材料清单 9 项',
+        summary: '本绣球手工材料包专为视障人群设计，将视觉图纸转化为触觉标识，依靠压纹、凸点定位搭配语音讲解，无需依靠视力，独立完成绣球拼装。',
+        concept: '取材传统绣球，利用回收纸杯再生制作，寓意团团圆圆。本款专门面向视障使用者，把看图拼装转化为触觉拼装，不靠颜色、画面，依靠凸起纹路、定位卡点完成制作。',
+        materials: [
+          '盲文+大字参考卡，附带语音讲解二维码',
+          '预裁纸片，纸片边缘压不同纹理用来区分内外层',
+          '带凸线的折叠模板，触摸即可找准折叠位置',
+          '带凸起定位卡点的球形骨架',
+          '预打结的挂绳与流苏',
+          '预贴好的圆点背胶，无需挤胶水',
+          '半球防滑底座，防止球体滚动',
+          '粗柄压痕棒、防滑操作垫',
+          '盲文+大字步骤卡，配套语音指引'
         ],
-        detailNote: '教程视频已上传，完整播放页将在 V0.4 接入；内测期间可在小组群向 R4Y 申请查看原片。',
-        actionHint: '内测资料请联系线上技术支持组 R4Y 获取。'
+        components: [
+          {
+            title: '纸片与折叠定位',
+            items: ['预裁纸片以不同压纹区分内外层', '带凸线的折叠模板', '带凸起定位卡点的球形骨架']
+          },
+          {
+            title: '成品与操作配件',
+            items: ['预打结挂绳与流苏', '预贴圆点背胶', '半球防滑底座', '粗柄压痕棒、防滑操作垫']
+          },
+          {
+            title: '触觉与语音说明',
+            items: ['盲文+大字参考卡、语音讲解二维码', '盲文+大字步骤卡、语音指引']
+          }
+        ],
+        highlights: [
+          '纸片依靠触感纹理分层，骨架凸点定位插片位置，半球底座固定绣球，全程以触觉、语音引导，视障者可以独立完成绣球挂件。'
+        ],
+        image: 'assets/item1.jpg',
+        alt: '蓝紫色纸杯绣球挂件，配浅蓝挂绳与紫色流苏，旁边摆放国风卡片'
       },
       {
-        id: 'clay-succulent',
+        id: 'bamboo-hairclip',
         code: 'MP-02',
-        title: '超轻黏土多肉盆栽',
+        title: '竹编彩色发夹',
         category: 'physical',
-        desc: '用超轻黏土制作多肉盆栽，配套单手固定底座与分步力量练习卡，兼顾手部精细动作训练。',
-        featureTags: ['单手友好', '精细动作锻炼'],
-        difficulty: 2,
-        duration: '约 45 分钟',
-        materialCount: 8,
-        image: 'https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=900&h=506&q=78',
-        imagePosition: 'center',
-        alt: '双手在木桌上用工具制作黏土手作',
-        progress: {
-          tone: 'waiting',
-          icon: '⏳',
-          label: '线下组素材采集中（祈盐负责）',
-          meta: '线下组跟进'
-        },
-        supports: [
-          '配单手固定底座与桌面防滑垫',
-          '步骤按“揉—压—拼”拆分为三段练习',
-          '提供握力较弱者使用的辅助压泥工具'
+        featureTags: ['竹编预制', '磁吸对位', '单手操作'],
+        countLabel: '材料清单 9 项',
+        summary: '竹编发夹材料包专为手部力量减弱、单手操作人群设计，提前完成复杂编织，磁吸结构简化对位，减少精细用力动作，单手可独立完成组装。',
+        concept: '源自非遗竹编工艺，将色竹篾编织小花造型，做成日常发夹。面向手部无力、只能单手操作的使用者，提前完成复杂编织工序，降低精细动作要求。',
+        materials: [
+          '成品参考卡，标注单手可操作',
+          '预先编织定型好的竹编花片，背面预贴背胶',
+          '可固定在桌边的夹持模板',
+          '磁吸式发夹底座，对位简单',
+          '加厚背胶固定片',
+          '预串好的装饰珠组件',
+          '弹簧助力安全圆头剪刀',
+          '腕托垫、加重压片',
+          '大字图文步骤卡'
         ],
-        detailNote: '祈盐正在补拍线下试做素材，当前展示的是最近一次试做记录，完整步骤待更新。',
-        actionHint: '素材尚在采集，可先联系祈盐确认线下试做进度。'
+        components: [
+          {
+            title: '发夹主体与固定',
+            items: ['预编织定型竹编花片（背面预贴背胶）', '磁吸式发夹底座', '加厚背胶固定片', '可固定桌边的夹持模板']
+          },
+          {
+            title: '装饰与操作辅助',
+            items: ['预串装饰珠组件', '弹簧助力安全圆头剪刀', '腕托垫、加重压片']
+          },
+          {
+            title: '参考与步骤支持',
+            items: ['单手可操作成品参考卡', '大字图文步骤卡']
+          }
+        ],
+        highlights: [
+          '核心编织花纹提前预制，磁吸底座自动对位，弹簧剪刀省力，搭配桌夹解放另一只手，单手就可以完成组装。'
+        ],
+        image: 'assets/item2.jpg',
+        alt: '浅色头发上别着多枚彩色竹编发夹'
       },
       {
-        id: 'lacquer-fan',
+        id: 'incense-pendant',
         code: 'MP-03',
-        title: '非遗漆扇手作体验',
+        title: '青釉缠枝纹合香牌',
         category: 'hearing',
-        desc: '选取入门级漆扇扇面与安全颜料，配套全手语视频与字幕；晾干后可作为书桌摆件或活动纪念品。',
-        featureTags: ['全手语视频教学', '附字幕'],
-        difficulty: 2,
-        duration: '约 60 分钟',
-        materialCount: 5,
-        image: 'https://commons.wikimedia.org/wiki/Special:FilePath/%22Chinese_folding_fan%22_(18th_century)_-_Museum_of_Villa_Pignatelli_in_Naples_(45078134631).jpg?width=900',
-        imagePosition: 'center',
-        alt: '展开的传统彩绘折扇扇面',
-        progress: {
-          tone: 'missing',
-          icon: '📄',
-          label: '详细步骤待补充',
-          meta: '内容组跟进'
-        },
-        supports: [
-          '全手语视频已完成二审，字幕校对中',
-          '图文步骤采用大字号与高对比配色',
-          '漆面晾干区与操作区分开，降低误触风险'
+        featureTags: ['分镜图示', '手语视频', '色标材料'],
+        countLabel: '材料清单 9 项',
+        summary: '合香牌材料包面向听障人群设计，以分镜图示、色彩标识替代口头讲解，配套手语教学视频，依靠视觉信息完成压模、打磨、串配全过程。',
+        concept: '以传统合香、缠枝纹样为灵感，香泥压模制成平安挂坠，缠枝纹寓意生生不息。专为听障使用者设计，抛弃口头语音教学，全部依靠图示、色标、手语视频传递制作步骤。',
+        materials: [
+          '成品参考卡，附带手语教学二维码',
+          '分袋装好、贴有色标标签的预制香泥团',
+          '印有方向箭头的缠枝纹硅胶模具',
+          '带按压方向标识的弹簧打孔器',
+          '贴有色彩标签的不同目数打磨砂条',
+          '分装贴图标签的主绳扣、宫铃、流苏配件',
+          '印有穿绳指引箭头的挂绳',
+          '辅助工具，工具手柄带有对应色标',
+          '分镜式图示步骤卡，搭配手语视频二维码'
         ],
-        detailNote: '手语视频已完成二审，图文步骤仍在补充；字幕校对完成后统一替换当前占位内容。',
-        actionHint: '详细步骤尚未归档，请先联系内容组林岚确认最新版本。'
+        components: [
+          {
+            title: '香泥与压模',
+            items: ['分袋色标预制香泥团', '印有方向箭头的缠枝纹硅胶模具']
+          },
+          {
+            title: '打孔与打磨',
+            items: ['带按压方向标识的弹簧打孔器', '不同目数打磨砂条', '带对应色标的手柄辅助工具']
+          },
+          {
+            title: '系挂成品组件',
+            items: ['主绳扣、宫铃、流苏配件', '印有穿绳指引箭头的挂绳']
+          },
+          {
+            title: '视觉与手语支持',
+            items: ['成品参考卡、手语教学二维码', '分镜式图示步骤卡、手语视频二维码']
+          }
+        ],
+        highlights: [
+          '全材料色标配对，步骤使用连续分镜图画表达，扫码观看手语教学视频，不需要听觉指导，听障使用者可以看懂流程、独立制作。'
+        ],
+        image: 'assets/item3.jpg',
+        alt: '手持青釉色缠枝纹合香牌，配玉珠与绿色流苏'
       },
       {
-        id: 'pipe-cleaner-bouquet',
+        id: 'shell-flower-hairpin',
         code: 'MP-04',
-        title: '简易扭扭棒花束',
-        category: 'cognitive',
-        desc: '扭扭棒花束采用免剪裁材料包，步骤压缩为 6 步；建议家长或志愿者在旁陪同，适合认知友好小组活动。',
-        featureTags: ['简化步骤', '家长 / 志愿者陪同'],
-        difficulty: 1,
-        duration: '约 30 分钟',
-        materialCount: 7,
-        image: 'https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?auto=format&fit=crop&w=900&h=506&q=78',
-        imagePosition: 'center',
-        alt: '白色花瓶中的粉色纸艺花束',
-        progress: {
-          tone: 'review',
-          icon: '✅',
-          label: '首轮试做完成，待补照片',
-          meta: '试做组整理'
-        },
-        supports: [
-          '步骤压缩为 6 步，每步配一张实拍图',
-          '材料按“花心、花瓣、花杆”预分装',
-          '附志愿者陪同提示卡与安全说明'
+        title: '蝶贝珍珠山茶发饰',
+        category: 'physical',
+        featureTags: ['蝶贝预制', '磁吸花托', '单手操作'],
+        countLabel: '材料清单 9 项',
+        summary: '山茶蝶贝发簪材料包适配手指灵活度不足、单手操作人群，提前完成铜丝缠绕、花瓣编组，磁吸结构简化组装，降低精细操作门槛。',
+        concept: '以山茶花为造型，蝶贝花瓣搭配珍珠，制作山茶发簪，山茶寓意坚韧向阳。面向手指不灵活、无法完成缠绕铜丝、扣取小开口圈的肢体障碍使用者，大量前置组装，使用磁吸结构。',
+        materials: [
+          '成品参考卡，标注单手可操作',
+          '已经预绕好铜丝、分层组合好的蝶贝花瓣组',
+          '预先粘好珍珠的花心组件',
+          '可以固定在桌边的发簪夹持底座',
+          '磁吸卡扣式花托，一碰锁紧花瓣',
+          '预串完成、带磁吸流苏扣的流苏坠',
+          '备用加重柄圆嘴钳',
+          '腕托支撑垫',
+          '大字图文步骤卡'
         ],
-        detailNote: '首轮试做已完成，花束照片与步骤卡正在整理；当前版本供组内讨论使用。',
-        actionHint: '试做记录由试做组保管，可联系 R4Y 转交最新照片。'
+        components: [
+          {
+            title: '花头预制组件',
+            items: ['预绕铜丝、分层组合的蝶贝花瓣组', '预粘珍珠花心组件', '磁吸卡扣式花托']
+          },
+          {
+            title: '固定与流苏',
+            items: ['可固定桌边的发簪夹持底座', '预串流苏坠、带磁吸流苏扣']
+          },
+          {
+            title: '辅助工具与说明',
+            items: ['备用加重柄圆嘴钳', '腕托支撑垫', '大字图文步骤卡', '单手可操作成品参考卡']
+          }
+        ],
+        highlights: [
+          '省去最难的铜丝缠绕、穿珠步骤，磁吸花托、磁吸流苏扣，不需要精细夹持、绕圈，固定簪杆后单手即可组装完成。'
+        ],
+        image: 'assets/item4.jpg',
+        alt: '陈列盒中的粉白蝶贝山茶花发饰，点缀珍珠花蕊'
+      },
+      {
+        id: 'coaster-prototype',
+        code: 'MP-05',
+        title: '掐丝珐琅 / 螺钿木质杯垫',
+        category: 'hearing',
+        featureTags: ['双原型打版', '色标填料', '手语视频'],
+        countLabel: '材料清单 9 项',
+        summary: '本掐丝螺钿杯垫材料包专为听障人群设计，预制高难度掐丝轮廓，采用色标与分镜图示替代口头教学，配套手语教学视频，依靠视觉即可独立完成填料封胶制作。',
+        concept: '原型取自非遗掐丝珐琅、螺钿贝壳镶嵌工艺，以宝相花传统纹样为主体，实木底座，兼具装饰与杯垫实用功能，寓意吉祥圆满。本套材料包专门面向听障使用者，规避口头教学，全部依靠图示、色标、手语视频传递制作流程，掐丝、螺钿裁切等高难度工序提前完成，使用者仅完成填料、封胶、组装环节。',
+        materials: [
+          '成品参考卡，附带手语教学二维码',
+          '预完成掐丝铜丝轮廓/木胚杯垫底座（凹槽限位，无需自行弯丝）',
+          '分装封装、贴大色块标签的珐琅颜料/螺钿碎片',
+          '填料辅助刮铲（手柄印对应色标）',
+          '定量按压式封胶瓶，瓶身印有涂抹方向箭头',
+          '防滑固定底座垫，印有分区定位线稿',
+          '分装配件袋，表面印有配件实物图示',
+          '加粗手柄辅助工具组',
+          '纯分镜图示步骤卡，搭配手语讲解二维码'
+        ],
+        components: [
+          {
+            title: '基底与轮廓',
+            items: ['预完成掐丝铜丝轮廓、木胚杯垫底座', '凹槽限位，无需自行弯丝', '防滑固定底座垫、分区定位线稿']
+          },
+          {
+            title: '填色与封胶',
+            items: ['分装色标珐琅颜料/螺钿碎片', '手柄带对应色标的填料辅助刮铲', '定量按压式封胶瓶']
+          },
+          {
+            title: '配件与操作工具',
+            items: ['分装配件袋、配件实物图示', '加粗手柄辅助工具组']
+          },
+          {
+            title: '分镜步骤与手语支持',
+            items: ['成品参考卡、手语教学二维码', '纯分镜图示步骤卡、手语讲解二维码']
+          }
+        ],
+        highlights: [
+          '铜丝轮廓、螺钿裁切全部预制完成，无需精细弯折裁切；全套材料采用色彩编码+实物图示，无需听觉讲解；扫码观看手语教学视频，听障使用者依靠视觉信息，独立完成填料、封胶、组装全部流程。'
+        ],
+        gallery: [
+          {
+            src: 'assets/item5-alt.jpg',
+            alt: '木质杯垫中的螺钿宝相花镶嵌纹样',
+            caption: '螺钿镶嵌原型参考。材料包将在掐丝珐琅与螺钿工艺中二选一打版。'
+          }
+        ],
+        image: 'assets/item5.jpg',
+        alt: '木质杯垫中的掐丝珐琅宝相花纹样'
+      },
+      {
+        id: 'wooden-hairpin',
+        code: 'MP-06',
+        title: '木簪生花 · 国风木质发簪',
+        category: 'physical',
+        featureTags: ['可拆卸花头', '固定卡扣', '加大握持段'],
+        countLabel: '组件结构已整理',
+        summary: '以山茶花为灵感，结合木簪纹理与可拆卸花头结构，做成可替换、可日常佩戴的国风发饰。',
+        summaryNote: '根据设计理念整理',
+        concept: '原创国风木质发簪设计。设计理念以山茶花为灵感，结合木簪纹理与可拆卸花头结构，形成可替换、可日常佩戴的国风发饰。',
+        materials: [
+          '黑檀木木簪主体（含木簪纹理）',
+          '茶花托座（正面）',
+          '蝶贝花瓣',
+          '珍珠花蕊',
+          '贝叶装饰',
+          '古铜连接件',
+          '固定卡扣'
+        ],
+        materialsNote: '聊天记录中暂未提供完整的 1—9 项材料清单；以上为现有资料明确列出的组件，待组员补齐后更新。',
+        components: [
+          {
+            title: '发簪主体',
+            items: ['木簪主体', '木簪纹理']
+          },
+          {
+            title: '茶花头结构',
+            items: ['正面茶花托座', '茶花托座', '可拆卸花头结构']
+          },
+          {
+            title: '花头装饰',
+            items: ['蝶贝花瓣', '珍珠花蕊', '贝叶装饰']
+          },
+          {
+            title: '连接与固定',
+            items: ['古铜连接件', '固定卡扣']
+          },
+          {
+            title: '结构与配色',
+            items: ['黑檀木', '奶白蝶贝', '粉白蝶贝', '珍珠花蕊', '古铜连接件']
+          },
+          {
+            title: '展示视角',
+            items: ['正面', '侧面', '顶部']
+          }
+        ],
+        highlights: [
+          '无障碍适配：固定卡扣。',
+          '加大握持段，圆润边缘处理。',
+          '结构层级清晰：黑檀木、奶白蝶贝。',
+          '造型易识别：粉白蝶贝、珍珠花蕊、古铜连接件。'
+        ],
+        image: 'assets/item6.jpg',
+        alt: '黑檀木发簪，簪头为粉白山茶花与蝶贝叶片'
       }
     ];
 
@@ -2489,9 +2877,8 @@
     const categories = [
       { key: 'all', label: '全部' },
       { key: 'vision', label: '视障友好' },
-      { key: 'physical', label: '肢体康复' },
-      { key: 'hearing', label: '听障友好' },
-      { key: 'cognitive', label: '认知友好' }
+      { key: 'physical', label: '肢体 / 单手友好' },
+      { key: 'hearing', label: '听障友好' }
     ];
 
     const categoryLabels = categories.reduce((map, item) => {
@@ -2503,7 +2890,6 @@
       activeCategory: 'all',
       activeSheet: null,
       lastFocusedElement: null,
-      currentTutorialId: null,
       readerMode: false,
       largeTextMode: false
     };
@@ -2531,11 +2917,17 @@
       detailCode: document.getElementById('detailCode'),
       detailTags: document.getElementById('detailTags'),
       detailTitle: document.getElementById('detailTitle'),
-      detailDesc: document.getElementById('detailDesc'),
-      detailFacts: document.getElementById('detailFacts'),
-      detailProgress: document.getElementById('detailProgress'),
-      detailSupports: document.getElementById('detailSupports'),
-      detailPlaceholder: document.getElementById('detailPlaceholder'),
+      detailSummary: document.getElementById('detailSummary'),
+      detailSummaryNote: document.getElementById('detailSummaryNote'),
+      detailConcept: document.getElementById('detailConcept'),
+      detailMaterials: document.getElementById('detailMaterials'),
+      detailMaterialsNote: document.getElementById('detailMaterialsNote'),
+      detailComponents: document.getElementById('detailComponents'),
+      detailGallerySection: document.getElementById('detailGallerySection'),
+      detailGalleryImage: document.getElementById('detailGalleryImage'),
+      detailGalleryCaption: document.getElementById('detailGalleryCaption'),
+      detailHighlights: document.getElementById('detailHighlights'),
+      detailHighlightsIndex: document.getElementById('detailHighlightsIndex'),
       detailAction: document.getElementById('detailAction'),
       qrCanvas: document.getElementById('qrCanvas')
     };
@@ -2653,20 +3045,19 @@
 
       els.list.innerHTML = filteredTutorials.map((tutorial, index) => {
         return `
-          <article class="tutorial-card" style="--card-delay: ${index * 55}ms">
+          <article class="tutorial-card" data-card-id="${escapeHTML(tutorial.id)}" style="--card-delay: ${index * 55}ms">
             <div class="card-cover">
               <img
                 src="${escapeHTML(tutorial.image)}"
                 alt="${escapeHTML(tutorial.alt)}"
                 width="900"
-                height="506"
-                style="object-position: ${escapeHTML(tutorial.imagePosition)};"
+                height="675"
                 loading="${index === 0 ? 'eager' : 'lazy'}"
                 decoding="async"
               >
               <span class="cover-shade" aria-hidden="true"></span>
               <span class="cover-code">${escapeHTML(tutorial.code)}</span>
-              <span class="cover-demo">示意图</span>
+              <span class="cover-demo">参考图</span>
             </div>
 
             <div class="card-body">
@@ -2674,30 +3065,17 @@
                 ${buildTags(tutorial)}
               </div>
               <h3 class="card-title">${escapeHTML(tutorial.title)}</h3>
-              <p class="card-desc">${escapeHTML(tutorial.desc)}</p>
-
-              <div class="card-meta">
-                <span>难度：<span class="stars" aria-hidden="true">${'★'.repeat(tutorial.difficulty)}</span></span>
-                <span>${escapeHTML(tutorial.duration)}</span>
-                <span>材料 ${tutorial.materialCount} 件</span>
-              </div>
-
-              <div class="progress-row progress-row--${tutorial.progress.tone}">
-                <span class="progress-label">
-                  <span class="progress-icon" aria-hidden="true">${tutorial.progress.icon}</span>
-                  ${escapeHTML(tutorial.progress.label)}
-                </span>
-                <span class="progress-meta">${escapeHTML(tutorial.progress.meta)}</span>
-              </div>
+              <p class="card-desc">${escapeHTML(tutorial.summary)}</p>
 
               <div class="card-actions">
+                <span class="card-material-count">${escapeHTML(tutorial.countLabel)}</span>
                 <button
                   class="view-button"
                   type="button"
                   data-view-id="${escapeHTML(tutorial.id)}"
-                  aria-label="查看教程：${escapeHTML(tutorial.title)}"
+                  aria-label="查看材料包详情：${escapeHTML(tutorial.title)}"
                 >
-                  查看教程 ${icons.arrow}
+                  查看详情 ${icons.arrow}
                 </button>
               </div>
             </div>
@@ -2866,16 +3244,6 @@
       }, prefersReducedMotion() ? 0 : 260);
     }
 
-    function progressMarkup(tutorial) {
-      return `
-        <span class="progress-label">
-          <span class="progress-icon" aria-hidden="true">${tutorial.progress.icon}</span>
-          ${escapeHTML(tutorial.progress.label)}
-        </span>
-        <span class="progress-meta">${escapeHTML(tutorial.progress.meta)}</span>
-      `;
-    }
-
     function openTutorialDetail(tutorialId, triggerElement = null) {
       const tutorial = tutorials.find((item) => item.id === tutorialId);
       if (!tutorial) {
@@ -2889,32 +3257,57 @@
 
       els.detailImage.src = tutorial.image;
       els.detailImage.alt = tutorial.alt;
-      els.detailImage.style.objectPosition = tutorial.imagePosition;
       els.detailCode.textContent = tutorial.code;
       els.detailTags.innerHTML = buildTags(tutorial);
       els.detailTitle.textContent = tutorial.title;
-      els.detailDesc.textContent = tutorial.desc;
 
-      els.detailFacts.innerHTML = `
-        <div><dt>难度</dt><dd>${'★'.repeat(tutorial.difficulty)}</dd></div>
-        <div><dt>时长</dt><dd>${escapeHTML(tutorial.duration)}</dd></div>
-        <div><dt>材料</dt><dd>${tutorial.materialCount} 件</dd></div>
-      `;
+      els.detailSummary.textContent = tutorial.summary;
+      els.detailSummaryNote.hidden = !tutorial.summaryNote;
+      els.detailSummaryNote.textContent = tutorial.summaryNote || '根据设计理念整理';
 
-      els.detailProgress.className = `progress-row progress-row--${tutorial.progress.tone}`;
-      els.detailProgress.innerHTML = progressMarkup(tutorial);
-      els.detailSupports.innerHTML = tutorial.supports.map((item) => (
-        `<li>${icons.check}<span>${escapeHTML(item)}</span></li>`
-      )).join('');
-      els.detailPlaceholder.textContent = tutorial.detailNote;
-      els.detailAction.textContent = '获取内测资料';
-      state.currentTutorialId = tutorial.id;
+      els.detailConcept.textContent = tutorial.concept;
+
+      els.detailMaterials.innerHTML = tutorial.materials
+        .map((material) => `<li>${escapeHTML(material)}</li>`)
+        .join('');
+
+      els.detailMaterialsNote.hidden = !tutorial.materialsNote;
+      els.detailMaterialsNote.textContent = tutorial.materialsNote || '';
+
+      els.detailComponents.innerHTML = tutorial.components.map((group) => `
+        <div class="component-group">
+          <h4>${escapeHTML(group.title)}</h4>
+          <ul>
+            ${group.items.map((item) => `<li>${escapeHTML(item)}</li>`).join('')}
+          </ul>
+        </div>
+      `).join('');
+
+      els.detailHighlights.innerHTML = tutorial.highlights
+        .map((item) => `<p>${icons.check}<span>${escapeHTML(item)}</span></p>`)
+        .join('');
+
+      const galleryItem = tutorial.gallery && tutorial.gallery[0];
+      els.detailGallerySection.hidden = !galleryItem;
+      if (galleryItem) {
+        els.detailGalleryImage.src = galleryItem.src;
+        els.detailGalleryImage.alt = galleryItem.alt;
+        els.detailGalleryCaption.textContent = galleryItem.caption;
+        els.detailHighlightsIndex.textContent = '05';
+      } else {
+        els.detailGalleryImage.removeAttribute('src');
+        els.detailGalleryImage.alt = '';
+        els.detailGalleryCaption.textContent = '';
+        els.detailHighlightsIndex.textContent = '04';
+      }
+
+      els.detailAction.textContent = '返回材料包列表';
 
       els.detailScroll.scrollTop = 0;
       openSheet(els.detailSheet, triggerElement);
 
       if (state.readerMode) {
-        speakText(`已打开${tutorial.title}。当前进度：${tutorial.progress.label}。${tutorial.detailNote}`);
+        speakText(`已打开${tutorial.title}。${tutorial.summary}`);
       }
     }
 
@@ -3003,7 +3396,7 @@
       qrPlaceholderDrawn = true;
     }
 
-    /* 图片加载失败时，降级为统一的材料示意图背景 */
+    /* 图片加载失败时，降级为统一的材料包参考背景 */
     document.addEventListener('error', (event) => {
       const image = event.target;
       if (!(image instanceof HTMLImageElement)) {
@@ -3015,7 +3408,7 @@
         return;
       }
 
-      const altText = image.alt || '材料包示意图';
+      const altText = image.alt || '材料包参考图';
       image.hidden = true;
       cover.classList.add('is-fallback');
       cover.setAttribute('role', 'img');
@@ -3071,6 +3464,13 @@
         return;
       }
 
+      const card = event.target.closest('[data-card-id]');
+      if (card) {
+        const cardButton = card.querySelector('.view-button');
+        openTutorialDetail(card.dataset.cardId, cardButton || card);
+        return;
+      }
+
       const emptyResetButton = event.target.closest('[data-empty-reset]');
       if (emptyResetButton) {
         activateCategory('all');
@@ -3113,8 +3513,7 @@
     });
 
     els.detailAction.addEventListener('click', () => {
-      const tutorial = tutorials.find((item) => item.id === state.currentTutorialId);
-      showToast(tutorial ? tutorial.actionHint : '内测资料请联系线上技术支持组 R4Y。');
+      closeSheet();
     });
 
     document.addEventListener('click', (event) => {
