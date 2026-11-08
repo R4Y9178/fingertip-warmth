@@ -1114,6 +1114,190 @@
       color: var(--muted-strong);
     }
 
+    .feedback-list {
+      display: grid;
+      gap: 9px;
+      margin-top: 9px;
+    }
+
+    .feedback-card--local {
+      border-color: #e7dfd4;
+      background: #fffdf9;
+    }
+
+    .feedback-card--local:focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: 2px;
+    }
+
+    .feedback-card--local .feedback-message {
+      white-space: pre-wrap;
+    }
+
+    .feedback-avatar--local {
+      background: var(--warm-soft);
+      color: var(--warm);
+    }
+
+    .feedback-form {
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      scroll-margin-top: 12px;
+    }
+
+    .feedback-form-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .feedback-form-title {
+      margin: 0;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 750;
+      line-height: 1.5;
+    }
+
+    .feedback-form-tag {
+      flex: 0 0 auto;
+      padding: 2px 6px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--surface-soft);
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .feedback-form-intro {
+      margin: 5px 0 12px;
+      color: var(--muted);
+      font-size: 10.5px;
+      line-height: 1.7;
+    }
+
+    .feedback-field {
+      display: grid;
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .feedback-label {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      color: var(--ink);
+      font-size: 11.5px;
+      font-weight: 650;
+      line-height: 1.5;
+    }
+
+    .feedback-label-note {
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 500;
+    }
+
+    .feedback-input,
+    .feedback-textarea {
+      width: 100%;
+      min-height: var(--tap);
+      padding: 9px 10px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.65;
+      transition: border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .feedback-textarea {
+      min-height: 96px;
+      resize: vertical;
+    }
+
+    .feedback-input::placeholder,
+    .feedback-textarea::placeholder {
+      color: #8b918c;
+      opacity: 1;
+    }
+
+    .feedback-input:focus,
+    .feedback-textarea:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(31, 77, 67, 0.12);
+      outline: none;
+    }
+
+    .feedback-input[aria-invalid="true"],
+    .feedback-textarea[aria-invalid="true"] {
+      border-color: #a6422e;
+    }
+
+    .feedback-field-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+    .feedback-counter {
+      flex: 0 0 auto;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .feedback-error {
+      margin: 9px 0 0;
+      padding: 7px 8px;
+      border: 1px solid #e7c2b8;
+      border-radius: 7px;
+      background: #fbf0ed;
+      color: #7c2f1c;
+      font-size: 10.5px;
+      line-height: 1.6;
+    }
+
+    .feedback-submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 46px;
+      margin-top: 11px;
+      padding: 0 16px;
+      border: 1px solid var(--brand);
+      border-radius: 9px;
+      background: var(--brand);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.4;
+      transition: background-color 160ms ease, border-color 160ms ease;
+    }
+
+    .feedback-submit:active {
+      background: var(--brand-dark);
+      border-color: var(--brand-dark);
+    }
+
+    .feedback-form-note {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.65;
+      text-align: center;
+    }
+
     .feedback-pending {
       display: flex;
       align-items: flex-start;
@@ -2035,6 +2219,28 @@
       font-size: 15px;
     }
 
+    .phone-shell.is-large-text .feedback-form-title {
+      font-size: 16px;
+    }
+
+    .phone-shell.is-large-text .feedback-form-intro,
+    .phone-shell.is-large-text .feedback-label,
+    .phone-shell.is-large-text .feedback-input,
+    .phone-shell.is-large-text .feedback-textarea {
+      font-size: 14px;
+    }
+
+    .phone-shell.is-large-text .feedback-form-tag,
+    .phone-shell.is-large-text .feedback-field-foot,
+    .phone-shell.is-large-text .feedback-form-note,
+    .phone-shell.is-large-text .feedback-error {
+      font-size: 11px;
+    }
+
+    .phone-shell.is-large-text .feedback-submit {
+      font-size: 15px;
+    }
+
     .phone-shell.is-large-text .feedback-author strong,
     .phone-shell.is-large-text .dock-copy strong {
       font-size: 14px;
@@ -2129,6 +2335,11 @@
       .feedback-entry:hover {
         border-color: var(--line-strong);
         background: var(--surface-soft);
+      }
+
+      .feedback-submit:hover {
+        background: var(--brand-dark);
+        border-color: var(--brand-dark);
       }
 
       .qr-button:hover {
@@ -2425,7 +2636,7 @@
           </div>
           <span class="status-badge">Demo 测试</span>
         </div>
-        <p class="section-desc">内测阶段仅展示组内留言，公开投稿功能列入 V0.4。</p>
+        <p class="section-desc">欢迎留下使用意见与无障碍建议。当前为内测投稿，留言保存在本机浏览器；正式版将接入云端讨论区。</p>
 
         <article class="feedback-card" aria-label="组内留言">
           <header class="feedback-header">
@@ -2439,14 +2650,60 @@
           <p class="feedback-message">“初版网页设计，有更好的建议请与我沟通！”</p>
           <footer class="feedback-footer">
             <span class="feedback-tag"># 页面结构</span>
-            <span>组内可见 · 1 条留言</span>
+            <span id="feedbackTotal">内测讨论 · 1 条留言</span>
           </footer>
         </article>
 
-        <div class="feedback-pending">
-          <span class="feedback-pending-icon" aria-hidden="true">💬</span>
-          <p><strong>投稿入口暂未开放。</strong>内测期间如需补充建议，请联系小组技术支持 <span class="mono">feedback</span>。</p>
-        </div>
+        <div class="feedback-list" id="feedbackList" role="log" aria-live="polite" aria-relevant="additions" aria-label="最新留言"></div>
+
+        <form class="feedback-form" id="feedbackForm" novalidate>
+          <div class="feedback-form-head">
+            <h3 class="feedback-form-title" id="feedbackFormTitle">我要留言</h3>
+            <span class="feedback-form-tag">本机投稿</span>
+          </div>
+          <p class="feedback-form-intro">说说哪里不好用、哪里需要改进，或者留下你希望增加的手作材料包。</p>
+
+          <div class="feedback-field">
+            <label class="feedback-label" for="feedbackName">
+              称呼
+              <span class="feedback-label-note">选填</span>
+            </label>
+            <input
+              class="feedback-input"
+              id="feedbackName"
+              name="feedbackName"
+              type="text"
+              maxlength="20"
+              autocomplete="nickname"
+              placeholder="怎么称呼你？"
+            >
+          </div>
+
+          <div class="feedback-field">
+            <label class="feedback-label" for="feedbackMessage">
+              留言内容
+              <span class="feedback-label-note">必填 · 至少 2 个字</span>
+            </label>
+            <textarea
+              class="feedback-textarea"
+              id="feedbackMessage"
+              name="feedbackMessage"
+              rows="4"
+              maxlength="300"
+              required
+              placeholder="写下你的意见或建议……"
+              aria-describedby="feedbackCounter feedbackError"
+            ></textarea>
+            <div class="feedback-field-foot">
+              <span>请勿填写敏感个人信息</span>
+              <span class="feedback-counter" id="feedbackCounter">0 / 300</span>
+            </div>
+          </div>
+
+          <p class="feedback-error" id="feedbackError" role="alert" hidden></p>
+          <button class="feedback-submit" id="feedbackSubmit" type="submit">发布到讨论区</button>
+          <p class="feedback-form-note" id="feedbackFormNote">留言保存在本机浏览器；接入正式云端后，全组将实时可见。</p>
+        </form>
       </section>
 
       <!-- 无障碍关怀提示 -->
@@ -2469,7 +2726,7 @@
     <!-- ==================== 底部快捷入口 ==================== -->
     <footer class="dock" aria-label="快捷操作">
       <div class="dock-actions">
-        <button class="feedback-entry" id="feedbackEntry" type="button" aria-label="前往意见反馈与讨论区，当前有 1 条组内留言">
+        <button class="feedback-entry" id="feedbackEntry" type="button" aria-label="前往意见反馈与讨论区，当前有 1 条留言">
           <span class="dock-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" focusable="false">
               <path d="M4.2 5.8h15.6v10.3H9.7L4.2 19V5.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
@@ -2478,9 +2735,9 @@
           </span>
           <span class="dock-copy">
             <strong>意见反馈 / 讨论区</strong>
-            <small>Demo 测试 · 1 条组内留言</small>
+            <small id="dockFeedbackMeta">Demo 测试 · 可直接留言</small>
           </span>
-          <span class="dock-count" aria-hidden="true">1</span>
+          <span class="dock-count" id="dockFeedbackCount" aria-hidden="true">1</span>
         </button>
 
         <button class="qr-button" id="qrButton" type="button" aria-label="生成分享二维码（演示）">
@@ -2940,6 +3197,10 @@
       largeTextMode: false
     };
 
+    const FEEDBACK_STORAGE_KEY = 'jzhand-feedback-v1';
+    const MAX_LOCAL_FEEDBACK = 20;
+    let localFeedbackMessages = [];
+
     const els = {
       shell: document.getElementById('appShell'),
       tabs: document.getElementById('categoryTabs'),
@@ -2953,6 +3214,16 @@
       largeTextToggle: document.getElementById('largeTextToggle'),
       feedbackEntry: document.getElementById('feedbackEntry'),
       feedbackSection: document.getElementById('feedbackSection'),
+      feedbackTotal: document.getElementById('feedbackTotal'),
+      feedbackList: document.getElementById('feedbackList'),
+      feedbackForm: document.getElementById('feedbackForm'),
+      feedbackName: document.getElementById('feedbackName'),
+      feedbackMessage: document.getElementById('feedbackMessage'),
+      feedbackCounter: document.getElementById('feedbackCounter'),
+      feedbackError: document.getElementById('feedbackError'),
+      feedbackFormNote: document.getElementById('feedbackFormNote'),
+      dockFeedbackMeta: document.getElementById('dockFeedbackMeta'),
+      dockFeedbackCount: document.getElementById('dockFeedbackCount'),
       qrButton: document.getElementById('qrButton'),
       toast: document.getElementById('toast'),
       detailSheet: document.getElementById('detailSheet'),
@@ -3160,6 +3431,169 @@
     function hideToast() {
       window.clearTimeout(toastTimer);
       els.toast.classList.remove('is-visible');
+    }
+
+    /* ============================================================
+       04.1 讨论区本机投稿
+       说明：GitHub Pages 为纯静态托管，当前留言只保存在本机浏览器；
+       后续接入云端接口时，可在此处替换为 fetch 提交。
+       ============================================================ */
+    function loadLocalFeedback() {
+      try {
+        const raw = window.localStorage.getItem(FEEDBACK_STORAGE_KEY);
+        if (!raw) {
+          return [];
+        }
+
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) {
+          return [];
+        }
+
+        return parsed.filter((entry) => (
+          entry &&
+          typeof entry.name === 'string' &&
+          typeof entry.message === 'string' &&
+          entry.message.trim().length > 0 &&
+          !Number.isNaN(new Date(entry.createdAt).getTime())
+        )).slice(0, MAX_LOCAL_FEEDBACK);
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveLocalFeedback() {
+      try {
+        window.localStorage.setItem(
+          FEEDBACK_STORAGE_KEY,
+          JSON.stringify(localFeedbackMessages.slice(0, MAX_LOCAL_FEEDBACK))
+        );
+        return true;
+      } catch (error) {
+        return false;
+      }
+    }
+
+    function formatFeedbackTime(value) {
+      const timestamp = new Date(value).getTime();
+      if (Number.isNaN(timestamp)) {
+        return '本机留言';
+      }
+
+      const elapsed = Math.max(0, Date.now() - timestamp);
+      if (elapsed < 60 * 1000) {
+        return '刚刚';
+      }
+      if (elapsed < 60 * 60 * 1000) {
+        return `${Math.floor(elapsed / (60 * 1000))} 分钟前`;
+      }
+      if (elapsed < 24 * 60 * 60 * 1000) {
+        return `${Math.floor(elapsed / (60 * 60 * 1000))} 小时前`;
+      }
+
+      return new Intl.DateTimeFormat('zh-CN', {
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      }).format(new Date(timestamp));
+    }
+
+    function updateFeedbackMeta() {
+      const total = 1 + localFeedbackMessages.length;
+      els.feedbackTotal.textContent = `内测讨论 · ${total} 条留言`;
+      els.dockFeedbackCount.textContent = String(total);
+      els.dockFeedbackMeta.textContent = 'Demo 测试 · 可直接留言';
+      els.feedbackEntry.setAttribute('aria-label', `前往意见反馈与讨论区，当前有 ${total} 条留言`);
+    }
+
+    function renderLocalFeedback() {
+      els.feedbackList.innerHTML = '';
+
+      localFeedbackMessages.forEach((entry) => {
+        const name = entry.name.trim().slice(0, 20) || '匿名访客';
+        const avatarText = name.slice(0, 2);
+        const card = document.createElement('article');
+        card.className = 'feedback-card feedback-card--local';
+        card.tabIndex = -1;
+        card.innerHTML = `
+          <header class="feedback-header">
+            <span class="feedback-avatar feedback-avatar--local" aria-hidden="true">${escapeHTML(avatarText)}</span>
+            <div class="feedback-author">
+              <strong>${escapeHTML(name)}</strong>
+              <span>本机留言</span>
+            </div>
+            <time class="feedback-status-label" datetime="${escapeHTML(entry.createdAt)}">${escapeHTML(formatFeedbackTime(entry.createdAt))}</time>
+          </header>
+          <p class="feedback-message">${escapeHTML(entry.message)}</p>
+          <footer class="feedback-footer">
+            <span class="feedback-tag"># 意见反馈</span>
+            <span>仅本设备可见</span>
+          </footer>
+        `;
+        els.feedbackList.appendChild(card);
+      });
+
+      updateFeedbackMeta();
+    }
+
+    function setFeedbackError(message) {
+      const hasError = Boolean(message);
+      els.feedbackError.hidden = !hasError;
+      els.feedbackError.textContent = message || '';
+      els.feedbackMessage.setAttribute('aria-invalid', String(hasError));
+    }
+
+    function submitFeedback() {
+      const name = els.feedbackName.value.trim().slice(0, 20) || '匿名访客';
+      const message = els.feedbackMessage.value.trim();
+
+      if (message.length < 2) {
+        setFeedbackError('请至少写 2 个字，再发布留言。');
+        els.feedbackMessage.focus();
+        return;
+      }
+
+      if (message.length > 300) {
+        setFeedbackError('留言最多 300 个字，请精简后再试。');
+        els.feedbackMessage.focus();
+        return;
+      }
+
+      setFeedbackError('');
+
+      const entry = {
+        id: window.crypto && typeof window.crypto.randomUUID === 'function'
+          ? window.crypto.randomUUID()
+          : `feedback-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+        name,
+        message,
+        createdAt: new Date().toISOString()
+      };
+
+      localFeedbackMessages = [entry, ...localFeedbackMessages].slice(0, MAX_LOCAL_FEEDBACK);
+      const stored = saveLocalFeedback();
+
+      renderLocalFeedback();
+      els.feedbackMessage.value = '';
+      els.feedbackCounter.textContent = '0 / 300';
+      els.feedbackMessage.setAttribute('aria-invalid', 'false');
+      els.feedbackFormNote.textContent = stored
+        ? '留言保存在本机浏览器；接入正式云端后，全组将实时可见。'
+        : '当前浏览器无法长期保存留言，本条留言仅在本次打开页面中显示。';
+
+      showToast(stored ? '留言已发布到本机讨论区' : '留言已显示，但当前浏览器无法长期保存');
+
+      const newestCard = els.feedbackList.firstElementChild;
+      if (newestCard) {
+        newestCard.scrollIntoView({
+          behavior: scrollBehavior(),
+          block: 'center'
+        });
+        window.setTimeout(() => {
+          newestCard.focus({ preventScroll: true });
+        }, prefersReducedMotion() ? 0 : 240);
+      }
     }
 
     function speakText(text) {
@@ -3542,17 +3976,37 @@
       setLargeTextMode(!state.largeTextMode);
     });
 
+    els.feedbackMessage.addEventListener('input', () => {
+      const length = els.feedbackMessage.value.length;
+      els.feedbackCounter.textContent = `${length} / 300`;
+      if (!els.feedbackError.hidden) {
+        setFeedbackError('');
+      }
+    });
+
+    els.feedbackMessage.addEventListener('keydown', (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+        event.preventDefault();
+        els.feedbackForm.requestSubmit();
+      }
+    });
+
+    els.feedbackForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      submitFeedback();
+    });
+
     els.feedbackEntry.addEventListener('click', () => {
-      els.feedbackSection.scrollIntoView({
+      els.feedbackForm.scrollIntoView({
         behavior: scrollBehavior(),
         block: 'start'
       });
 
       window.setTimeout(() => {
-        els.feedbackSection.focus({ preventScroll: true });
+        els.feedbackName.focus({ preventScroll: true });
       }, prefersReducedMotion() ? 0 : 380);
 
-      showToast('已定位到意见反馈 / 讨论区');
+      showToast('已定位到意见反馈留言入口');
     });
 
     els.qrButton.addEventListener('click', () => {
@@ -3608,6 +4062,8 @@
     /* ============================================================
        08. 初始化
        ============================================================ */
+    localFeedbackMessages = loadLocalFeedback();
+    renderLocalFeedback();
     renderTabs();
     updateTabs();
     renderTutorials();
