@@ -1486,6 +1486,22 @@
       line-height: 1.4;
     }
 
+    .detail-cover-label {
+      position: absolute;
+      top: 11px;
+      right: 12px;
+      z-index: 2;
+      padding: 4px 7px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--muted-strong);
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+    }
+
     .detail-content {
       padding: 15px 16px 2px;
     }
@@ -2379,7 +2395,7 @@
             <path d="M6 3.8h9l3 3V20a.8.8 0 0 1-.8.8H6a.8.8 0 0 1-.8-.8V4.6a.8.8 0 0 1 .8-.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
             <path d="M9 9h6M9 12.5h6M9 16h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
           </svg>
-          <span><strong>资料说明：</strong>本页依据团队导出的材料包图文与聊天记录整理，实物图片为对应材料包参考图。</span>
+          <span><strong>资料说明：</strong>本页依据团队材料包图文与聊天记录整理，封面为概念效果图，最终以实物打样为准。</span>
         </p>
         <p class="overview-updated">首批 6 套资料已归档 · 内部评审用</p>
       </section>
@@ -2446,7 +2462,7 @@
       <footer class="site-footer">
         <p class="site-footer-main">项目申报单位：（代填写） <span>|</span> 技术开发：线上技术支持组R4Y <span>|</span> 2026年</p>
         <p class="site-footer-meta">版本 V0.3 · 内部评审材料 · 内容整理：范俊辰、祈盐牙兽兽、TvTing</p>
-        <p class="site-footer-meta">实物参考图来自团队材料包资料 · 最终以实物打样为准</p>
+        <p class="site-footer-meta">封面为概念效果图 · 最终以实物打样为准</p>
       </footer>
     </main>
 
@@ -2498,6 +2514,7 @@
           <div class="detail-cover" id="detailCover">
             <img id="detailImage" alt="" width="900" height="675">
             <span class="detail-code" id="detailCode">MP-01</span>
+            <span class="detail-cover-label" id="detailCoverLabel">概念效果图</span>
           </div>
 
           <div class="detail-content">
@@ -2602,7 +2619,7 @@
       {
         id: 'paper-ball',
         code: 'MP-01',
-        title: '非遗纸杯绣球挂件',
+        title: '非遗纸艺绣球挂件',
         category: 'vision',
         featureTags: ['触觉定位', '语音讲解', '预贴背胶'],
         countLabel: '材料清单 9 项',
@@ -2636,13 +2653,20 @@
         highlights: [
           '纸片依靠触感纹理分层，骨架凸点定位插片位置，半球底座固定绣球，全程以触觉、语音引导，视障者可以独立完成绣球挂件。'
         ],
+        gallery: [
+          {
+            src: 'assets/item1-alt.jpg',
+            alt: '深蓝与白金海浪纹折纸绣球挂件',
+            caption: '备选视觉方案：深蓝海浪纹绣球。正式版可沿用纸杯再生制作结构，按最终打样效果二选一。'
+          }
+        ],
         image: 'assets/item1.jpg',
-        alt: '蓝紫色纸杯绣球挂件，配浅蓝挂绳与紫色流苏，旁边摆放国风卡片'
+        alt: '蓝底国风纹样纸艺绣球挂件，配浅色挂绳与紫色流苏'
       },
       {
         id: 'bamboo-hairclip',
         code: 'MP-02',
-        title: '竹编彩色发夹',
+        title: '竹编彩韵发夹',
         category: 'physical',
         featureTags: ['竹编预制', '磁吸对位', '单手操作'],
         countLabel: '材料清单 9 项',
@@ -2676,22 +2700,29 @@
         highlights: [
           '核心编织花纹提前预制，磁吸底座自动对位，弹簧剪刀省力，搭配桌夹解放另一只手，单手就可以完成组装。'
         ],
+        gallery: [
+          {
+            src: 'assets/item2-alt.jpg',
+            alt: '扇形与云纹造型的彩色竹编发夹',
+            caption: '备选视觉方案：扇形竹编发夹。正式版可沿用现有竹编预制与磁吸底座结构。'
+          }
+        ],
         image: 'assets/item2.jpg',
-        alt: '浅色头发上别着多枚彩色竹编发夹'
+        alt: '浅色背景上的多枚彩色竹编发夹'
       },
       {
         id: 'incense-pendant',
         code: 'MP-03',
-        title: '青釉缠枝纹合香牌',
+        title: '青釉云纹合香牌',
         category: 'hearing',
         featureTags: ['分镜图示', '手语视频', '色标材料'],
         countLabel: '材料清单 9 项',
         summary: '合香牌材料包面向听障人群设计，以分镜图示、色彩标识替代口头讲解，配套手语教学视频，依靠视觉信息完成压模、打磨、串配全过程。',
-        concept: '以传统合香、缠枝纹样为灵感，香泥压模制成平安挂坠，缠枝纹寓意生生不息。专为听障使用者设计，抛弃口头语音教学，全部依靠图示、色标、手语视频传递制作步骤。',
+        concept: '以传统合香、云纹为灵感，香泥压模制成平安挂坠，云纹寓意平安顺遂。专为听障使用者设计，抛弃口头语音教学，全部依靠图示、色标、手语视频传递制作步骤。',
         materials: [
           '成品参考卡，附带手语教学二维码',
           '分袋装好、贴有色标标签的预制香泥团',
-          '印有方向箭头的缠枝纹硅胶模具',
+          '印有方向箭头的云纹硅胶模具',
           '带按压方向标识的弹簧打孔器',
           '贴有色彩标签的不同目数打磨砂条',
           '分装贴图标签的主绳扣、宫铃、流苏配件',
@@ -2702,7 +2733,7 @@
         components: [
           {
             title: '香泥与压模',
-            items: ['分袋色标预制香泥团', '印有方向箭头的缠枝纹硅胶模具']
+            items: ['分袋色标预制香泥团', '印有方向箭头的云纹硅胶模具']
           },
           {
             title: '打孔与打磨',
@@ -2720,8 +2751,15 @@
         highlights: [
           '全材料色标配对，步骤使用连续分镜图画表达，扫码观看手语教学视频，不需要听觉指导，听障使用者可以看懂流程、独立制作。'
         ],
+        gallery: [
+          {
+            src: 'assets/item3-alt.jpg',
+            alt: '棕色莲纹浮雕合香牌',
+            caption: '备选视觉方案：棕色莲纹合香牌。香牌纹样可按最终打样调整。'
+          }
+        ],
         image: 'assets/item3.jpg',
-        alt: '手持青釉色缠枝纹合香牌，配玉珠与绿色流苏'
+        alt: '青绿色云纹合香牌，配流苏与玉珠'
       },
       {
         id: 'shell-flower-hairpin',
@@ -2760,8 +2798,15 @@
         highlights: [
           '省去最难的铜丝缠绕、穿珠步骤，磁吸花托、磁吸流苏扣，不需要精细夹持、绕圈，固定簪杆后单手即可组装完成。'
         ],
+        gallery: [
+          {
+            src: 'assets/item4-alt.jpg',
+            alt: '三花蝶贝山茶发簪',
+            caption: '备选视觉方案：三花蝶贝山茶发簪。展示形态可按材料包配置调整。'
+          }
+        ],
         image: 'assets/item4.jpg',
-        alt: '陈列盒中的粉白蝶贝山茶花发饰，点缀珍珠花蕊'
+        alt: '陈列盒中的四枚蝶贝山茶花发夹，点缀珍珠花蕊'
       },
       {
         id: 'coaster-prototype',
@@ -2808,7 +2853,7 @@
           {
             src: 'assets/item5-alt.jpg',
             alt: '木质杯垫中的螺钿宝相花镶嵌纹样',
-            caption: '螺钿镶嵌原型参考。材料包将在掐丝珐琅与螺钿工艺中二选一打版。'
+            caption: '备选工艺原型：螺钿镶嵌。材料包将在掐丝珐琅与螺钿工艺中二选一打版。'
           }
         ],
         image: 'assets/item5.jpg',
@@ -2819,6 +2864,7 @@
         code: 'MP-06',
         title: '木簪生花 · 国风木质发簪',
         category: 'physical',
+        coverLabel: '参考图',
         featureTags: ['可拆卸花头', '固定卡扣', '加大握持段'],
         countLabel: '组件结构已整理',
         summary: '以山茶花为灵感，结合木簪纹理与可拆卸花头结构，做成可替换、可日常佩戴的国风发饰。',
@@ -2915,6 +2961,7 @@
       detailCover: document.getElementById('detailCover'),
       detailImage: document.getElementById('detailImage'),
       detailCode: document.getElementById('detailCode'),
+      detailCoverLabel: document.getElementById('detailCoverLabel'),
       detailTags: document.getElementById('detailTags'),
       detailTitle: document.getElementById('detailTitle'),
       detailSummary: document.getElementById('detailSummary'),
@@ -3057,7 +3104,7 @@
               >
               <span class="cover-shade" aria-hidden="true"></span>
               <span class="cover-code">${escapeHTML(tutorial.code)}</span>
-              <span class="cover-demo">参考图</span>
+              <span class="cover-demo">${escapeHTML(tutorial.coverLabel || '概念效果图')}</span>
             </div>
 
             <div class="card-body">
@@ -3258,6 +3305,7 @@
       els.detailImage.src = tutorial.image;
       els.detailImage.alt = tutorial.alt;
       els.detailCode.textContent = tutorial.code;
+      els.detailCoverLabel.textContent = tutorial.coverLabel || '概念效果图';
       els.detailTags.innerHTML = buildTags(tutorial);
       els.detailTitle.textContent = tutorial.title;
 
