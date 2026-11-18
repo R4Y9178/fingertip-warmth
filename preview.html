@@ -1,0 +1,4066 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6efe3">
+  <meta name="description" content="共创微光 · 听障友好的非遗手作学习 App 概念预览。">
+  <title>共创微光 · 听障友好的非遗手作学习</title>
+
+  <style>
+    /* ============================================================
+       01. 基础变量
+       ============================================================ */
+    :root {
+      --paper: #f6efe3;
+      --surface: #fffaf1;
+      --surface-strong: #fffdf8;
+      --ink: #29251f;
+      --muted: #6f665b;
+      --muted-strong: #51483e;
+      --soft: #736457;
+      --line: #e6d8c6;
+      --line-strong: #d7c5ae;
+      --green: #2f4c3f;
+      --green-deep: #22392f;
+      --green-soft: #e7eee8;
+      --red: #9b3d29;
+      --red-deep: #7f2f1f;
+      --red-soft: #f5e5dc;
+      --gold: #7f5c2d;
+      --gold-soft: #f3e9d7;
+      --yellow-soft: #fbf3e1;
+      --shadow: 0 12px 34px rgba(55, 39, 25, 0.1);
+      --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", sans-serif;
+      --font-serif: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
+      --tap: 44px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      margin: 0;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      background: #e9e1d4;
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      color: inherit;
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    img,
+    svg {
+      display: block;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      word-break: break-word;
+    }
+
+    ::selection {
+      background: #efd8c6;
+      color: #3b2417;
+    }
+
+    :focus-visible {
+      outline: 3px solid #1d5b48;
+      outline-offset: 3px;
+    }
+
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    .icon {
+      width: 22px;
+      height: 22px;
+      flex: 0 0 auto;
+    }
+
+    /* ============================================================
+       02. App 外壳
+       ============================================================ */
+    .app-shell {
+      position: relative;
+      isolation: isolate;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 430px;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(183, 137, 79, 0.09), transparent 30%),
+        radial-gradient(circle at 100% 35%, rgba(74, 111, 91, 0.07), transparent 34%),
+        var(--paper);
+      color: var(--ink);
+    }
+
+    .app-header {
+      position: relative;
+      z-index: 30;
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: calc(10px + env(safe-area-inset-top)) 16px 10px;
+      border-bottom: 1px solid rgba(214, 196, 175, 0.68);
+      background: rgba(246, 239, 227, 0.93);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand-seal {
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--red);
+      color: #fff7ea;
+      font-family: var(--font-serif);
+      font-size: 21px;
+      font-weight: 700;
+      line-height: 1;
+      box-shadow: 0 4px 10px rgba(126, 47, 31, 0.2);
+    }
+
+    .brand-copy {
+      min-width: 0;
+    }
+
+    .brand-copy h1 {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1.25;
+    }
+
+    .brand-copy p {
+      margin: 1px 0 0;
+      color: var(--muted);
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      line-height: 1.5;
+    }
+
+    .header-tools {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-left: auto;
+    }
+
+    .text-size-button {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255, 250, 241, 0.7);
+      color: var(--ink);
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .text-size-button[aria-pressed="true"] {
+      border-color: #9fb5a5;
+      background: var(--green-soft);
+      color: var(--green-deep);
+    }
+
+    .app-main {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 16px 16px 26px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .app-main::-webkit-scrollbar {
+      width: 0;
+    }
+
+    .tab-panel {
+      animation: panel-in 260ms ease both;
+    }
+
+    @keyframes panel-in {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .page-head {
+      margin: 1px 2px 16px;
+    }
+
+    .page-kicker {
+      margin: 0 0 4px;
+      color: var(--red);
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      line-height: 1.5;
+      text-transform: uppercase;
+    }
+
+    .page-head h2,
+    .home-head h2 {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--font-serif);
+      font-size: 25px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      line-height: 1.45;
+    }
+
+    .page-head p:last-child {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.75;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 20px 2px 9px;
+    }
+
+    .section-head h3 {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--font-serif);
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .section-head-note {
+      color: var(--soft);
+      font-size: 9.5px;
+      line-height: 1.5;
+      white-space: nowrap;
+    }
+
+    .text-link {
+      padding: 4px 0;
+      border: 0;
+      background: transparent;
+      color: var(--green);
+      font-size: 10.5px;
+      font-weight: 650;
+      line-height: 1.5;
+    }
+
+    .text-link::after {
+      content: "  ›";
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    /* ============================================================
+       03. 底部导航
+       ============================================================ */
+    .bottom-nav {
+      position: relative;
+      z-index: 30;
+      flex: 0 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      padding: 6px 9px calc(7px + env(safe-area-inset-bottom));
+      border-top: 1px solid rgba(214, 196, 175, 0.8);
+      background: rgba(255, 250, 241, 0.96);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 -8px 24px rgba(69, 48, 30, 0.05);
+    }
+
+    .nav-button {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      min-height: 52px;
+      padding: 1px 2px;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: #736457;
+      font-size: 9.5px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .nav-button .icon {
+      width: 22px;
+      height: 22px;
+    }
+
+    .nav-button[aria-current="page"] {
+      color: var(--green-deep);
+    }
+
+    .nav-button[aria-current="page"]::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 16px;
+      height: 3px;
+      border-radius: 0 0 999px 999px;
+      background: var(--red);
+    }
+
+    .nav-button[aria-current="page"] .icon {
+      stroke-width: 2;
+    }
+
+    .nav-badge {
+      position: absolute;
+      top: 2px;
+      right: calc(50% - 23px);
+      display: grid;
+      place-items: center;
+      min-width: 15px;
+      height: 15px;
+      padding: 0 4px;
+      border: 2px solid var(--surface);
+      border-radius: 999px;
+      background: var(--red);
+      color: #fff;
+      font-size: 8px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    /* ============================================================
+       04. 开屏动效
+       ============================================================ */
+    .splash {
+      position: absolute;
+      inset: 0;
+      z-index: 120;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      padding: 26px;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(179, 138, 77, 0.16), transparent 28%),
+        radial-gradient(circle at 100% 90%, rgba(47, 76, 63, 0.1), transparent 34%),
+        #f4eadc;
+      transition: opacity 420ms ease, visibility 420ms ease;
+      text-align: center;
+    }
+
+    .splash::before {
+      content: "";
+      position: absolute;
+      top: -70px;
+      right: -90px;
+      width: 260px;
+      height: 260px;
+      border: 1px solid rgba(155, 61, 41, 0.14);
+      border-radius: 50%;
+    }
+
+    .splash::after {
+      content: "";
+      position: absolute;
+      bottom: -90px;
+      left: -80px;
+      width: 230px;
+      height: 230px;
+      border: 1px solid rgba(47, 76, 63, 0.14);
+      border-radius: 50%;
+    }
+
+    .splash.is-leaving {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .splash-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 310px;
+    }
+
+    .splash-kicker {
+      margin: 0 0 2px;
+      color: var(--red);
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      line-height: 1.6;
+    }
+
+    .hand-stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 208px;
+      height: 208px;
+      margin: 20px 0 12px;
+      border: 1px dashed rgba(155, 61, 41, 0.22);
+      border-radius: 50%;
+    }
+
+    .hand-stage::before,
+    .hand-stage::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(47, 76, 63, 0.16);
+    }
+
+    .hand-stage::before {
+      inset: 19px;
+    }
+
+    .hand-stage::after {
+      inset: 43px;
+      border-color: rgba(179, 138, 77, 0.24);
+    }
+
+    .hand-icon {
+      position: relative;
+      z-index: 1;
+      width: 92px;
+      height: 92px;
+      color: var(--green-deep);
+      stroke-dasharray: 250;
+      stroke-dashoffset: 250;
+      animation: draw-hand 1.6s 200ms cubic-bezier(0.3, 0.7, 0.3, 1) forwards, hand-float 3.6s 1.8s ease-in-out infinite;
+    }
+
+    .hand-dot {
+      position: absolute;
+      top: 36px;
+      right: 38px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 0 7px rgba(155, 61, 41, 0.1);
+      animation: dot-breathe 2.4s ease-in-out infinite;
+    }
+
+    @keyframes draw-hand {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes hand-float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+
+    @keyframes dot-breathe {
+      0%,
+      100% {
+        transform: scale(0.8);
+        opacity: 0.55;
+      }
+      50% {
+        transform: scale(1.15);
+        opacity: 1;
+      }
+    }
+
+    .splash-title {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--font-serif);
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      line-height: 1.4;
+    }
+
+    .splash-sub {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.75;
+    }
+
+    .splash-features {
+      display: flex;
+      gap: 7px;
+      margin-top: 16px;
+    }
+
+    .splash-features span {
+      padding: 4px 8px;
+      border: 1px solid rgba(47, 76, 63, 0.16);
+      border-radius: 999px;
+      background: rgba(255, 250, 241, 0.6);
+      color: var(--green);
+      font-size: 9.5px;
+      line-height: 1.5;
+    }
+
+    .splash-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      width: 100%;
+      margin-top: 23px;
+    }
+
+    .splash-enter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid var(--green-deep);
+      border-radius: 11px;
+      background: var(--green-deep);
+      color: #fffaf1;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: 0.04em;
+    }
+
+    .splash-skip {
+      min-height: 36px;
+      border: 0;
+      background: transparent;
+      color: var(--soft);
+      font-size: 10.5px;
+      line-height: 1.5;
+    }
+
+    .splash-progress {
+      width: 120px;
+      height: 2px;
+      margin-top: 5px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(47, 76, 63, 0.12);
+    }
+
+    .splash-progress span {
+      display: block;
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--red);
+      animation: splash-progress 5.2s linear forwards;
+    }
+
+    .splash-note {
+      margin: 10px 0 0;
+      color: var(--soft);
+      font-size: 9px;
+      line-height: 1.6;
+    }
+
+    @keyframes splash-progress {
+      to {
+        width: 100%;
+      }
+    }
+
+    /* ============================================================
+       05. 首页
+       ============================================================ */
+    .home-head {
+      margin: 3px 2px 14px;
+    }
+
+    .home-head .home-greeting {
+      margin: 0 0 4px;
+      color: var(--red);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      line-height: 1.5;
+    }
+
+    .home-head p.home-copy {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .meditation-card {
+      position: relative;
+      display: block;
+      width: 100%;
+      min-height: 206px;
+      overflow: hidden;
+      padding: 20px 19px;
+      border: 1px solid rgba(255, 250, 241, 0.12);
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 80% 6%, rgba(194, 168, 113, 0.24), transparent 26%),
+        linear-gradient(135deg, #3c5c4d 0%, #2d4a3e 60%, #233b31 100%);
+      color: #fffaf1;
+      text-align: left;
+      box-shadow: 0 16px 30px rgba(35, 59, 49, 0.18);
+    }
+
+    .meditation-art {
+      position: absolute;
+      right: -26px;
+      bottom: -19px;
+      width: 235px;
+      height: 165px;
+      color: rgba(244, 233, 213, 0.38);
+      pointer-events: none;
+    }
+
+    .meditation-copy {
+      position: relative;
+      z-index: 1;
+      display: block;
+      max-width: 230px;
+    }
+
+    .meditation-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      border: 1px solid rgba(255, 250, 241, 0.18);
+      border-radius: 999px;
+      background: rgba(255, 250, 241, 0.08);
+      color: #f4e4cc;
+      font-size: 9.5px;
+      line-height: 1.5;
+    }
+
+    .meditation-title {
+      display: block;
+      margin-top: 15px;
+      font-family: var(--font-serif);
+      font-size: 29px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      line-height: 1.25;
+    }
+
+    .meditation-hint {
+      display: block;
+      min-height: 21px;
+      margin-top: 5px;
+      color: #e9dece;
+      font-size: 11px;
+      line-height: 1.65;
+    }
+
+    .meditation-state {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 18px;
+      color: #f8edd9;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .meditation-state::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #d8ae70;
+    }
+
+    .meditation-ripple {
+      position: absolute;
+      right: 60px;
+      top: 55px;
+      width: 72px;
+      height: 72px;
+      border: 1px solid rgba(255, 250, 241, 0.25);
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .meditation-card.is-active .meditation-ripple {
+      animation: breathing-ring 4s ease-in-out infinite;
+    }
+
+    .meditation-card.is-active .meditation-state::before {
+      background: #fff3db;
+      box-shadow: 0 0 0 4px rgba(255, 243, 219, 0.13);
+    }
+
+    @keyframes breathing-ring {
+      0%,
+      100% {
+        transform: scale(0.7);
+        opacity: 0;
+      }
+      35% {
+        transform: scale(1);
+        opacity: 0.75;
+      }
+      70% {
+        transform: scale(1.18);
+        opacity: 0;
+      }
+    }
+
+    .home-split {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 11px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 250, 241, 0.82);
+      overflow: hidden;
+    }
+
+    .split-action {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      min-height: 112px;
+      padding: 14px;
+      border: 0;
+      background: transparent;
+      text-align: left;
+    }
+
+    .split-action + .split-action {
+      border-left: 1px solid var(--line);
+    }
+
+    .split-icon {
+      display: grid;
+      place-items: center;
+      width: 37px;
+      height: 37px;
+      margin-bottom: 1px;
+      border: 1px solid #dfd0bd;
+      border-radius: 50%;
+      background: #fbf5ea;
+      color: var(--green);
+    }
+
+    .split-icon .icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .split-action:nth-child(2) .split-icon {
+      color: var(--red);
+    }
+
+    .split-title {
+      color: var(--ink);
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      line-height: 1.35;
+    }
+
+    .split-desc {
+      color: var(--soft);
+      font-size: 9.5px;
+      line-height: 1.55;
+    }
+
+    .home-rail {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 0 1px 4px;
+      scrollbar-width: none;
+      scroll-snap-type: x proximity;
+    }
+
+    .home-rail::-webkit-scrollbar {
+      display: none;
+    }
+
+    .mini-course {
+      display: flex;
+      flex: 0 0 174px;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      text-align: left;
+      scroll-snap-align: start;
+      box-shadow: 0 5px 16px rgba(69, 48, 30, 0.045);
+    }
+
+    .mini-course-cover {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: #e9dfd2;
+    }
+
+    .mini-course-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .mini-course-body {
+      display: block;
+      padding: 9px 10px 10px;
+    }
+
+    .mini-course-tag {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--red);
+      font-size: 8.5px;
+      font-weight: 650;
+      line-height: 1.5;
+    }
+
+    .mini-course-title {
+      display: -webkit-box;
+      overflow: hidden;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 650;
+      line-height: 1.5;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+    }
+
+    .continue-card {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 11px;
+      margin-top: 2px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--surface);
+      text-align: left;
+    }
+
+    .continue-thumb {
+      flex: 0 0 auto;
+      width: 59px;
+      height: 59px;
+      overflow: hidden;
+      border-radius: 10px;
+      background: #e8ded1;
+    }
+
+    .continue-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .continue-copy {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .continue-kicker {
+      color: var(--soft);
+      font-size: 8.5px;
+      line-height: 1.5;
+    }
+
+    .continue-title {
+      display: block;
+      overflow: hidden;
+      margin-top: 1px;
+      color: var(--ink);
+      font-size: 12.5px;
+      font-weight: 650;
+      line-height: 1.5;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .continue-progress {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 5px;
+    }
+
+    .continue-track {
+      flex: 1 1 auto;
+      height: 3px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e9e0d4;
+    }
+
+    .continue-track span {
+      display: block;
+      width: 33%;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--red);
+    }
+
+    .continue-progress small {
+      flex: 0 0 auto;
+      color: var(--soft);
+      font-size: 8px;
+      line-height: 1.5;
+    }
+
+    .continue-arrow {
+      flex: 0 0 auto;
+      color: var(--green);
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    /* ============================================================
+       06. 学艺页
+       ============================================================ */
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .search-box .icon {
+      position: absolute;
+      left: 12px;
+      width: 18px;
+      height: 18px;
+      color: var(--soft);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      min-height: 44px;
+      padding: 0 13px 0 37px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255, 250, 241, 0.82);
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .search-input::placeholder {
+      color: #756758;
+      opacity: 1;
+    }
+
+    .search-input:focus {
+      border-color: #9bb1a3;
+      outline: 3px solid rgba(47, 76, 63, 0.14);
+      outline-offset: 0;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .category-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 4px;
+      min-height: 76px;
+      padding: 8px 3px 6px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      background: rgba(255, 250, 241, 0.55);
+      color: var(--ink);
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .category-icon {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      background: #f1e8db;
+      color: var(--green);
+    }
+
+    .category-button:nth-child(3n + 2) .category-icon {
+      background: #f4e8df;
+      color: var(--red);
+    }
+
+    .category-button:nth-child(3n) .category-icon {
+      background: #e8eee8;
+      color: #426454;
+    }
+
+    .category-icon .icon {
+      width: 21px;
+      height: 21px;
+    }
+
+    .learn-banner {
+      position: relative;
+      display: block;
+      width: 100%;
+      min-height: 153px;
+      overflow: hidden;
+      margin-top: 16px;
+      padding: 0;
+      border: 0;
+      border-radius: 16px;
+      background: #e5d8c7;
+      color: #fffaf1;
+      text-align: left;
+    }
+
+    .learn-banner img {
+      width: 100%;
+      height: 153px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .learn-banner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(34, 34, 28, 0.78), rgba(34, 34, 28, 0.12));
+    }
+
+    .learn-banner-copy {
+      position: absolute;
+      left: 17px;
+      bottom: 16px;
+      z-index: 1;
+      display: block;
+      max-width: 240px;
+    }
+
+    .learn-banner-kicker {
+      display: block;
+      color: #f1ddbe;
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      line-height: 1.5;
+    }
+
+    .learn-banner-title {
+      display: block;
+      margin-top: 3px;
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      line-height: 1.4;
+    }
+
+    .learn-banner-note {
+      display: block;
+      margin-top: 2px;
+      color: rgba(255, 250, 241, 0.8);
+      font-size: 9.5px;
+      line-height: 1.5;
+    }
+
+    .object-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .object-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      min-height: 77px;
+      padding: 8px 2px 7px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--ink);
+      font-size: 9.5px;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .object-icon {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+    }
+
+    .object-icon .icon {
+      width: 21px;
+      height: 21px;
+    }
+
+    .object-button:nth-child(odd) .object-icon {
+      background: #f3e7d7;
+      color: var(--red);
+    }
+
+    .object-button:nth-child(even) .object-icon {
+      border: 1px solid #b7c8bb;
+      background: transparent;
+      color: var(--green);
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .course-card {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface);
+      text-align: left;
+      box-shadow: 0 5px 15px rgba(69, 48, 30, 0.04);
+    }
+
+    .course-cover {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: #e7dccf;
+    }
+
+    .course-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .course-body {
+      display: block;
+      padding: 8px 9px 9px;
+    }
+
+    .course-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-bottom: 3px;
+    }
+
+    .mini-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 17px;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: #f4e9da;
+      color: #785b32;
+      font-size: 8px;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .mini-tag.is-green {
+      background: var(--green-soft);
+      color: var(--green-deep);
+    }
+
+    .course-card-title {
+      display: -webkit-box;
+      overflow: hidden;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 650;
+      line-height: 1.5;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+    }
+
+    .course-card-meta {
+      display: block;
+      margin-top: 3px;
+      color: var(--soft);
+      font-size: 8px;
+      line-height: 1.45;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 26px 16px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 12px;
+      background: rgba(255, 250, 241, 0.5);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .learn-continue {
+      margin-top: 10px;
+    }
+
+    /* ============================================================
+       07. 商城页
+       ============================================================ */
+    .shop-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .cart-button {
+      position: relative;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      width: var(--tap);
+      height: var(--tap);
+      margin-top: 1px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--surface);
+      color: var(--green-deep);
+    }
+
+    .cart-button .icon {
+      width: 21px;
+      height: 21px;
+    }
+
+    .cart-button .nav-badge {
+      top: -5px;
+      right: -5px;
+    }
+
+    .shop-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .shop-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface);
+    }
+
+    .product-main {
+      display: flex;
+      align-items: center;
+      flex: 1 1 auto;
+      gap: 10px;
+      min-width: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      text-align: left;
+    }
+
+    .product-thumb {
+      flex: 0 0 auto;
+      width: 72px;
+      height: 72px;
+      overflow: hidden;
+      border-radius: 9px;
+      background: #e6dbce;
+    }
+
+    .product-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-copy {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .product-craft {
+      display: block;
+      color: var(--red);
+      font-size: 8.5px;
+      font-weight: 650;
+      line-height: 1.5;
+    }
+
+    .product-title {
+      display: -webkit-box;
+      overflow: hidden;
+      margin-top: 1px;
+      color: var(--ink);
+      font-size: 12.5px;
+      font-weight: 650;
+      line-height: 1.5;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+    }
+
+    .product-price {
+      display: block;
+      margin-top: 3px;
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 650;
+      line-height: 1.5;
+    }
+
+    .add-cart-button {
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--green-deep);
+      border-radius: 50%;
+      background: var(--green-deep);
+      color: #fffaf1;
+    }
+
+    .add-cart-button .icon {
+      width: 17px;
+      height: 17px;
+    }
+
+    .shop-note {
+      margin: 13px 3px 0;
+      color: var(--soft);
+      font-size: 9.5px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    /* ============================================================
+       08. 我的页
+       ============================================================ */
+    .profile-hero {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px;
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 90% 10%, rgba(226, 198, 156, 0.22), transparent 30%),
+        linear-gradient(135deg, #3c5a4b, #283f34);
+      color: #fffaf1;
+    }
+
+    .profile-avatar {
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      width: 57px;
+      height: 57px;
+      border: 1px solid rgba(255, 250, 241, 0.28);
+      border-radius: 50%;
+      background: #f4e8d6;
+      color: var(--red);
+      font-family: var(--font-serif);
+      font-size: 25px;
+      font-weight: 700;
+    }
+
+    .profile-copy {
+      min-width: 0;
+    }
+
+    .profile-copy h2 {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      line-height: 1.4;
+    }
+
+    .profile-copy p {
+      margin: 2px 0 0;
+      color: #e8dece;
+      font-size: 10px;
+      line-height: 1.55;
+    }
+
+    .profile-demo {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 2px 6px;
+      border: 1px solid rgba(255, 250, 241, 0.2);
+      border-radius: 4px;
+      color: #eadbc4;
+      font-size: 8px;
+      line-height: 1.5;
+    }
+
+    .profile-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 12px;
+      padding: 12px 0;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: rgba(255, 250, 241, 0.68);
+    }
+
+    .profile-stat {
+      text-align: center;
+    }
+
+    .profile-stat + .profile-stat {
+      border-left: 1px solid var(--line);
+    }
+
+    .profile-stat strong {
+      display: block;
+      color: var(--green-deep);
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .profile-stat span {
+      display: block;
+      margin-top: 1px;
+      color: var(--soft);
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+    .profile-section-title {
+      margin: 19px 2px 8px;
+      color: var(--ink);
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .recent-card {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface);
+      text-align: left;
+    }
+
+    .recent-thumb {
+      flex: 0 0 auto;
+      width: 54px;
+      height: 54px;
+      overflow: hidden;
+      border-radius: 9px;
+      background: #e7dccf;
+    }
+
+    .recent-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .recent-copy {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .recent-copy small {
+      display: block;
+      color: var(--soft);
+      font-size: 8.5px;
+      line-height: 1.5;
+    }
+
+    .recent-copy strong {
+      display: block;
+      overflow: hidden;
+      margin-top: 1px;
+      color: var(--ink);
+      font-size: 12.5px;
+      font-weight: 650;
+      line-height: 1.5;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .recent-arrow {
+      flex: 0 0 auto;
+      color: var(--green);
+      font-size: 19px;
+      line-height: 1;
+    }
+
+    .menu-list {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface);
+    }
+
+    .menu-row {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 12px;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      font-size: 12px;
+      line-height: 1.5;
+      text-align: left;
+      text-decoration: none;
+    }
+
+    .menu-row + .menu-row {
+      border-top: 1px solid var(--line);
+    }
+
+    .menu-icon {
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: #f3eadc;
+      color: var(--green);
+    }
+
+    .menu-icon .icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .menu-label {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .menu-meta {
+      color: var(--soft);
+      font-size: 9.5px;
+      white-space: nowrap;
+    }
+
+    .menu-chevron {
+      color: #7f7264;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .profile-links {
+      margin-top: 12px;
+      padding: 2px 2px 0;
+    }
+
+    .profile-link {
+      display: block;
+      padding: 8px 0;
+      color: var(--green);
+      font-size: 10.5px;
+      font-weight: 650;
+      line-height: 1.6;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .profile-link + .profile-link {
+      border-top: 1px solid rgba(214, 196, 175, 0.55);
+    }
+
+    .preview-note {
+      margin: 12px 4px 1px;
+      color: var(--soft);
+      font-size: 8.5px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    /* ============================================================
+       09. 弹层与轻提示
+       ============================================================ */
+    .sheet-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 90;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .sheet-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(30, 24, 19, 0.5);
+      opacity: 0;
+      transition: opacity 220ms ease;
+      -webkit-backdrop-filter: blur(3px);
+      backdrop-filter: blur(3px);
+    }
+
+    .sheet-panel {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-height: 91%;
+      overflow: hidden;
+      border-radius: 21px 21px 0 0;
+      background: var(--surface-strong);
+      opacity: 0;
+      transform: translateY(22px);
+      transition: transform 260ms cubic-bezier(0.2, 0.75, 0.25, 1), opacity 200ms ease;
+      box-shadow: 0 -20px 50px rgba(49, 32, 20, 0.22);
+    }
+
+    .sheet-layer.is-open .sheet-backdrop {
+      opacity: 1;
+    }
+
+    .sheet-layer.is-open .sheet-panel {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .sheet-grabber {
+      flex: 0 0 auto;
+      width: 34px;
+      height: 4px;
+      margin: 8px auto 2px;
+      border-radius: 999px;
+      background: #d9cbbb;
+    }
+
+    .sheet-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 5;
+      display: grid;
+      place-items: center;
+      width: var(--tap);
+      height: var(--tap);
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: rgba(255, 250, 241, 0.94);
+      color: var(--ink);
+      box-shadow: 0 5px 15px rgba(45, 29, 18, 0.12);
+    }
+
+    .sheet-close .icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .sheet-scroll {
+      min-height: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .sheet-scroll::-webkit-scrollbar {
+      width: 0;
+    }
+
+    .sheet-content {
+      padding-bottom: calc(23px + env(safe-area-inset-bottom));
+    }
+
+    .sheet-cover {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: #e6dbce;
+    }
+
+    .sheet-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .sheet-body {
+      padding: 17px 18px 0;
+    }
+
+    .sheet-title {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--font-serif);
+      font-size: 23px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      line-height: 1.45;
+    }
+
+    .sheet-summary {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.8;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 7px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--paper);
+      color: var(--muted);
+      font-size: 9.5px;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .tag.is-red {
+      border-color: #e7c7bd;
+      background: var(--red-soft);
+      color: var(--red-deep);
+    }
+
+    .tag.is-green {
+      border-color: #cadbd0;
+      background: var(--green-soft);
+      color: var(--green-deep);
+    }
+
+    .sheet-section {
+      margin-top: 15px;
+      padding-top: 13px;
+      border-top: 1px solid var(--line);
+    }
+
+    .sheet-section h3 {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin: 0 0 7px;
+      color: var(--ink);
+      font-size: 13.5px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .sheet-section-index {
+      color: var(--red);
+      font-family: var(--font-serif);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .sheet-section p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .material-list {
+      display: grid;
+      gap: 5px;
+      margin: 0;
+      padding-left: 1.35em;
+      color: var(--muted-strong);
+      font-size: 11.5px;
+      line-height: 1.7;
+    }
+
+    .material-list li::marker {
+      color: var(--red);
+      font-weight: 700;
+    }
+
+    .video-placeholder {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+      padding: 11px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 10px;
+      background: var(--paper);
+    }
+
+    .video-play {
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      width: 37px;
+      height: 37px;
+      border-radius: 50%;
+      background: var(--red);
+      color: #fff8ec;
+    }
+
+    .video-play .icon {
+      width: 15px;
+      height: 15px;
+      margin-left: 2px;
+    }
+
+    .video-copy {
+      min-width: 0;
+    }
+
+    .video-copy strong {
+      display: block;
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 650;
+      line-height: 1.5;
+    }
+
+    .video-copy span {
+      display: block;
+      margin-top: 1px;
+      color: var(--soft);
+      font-size: 9px;
+      line-height: 1.55;
+    }
+
+    .sheet-actions {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .sheet-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      min-height: 47px;
+      padding: 0 10px;
+      border: 1px solid var(--line-strong);
+      border-radius: 10px;
+      background: var(--paper);
+      color: var(--green-deep);
+      font-size: 12px;
+      font-weight: 650;
+      line-height: 1.4;
+    }
+
+    .sheet-button.primary {
+      border-color: var(--green-deep);
+      background: var(--green-deep);
+      color: #fffaf1;
+    }
+
+    .sheet-button[aria-pressed="true"] {
+      border-color: #e3b9ac;
+      background: var(--red-soft);
+      color: var(--red-deep);
+    }
+
+    .sheet-button .icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .placeholder {
+      padding: 46px 23px 32px;
+      text-align: center;
+    }
+
+    .placeholder-icon {
+      display: grid;
+      place-items: center;
+      width: 62px;
+      height: 62px;
+      margin: 0 auto 14px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--paper);
+      color: var(--green);
+    }
+
+    .placeholder-icon .icon {
+      width: 27px;
+      height: 27px;
+    }
+
+    .placeholder h2 {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--font-serif);
+      font-size: 21px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .placeholder p {
+      max-width: 27em;
+      margin: 7px auto 0;
+      color: var(--muted);
+      font-size: 11.5px;
+      line-height: 1.75;
+    }
+
+    .placeholder .sheet-button {
+      width: 100%;
+      margin-top: 17px;
+    }
+
+    .cart-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .cart-heading h2 {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .cart-count-label {
+      padding: 3px 6px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      color: var(--soft);
+      font-size: 9px;
+      line-height: 1.5;
+      white-space: nowrap;
+    }
+
+    .cart-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .cart-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper);
+    }
+
+    .cart-thumb {
+      flex: 0 0 auto;
+      width: 48px;
+      height: 48px;
+      overflow: hidden;
+      border-radius: 7px;
+      background: #e6dbce;
+    }
+
+    .cart-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cart-copy {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .cart-copy strong {
+      display: block;
+      overflow: hidden;
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 650;
+      line-height: 1.5;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .cart-copy span {
+      display: block;
+      margin-top: 1px;
+      color: var(--gold);
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 1px;
+      flex: 0 0 auto;
+    }
+
+    .qty-button {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--surface);
+      color: var(--green-deep);
+    }
+
+    .qty-button .icon {
+      width: 13px;
+      height: 13px;
+    }
+
+    .qty-number {
+      min-width: 21px;
+      color: var(--ink);
+      font-size: 11px;
+      line-height: 1;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cart-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 13px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    .cart-summary span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .cart-summary strong {
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .cart-submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 48px;
+      margin-top: 11px;
+      border: 1px solid var(--green-deep);
+      border-radius: 10px;
+      background: var(--green-deep);
+      color: #fffaf1;
+      font-size: 12.5px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .cart-note {
+      margin: 9px 0 0;
+      color: var(--soft);
+      font-size: 9px;
+      line-height: 1.65;
+      text-align: center;
+    }
+
+    .list-sheet {
+      padding: 15px 18px 0;
+    }
+
+    .list-sheet-head {
+      padding-right: 38px;
+    }
+
+    .list-sheet-head h2 {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .list-sheet-head p {
+      margin: 5px 0 14px;
+      color: var(--muted);
+      font-size: 10.5px;
+      line-height: 1.7;
+    }
+
+    .sheet-course-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .sheet-course-row {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 10px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper);
+      text-align: left;
+    }
+
+    .sheet-course-row img {
+      flex: 0 0 auto;
+      width: 51px;
+      height: 51px;
+      border-radius: 7px;
+      object-fit: cover;
+    }
+
+    .sheet-course-copy {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .sheet-course-copy strong {
+      display: block;
+      color: var(--ink);
+      font-size: 11.5px;
+      font-weight: 650;
+      line-height: 1.5;
+    }
+
+    .sheet-course-copy span {
+      display: block;
+      margin-top: 1px;
+      color: var(--soft);
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+    .empty-sheet {
+      margin: 8px 0 16px;
+      padding: 23px 15px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 10px;
+      color: var(--soft);
+      font-size: 11px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .settings-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 51px;
+      padding: 9px 11px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper);
+    }
+
+    .setting-copy strong {
+      display: block;
+      color: var(--ink);
+      font-size: 11.5px;
+      font-weight: 650;
+      line-height: 1.5;
+    }
+
+    .setting-copy span {
+      display: block;
+      margin-top: 1px;
+      color: var(--soft);
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+    .switch-button {
+      position: relative;
+      flex: 0 0 auto;
+      width: 45px;
+      height: 27px;
+      padding: 0;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      background: #e7ddcf;
+      transition: background-color 160ms ease, border-color 160ms ease;
+    }
+
+    .switch-button::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 19px;
+      height: 19px;
+      border-radius: 50%;
+      background: #fffdf8;
+      box-shadow: 0 2px 5px rgba(63, 43, 27, 0.16);
+      transition: transform 160ms ease;
+    }
+
+    .switch-button[aria-pressed="true"] {
+      border-color: var(--green-deep);
+      background: var(--green);
+    }
+
+    .switch-button[aria-pressed="true"]::after {
+      transform: translateX(18px);
+    }
+
+    .settings-credit {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      color: var(--soft);
+      font-size: 9px;
+      line-height: 1.7;
+    }
+
+    .settings-link {
+      display: inline-block;
+      margin-top: 4px;
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 650;
+      line-height: 1.6;
+    }
+
+    .toast {
+      position: absolute;
+      right: 18px;
+      bottom: calc(75px + env(safe-area-inset-bottom));
+      left: 18px;
+      z-index: 130;
+      max-width: 360px;
+      margin: 0 auto;
+      padding: 10px 14px;
+      border-radius: 9px;
+      background: #29231d;
+      color: #fffaf1;
+      font-size: 11px;
+      line-height: 1.6;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 180ms ease, transform 180ms ease;
+      box-shadow: 0 9px 24px rgba(44, 31, 21, 0.22);
+    }
+
+    .toast.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================================
+       10. 大字模式与响应式
+       ============================================================ */
+    .app-shell.is-large-text .brand-copy h1 {
+      font-size: 25px;
+    }
+
+    .app-shell.is-large-text .brand-copy p {
+      font-size: 11px;
+    }
+
+    .app-shell.is-large-text .page-head h2,
+    .app-shell.is-large-text .home-head h2 {
+      font-size: 28px;
+    }
+
+    .app-shell.is-large-text .page-head p:last-child,
+    .app-shell.is-large-text .home-head p.home-copy,
+    .app-shell.is-large-text .section-desc {
+      font-size: 14px;
+    }
+
+    .app-shell.is-large-text .section-head h3 {
+      font-size: 19px;
+    }
+
+    .app-shell.is-large-text .section-head-note,
+    .app-shell.is-large-text .text-link {
+      font-size: 12px;
+    }
+
+    .app-shell.is-large-text .meditation-title {
+      font-size: 32px;
+    }
+
+    .app-shell.is-large-text .meditation-hint {
+      font-size: 13px;
+    }
+
+    .app-shell.is-large-text .split-title {
+      font-size: 20px;
+    }
+
+    .app-shell.is-large-text .split-desc {
+      font-size: 11px;
+    }
+
+    .app-shell.is-large-text .mini-course-title {
+      font-size: 14px;
+    }
+
+    .app-shell.is-large-text .mini-course-tag,
+    .app-shell.is-large-text .continue-kicker {
+      font-size: 10px;
+    }
+
+    .app-shell.is-large-text .continue-title,
+    .app-shell.is-large-text .course-card-title,
+    .app-shell.is-large-text .product-title,
+    .app-shell.is-large-text .recent-copy strong,
+    .app-shell.is-large-text .sheet-course-copy strong {
+      font-size: 14px;
+    }
+
+    .app-shell.is-large-text .course-card-meta,
+    .app-shell.is-large-text .product-craft,
+    .app-shell.is-large-text .product-price,
+    .app-shell.is-large-text .recent-copy small,
+    .app-shell.is-large-text .sheet-course-copy span {
+      font-size: 11px;
+    }
+
+    .app-shell.is-large-text .category-button,
+    .app-shell.is-large-text .object-button,
+    .app-shell.is-large-text .nav-button {
+      font-size: 11px;
+    }
+
+    .app-shell.is-large-text .menu-row {
+      font-size: 14px;
+      min-height: 54px;
+    }
+
+    .app-shell.is-large-text .menu-meta {
+      font-size: 11px;
+    }
+
+    .app-shell.is-large-text .sheet-summary,
+    .app-shell.is-large-text .sheet-section p {
+      font-size: 14px;
+    }
+
+    .app-shell.is-large-text .material-list {
+      font-size: 13px;
+    }
+
+    .app-shell.is-large-text .search-input {
+      font-size: 15px;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .mini-course:hover,
+      .course-card:hover {
+        border-color: var(--line-strong);
+        box-shadow: 0 9px 20px rgba(69, 48, 30, 0.08);
+      }
+
+      .category-button:hover,
+      .object-button:hover {
+        border-color: var(--line-strong);
+        background: var(--surface);
+      }
+
+      .shop-item:hover,
+      .continue-card:hover,
+      .recent-card:hover,
+      .menu-row:hover {
+        border-color: var(--line-strong);
+        background: #fffaf2;
+      }
+
+      .cart-button:hover,
+      .add-cart-button:hover,
+      .text-size-button:hover {
+        background: var(--green-soft);
+      }
+
+      .splash-enter:hover {
+        background: #1b3026;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .app-header {
+        padding-right: 13px;
+        padding-left: 13px;
+      }
+
+      .app-main {
+        padding-right: 13px;
+        padding-left: 13px;
+      }
+
+      .brand-copy h1 {
+        font-size: 20px;
+      }
+
+      .brand-copy p {
+        font-size: 8.5px;
+      }
+
+      .brand-seal {
+        width: 35px;
+        height: 35px;
+        font-size: 19px;
+      }
+
+      .meditation-card {
+        min-height: 196px;
+        padding: 18px 16px;
+      }
+
+      .meditation-title {
+        font-size: 27px;
+      }
+
+      .meditation-art {
+        right: -50px;
+        width: 215px;
+      }
+
+      .split-action {
+        min-height: 108px;
+        padding: 12px;
+      }
+
+      .split-title {
+        font-size: 17px;
+      }
+
+      .category-grid {
+        gap: 4px;
+      }
+
+      .category-button {
+        font-size: 9px;
+      }
+
+      .category-icon {
+        width: 35px;
+        height: 35px;
+      }
+
+      .object-button {
+        font-size: 9px;
+      }
+
+      .object-icon {
+        width: 35px;
+        height: 35px;
+      }
+
+      .course-card-title {
+        font-size: 11.5px;
+      }
+
+      .product-thumb {
+        width: 63px;
+        height: 63px;
+      }
+
+      .profile-hero {
+        padding: 15px;
+      }
+
+      .profile-avatar {
+        width: 51px;
+        height: 51px;
+      }
+
+      .profile-copy h2 {
+        font-size: 19px;
+      }
+
+      .bottom-nav {
+        padding-right: 5px;
+        padding-left: 5px;
+      }
+
+      .nav-button {
+        font-size: 9px;
+      }
+
+      .splash {
+        padding: 18px;
+      }
+
+      .hand-stage {
+        width: 184px;
+        height: 184px;
+        margin-top: 14px;
+      }
+
+      .splash-title {
+        font-size: 27px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      body {
+        align-items: center;
+        padding: 24px;
+      }
+
+      .app-shell {
+        height: min(900px, calc(100vh - 48px));
+        height: min(900px, calc(100dvh - 48px));
+        border: 1px solid rgba(53, 38, 24, 0.16);
+        border-radius: 30px;
+        box-shadow:
+          0 34px 80px rgba(54, 38, 24, 0.2),
+          0 1px 0 rgba(255, 253, 248, 0.9) inset;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-shell" id="appShell">
+    <!-- ==================== 手语概念开屏 ==================== -->
+    <div class="splash" id="splash" role="dialog" aria-modal="true" aria-labelledby="splashTitle">
+      <div class="splash-inner">
+        <p class="splash-kicker">手语开屏 · 概念演示</p>
+        <div class="hand-stage" aria-hidden="true">
+          <svg class="hand-icon" viewBox="0 0 24 24" fill="none" focusable="false">
+            <path d="M7 11V6a1.5 1.5 0 0 1 3 0v5M10 11V4.5a1.5 1.5 0 0 1 3 0V11M13 11V6a1.5 1.5 0 0 1 3 0v5M16 11V8a1.5 1.5 0 0 1 3 0v6.5c0 4.1-3.4 7.5-7.5 7.5H10c-2.2 0-4.2-1.2-5.3-3.1L2 13.5c-.7-1.3-.2-2.9 1.1-3.5.9-.4 2-.2 2.7.5L7 12" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M13.5 20.5c2.9-.6 5-3.1 5.3-6.1" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>
+          </svg>
+          <span class="hand-dot"></span>
+        </div>
+        <h2 class="splash-title" id="splashTitle">让手作，被看见</h2>
+        <p class="splash-sub">听障友好的非遗手作学习空间<br>用手语、图示与轻震，陪你完成第一件作品。</p>
+        <div class="splash-features" aria-label="核心支持方式">
+          <span>手语视频</span>
+          <span>视觉图示</span>
+          <span>轻震反馈</span>
+        </div>
+        <div class="splash-actions">
+          <button class="splash-enter" id="splashEnter" type="button">进入共创微光</button>
+          <button class="splash-skip" id="splashSkip" type="button">跳过开屏</button>
+        </div>
+        <div class="splash-progress" aria-hidden="true"><span></span></div>
+        <p class="splash-note">概念动效 · 正式版将替换为真实手语视频</p>
+      </div>
+    </div>
+
+    <!-- ==================== App 顶栏 ==================== -->
+    <header class="app-header" id="appHeader">
+      <div class="brand-seal" aria-hidden="true">光</div>
+      <div class="brand-copy">
+        <h1>共创微光</h1>
+        <p>听障友好 · 非遗手作学习</p>
+      </div>
+      <div class="header-tools">
+        <button class="text-size-button" id="textSizeButton" type="button" aria-pressed="false" aria-label="开启大字模式">Aa</button>
+      </div>
+    </header>
+
+    <!-- ==================== 页面内容 ==================== -->
+    <main class="app-main" id="appMain">
+      <!-- 首页 -->
+      <section class="tab-panel" id="tab-home" aria-labelledby="homeTitle">
+        <div class="home-head">
+          <p class="home-greeting">你好，今天也来做点手工吧</p>
+          <h2 id="homeTitle" tabindex="-1">让手作，被看见。</h2>
+          <p class="home-copy">看图、跟做、慢慢完成；每一种身体条件，都能找到合适的方式。</p>
+        </div>
+
+        <button class="meditation-card" id="meditationButton" type="button" aria-pressed="false" aria-describedby="meditationHint">
+          <span class="meditation-art" aria-hidden="true">
+            <svg viewBox="0 0 320 220" fill="none" focusable="false">
+              <circle cx="244" cy="55" r="25" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M30 174c35-38 62-55 91-55 33 0 53 22 82 22 30 0 55-16 87-46" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              <path d="M35 196c33-26 62-38 90-38 35 0 58 15 87 15 28 0 49-10 75-26" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity=".7"/>
+              <path d="M106 167c7-28 21-48 42-61M172 175c-3-24-12-43-28-57M220 171c6-20 17-37 32-48" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity=".55"/>
+            </svg>
+          </span>
+          <span class="meditation-copy">
+            <span class="meditation-eyebrow">轻触 · 音效与轻震</span>
+            <span class="meditation-title">静心冥想</span>
+            <span class="meditation-hint" id="meditationHint" aria-live="polite">给自己三分钟，慢慢进入手作状态</span>
+            <span class="meditation-state" id="meditationState">轻触开始</span>
+          </span>
+          <span class="meditation-ripple" aria-hidden="true"></span>
+        </button>
+
+        <div class="home-split" role="group" aria-label="主要入口">
+          <button class="split-action" type="button" data-go="learn">
+            <span class="split-icon" aria-hidden="true">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" focusable="false">
+                <path d="M5 4.5h8.5A3.5 3.5 0 0 1 17 8v11.5H8.5A3.5 3.5 0 0 1 5 16V4.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                <path d="M5 16a3 3 0 0 1 3-3h9M9 8h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="split-title">学艺</span>
+            <span class="split-desc">跟着图示与手语做手作</span>
+          </button>
+          <button class="split-action" type="button" data-go="shop">
+            <span class="split-icon" aria-hidden="true">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" focusable="false">
+                <path d="M4 9h16l-1.3 9.5a2 2 0 0 1-2 1.7H7.3a2 2 0 0 1-2-1.7L4 9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                <path d="M8 9a4 4 0 0 1 8 0M9 13v2.5M15 13v2.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="split-title">商城</span>
+            <span class="split-desc">材料包与工具，一站式准备</span>
+          </button>
+        </div>
+
+        <div class="section-head">
+          <h3>非遗精选</h3>
+          <button class="text-link" type="button" data-go="learn">全部 6 套</button>
+        </div>
+        <div class="home-rail" id="homeRail"></div>
+
+        <div class="section-head">
+          <h3>继续探索</h3>
+          <span class="section-head-note">上次看到这里</span>
+        </div>
+        <button class="continue-card" type="button" data-course-id="paper-ball">
+          <span class="continue-thumb"><img src="assets/item1.jpg" alt="非遗纸艺绣球挂件"></span>
+          <span class="continue-copy">
+            <span class="continue-kicker">学艺进度 · 第 1 步 / 共 3 步</span>
+            <span class="continue-title">非遗纸艺绣球挂件</span>
+            <span class="continue-progress">
+              <span class="continue-track" aria-hidden="true"><span></span></span>
+              <small>33%</small>
+            </span>
+          </span>
+          <span class="continue-arrow" aria-hidden="true">›</span>
+        </button>
+      </section>
+
+      <!-- 学艺 -->
+      <section class="tab-panel" id="tab-learn" aria-labelledby="learnTitle" hidden>
+        <div class="page-head">
+          <p class="page-kicker">学艺 · LEARN</p>
+          <h2 id="learnTitle" tabindex="-1">跟做一门非遗手作</h2>
+          <p>先看图示，再跟着分步视频完成；所有课程按视觉优先设计。</p>
+        </div>
+
+        <div class="search-box">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+            <circle cx="10.8" cy="10.8" r="6.3" stroke="currentColor" stroke-width="1.7"/>
+            <path d="m15.5 15.5 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+          <label class="sr-only" for="courseSearch">搜索非遗工艺或材料包</label>
+          <input class="search-input" id="courseSearch" type="search" placeholder="搜索非遗工艺 / 材料包" autocomplete="off">
+        </div>
+
+        <div class="section-head">
+          <h3>工艺分类</h3>
+          <span class="section-head-note">8 个方向</span>
+        </div>
+        <div class="category-grid" id="craftCategories"></div>
+
+        <button class="learn-banner" type="button" data-course-id="coaster-prototype" aria-label="进入掐丝珐琅手作课堂：掐丝珐琅与螺钿木质杯垫">
+          <img src="assets/item5.jpg" alt="" aria-hidden="true">
+          <span class="learn-banner-copy">
+            <span class="learn-banner-kicker">手作课堂 · 听障友好</span>
+            <span class="learn-banner-title">掐丝珐琅手作课堂</span>
+            <span class="learn-banner-note">以指尖技艺，传承非遗温度</span>
+          </span>
+        </button>
+
+        <div class="section-head">
+          <h3>想做点什么？</h3>
+          <span class="section-head-note">教程待上传</span>
+        </div>
+        <div class="object-grid" id="objectCategories"></div>
+
+        <div class="section-head">
+          <h3>非遗工艺</h3>
+          <span class="section-head-note" id="courseCount">6 套</span>
+        </div>
+        <div class="course-grid" id="courseGrid" aria-live="polite"></div>
+
+        <div class="learn-continue">
+          <button class="continue-card" type="button" data-course-id="paper-ball">
+            <span class="continue-thumb"><img src="assets/item1.jpg" alt="非遗纸艺绣球挂件"></span>
+            <span class="continue-copy">
+              <span class="continue-kicker">继续探索 · 33%</span>
+              <span class="continue-title">非遗纸艺绣球挂件</span>
+              <span class="continue-progress">
+                <span class="continue-track" aria-hidden="true"><span></span></span>
+                <small>第 1 / 3 步</small>
+              </span>
+            </span>
+            <span class="continue-arrow" aria-hidden="true">›</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 商城 -->
+      <section class="tab-panel" id="tab-shop" aria-labelledby="shopTitle" hidden>
+        <div class="page-head shop-head">
+          <div>
+            <p class="page-kicker">商城 · SHOP</p>
+            <h2 id="shopTitle" tabindex="-1">材料包商城</h2>
+            <p>内测定价中。先看看材料包，正式版将开放预订与配送。</p>
+          </div>
+          <button class="cart-button" id="cartButton" type="button" aria-label="打开购物车，当前 0 件">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+              <path d="M4 9h16l-1.3 9.5a2 2 0 0 1-2 1.7H7.3a2 2 0 0 1-2-1.7L4 9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+              <path d="M8 9a4 4 0 0 1 8 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+            <span class="nav-badge" id="cartBadge" aria-hidden="true" hidden>0</span>
+          </button>
+        </div>
+        <div class="shop-list" id="shopList"></div>
+        <p class="shop-note">所有价格均为待标价 · 点击加号可先加入采购意向车</p>
+      </section>
+
+      <!-- 我的 -->
+      <section class="tab-panel" id="tab-profile" aria-labelledby="profileTitle" hidden>
+        <div class="profile-hero">
+          <div class="profile-avatar" aria-hidden="true">林</div>
+          <div class="profile-copy">
+            <h2 id="profileTitle" tabindex="-1">林也</h2>
+            <p>在手作里，慢慢认识非遗</p>
+            <span class="profile-demo">体验用户 · 概念预览</span>
+          </div>
+        </div>
+
+        <div class="profile-stats" aria-label="学习数据">
+          <div class="profile-stat">
+            <strong>6</strong>
+            <span>材料包</span>
+          </div>
+          <div class="profile-stat">
+            <strong id="favoriteStat">0</strong>
+            <span>收藏</span>
+          </div>
+          <div class="profile-stat">
+            <strong id="historyStat">0</strong>
+            <span>浏览</span>
+          </div>
+        </div>
+
+        <div class="profile-section-title">最近记录</div>
+        <button class="recent-card" type="button" id="recentCard"></button>
+
+        <div class="profile-section-title">我的</div>
+        <div class="menu-list" id="profileMenu"></div>
+
+        <div class="profile-links">
+          <a class="profile-link" href="index.html#feedbackSection">意见反馈 / 讨论区</a>
+          <a class="profile-link" href="index.html">查看完整项目资料</a>
+        </div>
+        <p class="preview-note">共创微光 · 听障友好的非遗手作学习<br>概念预览版 · 内容整理：范俊辰、祈盐牙兽兽、TvTing</p>
+      </section>
+    </main>
+
+    <!-- ==================== 底部导航 ==================== -->
+    <nav class="bottom-nav" id="bottomNav" aria-label="主要导航"></nav>
+
+    <!-- ==================== 通用弹层 ==================== -->
+    <div class="sheet-layer" id="sheetLayer" hidden aria-hidden="true">
+      <div class="sheet-backdrop" data-close-sheet></div>
+      <section class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+        <div class="sheet-grabber" aria-hidden="true"></div>
+        <button class="sheet-close" type="button" data-close-sheet data-autofocus aria-label="关闭弹层">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+            <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <div class="sheet-scroll" id="sheetScroll">
+          <div class="sheet-content" id="sheetContent"></div>
+        </div>
+      </section>
+    </div>
+
+    <p class="sr-only" id="tabStatus" aria-live="polite"></p>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <noscript>
+    <p style="position:fixed;left:16px;right:16px;bottom:16px;z-index:999;padding:13px 16px;border-radius:10px;background:#29231d;color:#fff;font-size:13px;line-height:1.6;text-align:center;">
+      本概念预览需要开启 JavaScript 才能使用导航、学艺搜索与购物车。
+    </p>
+  </noscript>
+
+  <script>
+    /* ============================================================
+       01. 图标与课程数据
+       ============================================================ */
+    const iconPaths = {
+      home: '<path d="M4 10.8 12 4l8 6.8V20h-5v-5.5H9V20H4v-9.2Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
+      learn: '<path d="M5 4.5h8a4 4 0 0 1 4 4V20h-8a4 4 0 0 1-4-4V4.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M5 16a3 3 0 0 1 3-3h9M9 8h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
+      shop: '<path d="M4 9h16l-1.3 9.5a2 2 0 0 1-2 1.7H7.3a2 2 0 0 1-2-1.7L4 9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 9a4 4 0 0 1 8 0M9 13v2.5M15 13v2.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+      user: '<circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.7"/><path d="M4.8 20a7.2 7.2 0 0 1 14.4 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+      search: '<circle cx="10.8" cy="10.8" r="6.3" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 15.5 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+      heart: '<path d="M12 20.3c-3.7-2.35-6.55-4.9-6.55-8.03 0-2.08 1.5-3.65 3.42-3.65 1.23 0 2.36.62 3.13 1.63.77-1.01 1.9-1.63 3.13-1.63 1.92 0 3.42 1.57 3.42 3.65 0 3.13-2.85 5.68-6.55 8.03Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
+      clock: '<circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
+      calendar: '<rect x="4" y="5.5" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 3.5v4M16 3.5v4M4 10h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+      settings: '<circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/><path d="M19 12a7 7 0 0 0-.12-1.26l2-1.53-2-3.46-2.34.94a7.2 7.2 0 0 0-2.18-1.26L14 3h-4l-.36 2.43a7.2 7.2 0 0 0-2.18 1.26l-2.34-.94-2 3.46 2 1.53A7 7 0 0 0 5 12c0 .43.04.85.12 1.26l-2 1.53 2 3.46 2.34-.94c.65.54 1.38.96 2.18 1.26L10 21h4l.36-2.43a7.2 7.2 0 0 0 2.18-1.26l2.34.94 2-3.46-2-1.53c.08-.41.12-.83.12-1.26Z" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/>',
+      chat: '<path d="M4.2 5.8h15.6v10.3H9.7L4.2 19V5.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 9.5h8M8 12.6h5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+      plus: '<path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+      minus: '<path d="M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+      close: '<path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>',
+      play: '<path d="m9 6.5 8 5.5-8 5.5v-11Z" fill="currentColor"/>',
+      arrow: '<path d="M5 12h13M13 6.5 18.5 12 13 17.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
+      hanfu: '<path d="M9 4 5 6v5l2-1v10h10V10l2 1V6l-4-2-2.2 3h-1.6L9 4Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>',
+      embroidery: '<circle cx="8" cy="8" r="3.5" stroke="currentColor" stroke-width="1.5"/><path d="m11 11 8 8M16 4l4 4M7 15c3-1 5-3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>',
+      ceramic: '<path d="M9 4h6M10 4c0 3.2-3 4.3-3 8v6.8c0 1.2 2 1.9 5 1.9s5-.7 5-1.9V12c0-3.7-3-4.8-3-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>',
+      paper: '<path d="M6 3.8h8l4 4V20H6V3.8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 4v4h4M9 12h6M9 15.5h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>',
+      carving: '<path d="m5 19 9-9 2 2-9 9H5v-2ZM14 10l3-3-2-2-3 3 2 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M4 4h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>',
+      weaving: '<path d="M4 6h16M4 10h16M4 14h16M4 18h16M7 4v16M12 4v16M17 4v16" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>',
+      dyeing: '<path d="M12 3.8c3.3 4.1 5.4 7 5.4 9.3a5.4 5.4 0 0 1-10.8 0c0-2.3 2.1-5.2 5.4-9.3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9.5 14.2c.7 1.2 1.6 1.8 2.9 1.9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>',
+      opera: '<path d="M7 5.5c2-1.6 8-1.6 10 0 2 1.7 1.4 6.6-.4 8.6-1.3 1.5-2.3 1.9-4.6 1.9s-3.3-.4-4.6-1.9C5.6 12.1 5 7.2 7 5.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 10.2c.7-.5 1.5-.5 2.2 0M12.8 10.2c.7-.5 1.5-.5 2.2 0M9.5 14c1.5 1 3.5 1 5 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
+      bookmark: '<path d="M7 4h10v16l-5-3.4L7 20V4Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>',
+      magnet: '<path d="M6 5v7a6 6 0 0 0 12 0V5h-4v7a2 2 0 0 1-4 0V5H6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M6 8h4M14 8h4" stroke="currentColor" stroke-width="1.5"/>',
+      coaster: '<circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M8 14c1-3 2.7-5 4.7-5 1.5 0 2.4 1 2.4 2.2 0 1.5-1.4 2.4-3.1 2.4-1.5 0-2.6.8-3 2.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
+      earring: '<path d="M7.5 4.8v3.7M16.5 8.3v3.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="m7.5 8.5-2.1 3.2 2.1 2.4 2.1-2.4-2.1-3.2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M16.5 12a2.4 2.4 0 1 0 2.4 2.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>'
+    };
+
+    function iconSvg(name) {
+      return `<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">${iconPaths[name] || ''}</svg>`;
+    }
+
+    const courses = [
+      {
+        id: 'paper-ball',
+        title: '非遗纸艺绣球挂件',
+        craft: '纸艺',
+        craftIcon: 'paper',
+        tags: ['视障友好', '触觉定位', '语音讲解'],
+        image: 'assets/item1.jpg',
+        alt: '蓝底国风纹样纸艺绣球挂件',
+        summary: '本绣球手工材料包专为视障人群设计，将视觉图纸转化为触觉标识，依靠压纹、凸点定位搭配语音讲解，无需依靠视力，独立完成绣球拼装。',
+        materials: [
+          '盲文+大字参考卡，附带语音讲解二维码',
+          '预裁纸片，纸片边缘压不同纹理用来区分内外层',
+          '带凸线的折叠模板，触摸即可找准折叠位置',
+          '带凸起定位卡点的球形骨架',
+          '预打结的挂绳与流苏',
+          '预贴好的圆点背胶，无需挤胶水',
+          '半球防滑底座，防止球体滚动',
+          '粗柄压痕棒、防滑操作垫',
+          '盲文+大字步骤卡，配套语音指引'
+        ],
+        highlight: '纸片依靠触感纹理分层，骨架凸点定位插片位置，半球底座固定绣球，全程以触觉、语音引导，视障者可以独立完成绣球挂件。'
+      },
+      {
+        id: 'bamboo-hairclip',
+        title: '竹编彩韵发夹',
+        craft: '竹编',
+        craftIcon: 'weaving',
+        tags: ['肢体 / 单手友好', '磁吸对位', '竹编预制'],
+        image: 'assets/item2.jpg',
+        alt: '浅色背景上的多枚彩色竹编发夹',
+        summary: '竹编发夹材料包专为手部力量减弱、单手操作人群设计，提前完成复杂编织，磁吸结构简化对位，减少精细用力动作，单手可独立完成组装。',
+        materials: [
+          '成品参考卡，标注单手可操作',
+          '预先编织定型好的竹编花片，背面预贴背胶',
+          '可固定在桌边的夹持模板',
+          '磁吸式发夹底座，对位简单',
+          '加厚背胶固定片',
+          '预串好的装饰珠组件',
+          '弹簧助力安全圆头剪刀',
+          '腕托垫、加重压片',
+          '大字图文步骤卡'
+        ],
+        highlight: '核心编织花纹提前预制，磁吸底座自动对位，弹簧剪刀省力，搭配桌夹解放另一只手，单手就可以完成组装。'
+      },
+      {
+        id: 'incense-pendant',
+        title: '青釉云纹合香牌',
+        craft: '合香',
+        craftIcon: 'ceramic',
+        tags: ['听障友好', '手语视频', '分镜图示'],
+        image: 'assets/item3.jpg',
+        alt: '青绿色云纹合香牌，配流苏与玉珠',
+        summary: '合香牌材料包面向听障人群设计，以分镜图示、色彩标识替代口头讲解，配套手语教学视频，依靠视觉信息完成压模、打磨、串配全过程。',
+        materials: [
+          '成品参考卡，附带手语教学二维码',
+          '分袋装好、贴有色标标签的预制香泥团',
+          '印有方向箭头的云纹硅胶模具',
+          '带按压方向标识的弹簧打孔器',
+          '贴有色彩标签的不同目数打磨砂条',
+          '分装贴图标签的主绳扣、宫铃、流苏配件',
+          '印有穿绳指引箭头的挂绳',
+          '辅助工具，工具手柄带有对应色标',
+          '分镜式图示步骤卡，搭配手语视频二维码'
+        ],
+        highlight: '全材料色标配对，步骤使用连续分镜图画表达，扫码观看手语教学视频，不需要听觉指导，听障使用者可以看懂流程、独立制作。'
+      },
+      {
+        id: 'shell-flower-hairpin',
+        title: '蝶贝珍珠山茶发饰',
+        craft: '首饰',
+        craftIcon: 'embroidery',
+        tags: ['肢体 / 单手友好', '磁吸花托', '蝶贝预制'],
+        image: 'assets/item4.jpg',
+        alt: '陈列盒中的四枚蝶贝山茶花发夹',
+        summary: '山茶蝶贝发簪材料包适配手指灵活度不足、单手操作人群，提前完成铜丝缠绕、花瓣编组，磁吸结构简化组装，降低精细操作门槛。',
+        materials: [
+          '成品参考卡，标注单手可操作',
+          '已经预绕好铜丝、分层组合好的蝶贝花瓣组',
+          '预先粘好珍珠的花心组件',
+          '可以固定在桌边的发簪夹持底座',
+          '磁吸卡扣式花托，一碰锁紧花瓣',
+          '预串完成、带磁吸流苏扣的流苏坠',
+          '备用加重柄圆嘴钳',
+          '腕托支撑垫',
+          '大字图文步骤卡'
+        ],
+        highlight: '省去最难的铜丝缠绕、穿珠步骤，磁吸花托、磁吸流苏扣，不需要精细夹持、绕圈，固定簪杆后单手即可组装完成。'
+      },
+      {
+        id: 'coaster-prototype',
+        title: '掐丝珐琅 / 螺钿木质杯垫',
+        craft: '掐丝',
+        craftIcon: 'ceramic',
+        tags: ['听障友好', '手语视频', '色标图示'],
+        image: 'assets/item5.jpg',
+        alt: '木质杯垫中的掐丝珐琅宝相花纹样',
+        summary: '本掐丝螺钿杯垫材料包专为听障人群设计，预制高难度掐丝轮廓，采用色标与分镜图示替代口头教学，配套手语教学视频，依靠视觉即可独立完成填料封胶制作。',
+        materials: [
+          '成品参考卡，附带手语教学二维码',
+          '预完成掐丝铜丝轮廓/木胚杯垫底座（凹槽限位，无需自行弯丝）',
+          '分装封装、贴大色块标签的珐琅颜料/螺钿碎片',
+          '填料辅助刮铲（手柄印对应色标）',
+          '定量按压式封胶瓶，瓶身印有涂抹方向箭头',
+          '防滑固定底座垫，印有分区定位线稿',
+          '分装配件袋，表面印有配件实物图示',
+          '加粗手柄辅助工具组',
+          '纯分镜图示步骤卡，搭配手语讲解二维码'
+        ],
+        highlight: '铜丝轮廓、螺钿裁切全部预制完成，无需精细弯折裁切；全套材料采用色彩编码+实物图示，无需听觉讲解；扫码观看手语教学视频，听障使用者依靠视觉信息，独立完成填料、封胶、组装全部流程。'
+      },
+      {
+        id: 'wooden-hairpin',
+        title: '木簪生花 · 国风木质发簪',
+        craft: '木作',
+        craftIcon: 'carving',
+        tags: ['肢体 / 单手友好', '固定卡扣', '可拆卸花头'],
+        image: 'assets/item6.jpg',
+        alt: '黑檀木发簪，簪头为粉白山茶花与蝶贝叶片',
+        summary: '以山茶花为灵感，结合木簪纹理与可拆卸花头结构，做成可替换、可日常佩戴的国风发饰。',
+        materials: [
+          '黑檀木木簪主体（含木簪纹理）',
+          '茶花托座（正面）',
+          '蝶贝花瓣',
+          '珍珠花蕊',
+          '贝叶装饰',
+          '古铜连接件',
+          '固定卡扣'
+        ],
+        materialNote: '聊天记录中暂未提供完整的 1—9 项材料清单；以上为现有资料明确列出的组件。',
+        highlight: '无障碍适配固定卡扣，加大握持段，圆润边缘处理；结构层级清晰，以黑檀木、奶白蝶贝与粉白蝶贝形成易识别的造型。'
+      }
+    ];
+
+    const craftCategories = [
+      { label: '汉服', icon: 'hanfu' },
+      { label: '刺绣', icon: 'embroidery' },
+      { label: '陶瓷', icon: 'ceramic' },
+      { label: '造纸', icon: 'paper' },
+      { label: '雕刻', icon: 'carving' },
+      { label: '织造', icon: 'weaving' },
+      { label: '印染', icon: 'dyeing' },
+      { label: '戏曲', icon: 'opera' }
+    ];
+
+    const objectCategories = [
+      { label: '书签', icon: 'bookmark' },
+      { label: '冰箱贴', icon: 'magnet' },
+      { label: '杯垫', icon: 'coaster' },
+      { label: '耳钉', icon: 'earring' }
+    ];
+
+    const navItems = [
+      { key: 'home', label: '首页', icon: 'home' },
+      { key: 'learn', label: '学艺', icon: 'learn' },
+      { key: 'shop', label: '商城', icon: 'shop' },
+      { key: 'profile', label: '我的', icon: 'user' }
+    ];
+
+    const FAVORITES_KEY = 'gcxw-preview-favorites-v1';
+    const HISTORY_KEY = 'gcxw-preview-history-v1';
+    const CART_KEY = 'gcxw-preview-cart-v1';
+    const LARGE_TEXT_KEY = 'gcxw-preview-large-text-v1';
+
+    const state = {
+      tab: 'home',
+      cart: {},
+      favorites: new Set(),
+      history: [],
+      sheetOpen: false,
+      lastFocused: null,
+      meditationTimer: null,
+      breathTimer: null,
+      meditationOn: false,
+      audioContext: null,
+      splashTimer: null,
+      largeText: false
+    };
+
+    const els = {
+      shell: document.getElementById('appShell'),
+      splash: document.getElementById('splash'),
+      splashEnter: document.getElementById('splashEnter'),
+      splashSkip: document.getElementById('splashSkip'),
+      header: document.getElementById('appHeader'),
+      main: document.getElementById('appMain'),
+      nav: document.getElementById('bottomNav'),
+      textSizeButton: document.getElementById('textSizeButton'),
+      tabStatus: document.getElementById('tabStatus'),
+      toast: document.getElementById('toast'),
+      sheetLayer: document.getElementById('sheetLayer'),
+      sheetContent: document.getElementById('sheetContent'),
+      sheetScroll: document.getElementById('sheetScroll'),
+      meditationButton: document.getElementById('meditationButton'),
+      meditationHint: document.getElementById('meditationHint'),
+      meditationState: document.getElementById('meditationState'),
+      homeRail: document.getElementById('homeRail'),
+      craftCategories: document.getElementById('craftCategories'),
+      objectCategories: document.getElementById('objectCategories'),
+      courseSearch: document.getElementById('courseSearch'),
+      courseGrid: document.getElementById('courseGrid'),
+      courseCount: document.getElementById('courseCount'),
+      shopList: document.getElementById('shopList'),
+      cartButton: document.getElementById('cartButton'),
+      cartBadge: document.getElementById('cartBadge'),
+      favoriteStat: document.getElementById('favoriteStat'),
+      historyStat: document.getElementById('historyStat'),
+      recentCard: document.getElementById('recentCard'),
+      profileMenu: document.getElementById('profileMenu')
+    };
+
+    /* ============================================================
+       02. 工具
+       ============================================================ */
+    function readStorage(key, fallback) {
+      try {
+        const raw = window.localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (error) {
+        return fallback;
+      }
+    }
+
+    function writeStorage(key, value) {
+      try {
+        window.localStorage.setItem(key, JSON.stringify(value));
+      } catch (error) {
+        /* 本地存储不可用时，保留当前页面内状态即可 */
+      }
+    }
+
+    function findCourse(id) {
+      return courses.find((course) => course.id === id);
+    }
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, (character) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[character]));
+    }
+
+    let toastTimer = null;
+    function showToast(message) {
+      window.clearTimeout(toastTimer);
+      els.toast.textContent = message;
+      els.toast.classList.add('is-visible');
+      toastTimer = window.setTimeout(() => {
+        els.toast.classList.remove('is-visible');
+      }, 2500);
+    }
+
+    function setAppInert(inert) {
+      [els.header, els.main, els.nav].forEach((element) => {
+        element.inert = inert;
+      });
+    }
+
+    /* ============================================================
+       03. 开屏
+       ============================================================ */
+    function closeSplash() {
+      window.clearTimeout(state.splashTimer);
+      els.splash.classList.add('is-leaving');
+      setAppInert(false);
+      window.setTimeout(() => {
+        els.splash.hidden = true;
+      }, 440);
+      const navHome = els.nav.querySelector('[data-tab="home"]');
+      if (navHome) {
+        navHome.focus({ preventScroll: true });
+      }
+    }
+
+    function initSplash() {
+      setAppInert(true);
+      els.splashEnter.focus({ preventScroll: true });
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      state.splashTimer = window.setTimeout(closeSplash, reduced ? 2600 : 5400);
+      els.splashEnter.addEventListener('click', closeSplash);
+      els.splashSkip.addEventListener('click', closeSplash);
+    }
+
+    /* ============================================================
+       04. 导航
+       ============================================================ */
+    function renderNav() {
+      els.nav.innerHTML = navItems.map((item) => `
+        <button class="nav-button" type="button" data-tab="${item.key}" aria-current="${item.key === state.tab ? 'page' : 'false'}">
+          ${iconSvg(item.icon)}
+          <span>${item.label}</span>
+          ${item.key === 'shop' ? '<span class="nav-badge" id="navCartBadge" aria-hidden="true" hidden>0</span>' : ''}
+        </button>
+      `).join('');
+    }
+
+    function switchTab(tabKey, options = {}) {
+      if (!navItems.some((item) => item.key === tabKey)) {
+        return;
+      }
+
+      state.tab = tabKey;
+      document.querySelectorAll('.tab-panel').forEach((panel) => {
+        panel.hidden = panel.id !== `tab-${tabKey}`;
+      });
+
+      els.nav.querySelectorAll('[data-tab]').forEach((button) => {
+        button.setAttribute('aria-current', button.dataset.tab === tabKey ? 'page' : 'false');
+      });
+
+      els.main.scrollTo({ top: 0, behavior: options.instant ? 'auto' : 'smooth' });
+      els.tabStatus.textContent = `已切换到${navItems.find((item) => item.key === tabKey).label}`;
+
+      if (tabKey !== 'home') {
+        stopMeditation(false);
+      }
+
+      if (options.focusHeading) {
+        const heading = document.querySelector(`#tab-${tabKey} h2`);
+        if (heading) {
+          window.setTimeout(() => heading.focus({ preventScroll: true }), 60);
+        }
+      }
+    }
+
+    els.nav.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-tab]');
+      if (button) {
+        switchTab(button.dataset.tab);
+      }
+    });
+
+    document.querySelectorAll('[data-go]').forEach((button) => {
+      button.addEventListener('click', () => {
+        switchTab(button.dataset.go, { focusHeading: true });
+      });
+    });
+
+    /* ============================================================
+       05. 渲染课程
+       ============================================================ */
+    function courseTags(course) {
+      return course.tags.slice(0, 2).map((tag, index) => (
+        `<span class="mini-tag${index === 0 ? ' is-green' : ''}">${escapeHTML(tag)}</span>`
+      )).join('');
+    }
+
+    function miniCourseHTML(course) {
+      return `
+        <button class="mini-course" type="button" data-course-id="${course.id}">
+          <span class="mini-course-cover"><img src="${course.image}" alt="${escapeHTML(course.alt)}" loading="lazy"></span>
+          <span class="mini-course-body">
+            <span class="mini-course-tag">${escapeHTML(course.craft)} · ${escapeHTML(course.tags[0])}</span>
+            <span class="mini-course-title">${escapeHTML(course.title)}</span>
+          </span>
+        </button>
+      `;
+    }
+
+    function courseCardHTML(course) {
+      return `
+        <button class="course-card" type="button" data-course-id="${course.id}">
+          <span class="course-cover"><img src="${course.image}" alt="${escapeHTML(course.alt)}" loading="lazy"></span>
+          <span class="course-body">
+            <span class="course-card-tags">${courseTags(course)}</span>
+            <span class="course-card-title">${escapeHTML(course.title)}</span>
+            <span class="course-card-meta">${escapeHTML(course.craft)} · 适合视觉跟做</span>
+          </span>
+        </button>
+      `;
+    }
+
+    function renderHomeRail() {
+      els.homeRail.innerHTML = courses.slice(0, 3).map(miniCourseHTML).join('');
+    }
+
+    function renderCategories() {
+      els.craftCategories.innerHTML = craftCategories.map((category) => `
+        <button class="category-button" type="button" data-craft="${escapeHTML(category.label)}">
+          <span class="category-icon">${iconSvg(category.icon)}</span>
+          <span>${escapeHTML(category.label)}</span>
+        </button>
+      `).join('');
+
+      els.objectCategories.innerHTML = objectCategories.map((category) => `
+        <button class="object-button" type="button" data-object="${escapeHTML(category.label)}">
+          <span class="object-icon">${iconSvg(category.icon)}</span>
+          <span>${escapeHTML(category.label)}</span>
+        </button>
+      `).join('');
+    }
+
+    function renderCourses(query = '') {
+      const normalized = query.trim().toLowerCase();
+      const filtered = courses.filter((course) => {
+        if (!normalized) {
+          return true;
+        }
+        return [course.title, course.craft, course.summary, ...course.tags]
+          .join(' ')
+          .toLowerCase()
+          .includes(normalized);
+      });
+
+      els.courseCount.textContent = `${filtered.length} 套`;
+      els.courseGrid.innerHTML = filtered.length
+        ? filtered.map(courseCardHTML).join('')
+        : `<div class="empty-state">没有找到相关的非遗材料包。<br>试试搜索“香牌”“杯垫”或“发夹”。</div>`;
+    }
+
+    els.courseSearch.addEventListener('input', (event) => {
+      renderCourses(event.target.value);
+    });
+
+    // 首页、学艺页中所有课程卡片、横幅、继续卡片共用事件委托
+    document.addEventListener('click', (event) => {
+      const courseTrigger = event.target.closest('[data-course-id]');
+      if (courseTrigger) {
+        openCourseSheet(courseTrigger.dataset.courseId, courseTrigger);
+        return;
+      }
+
+      const craftTrigger = event.target.closest('[data-craft]');
+      if (craftTrigger) {
+        openPlaceholder(`${craftTrigger.dataset.craft}课程`, '这个方向的视频课程正在整理中，正式版会加入手语讲解、字幕与分步图示；先去看看现有的六套材料包吧。');
+        return;
+      }
+
+      const objectTrigger = event.target.closest('[data-object]');
+      if (objectTrigger) {
+        openPlaceholder(`${objectTrigger.dataset.object}教程`, '这一类作品的视频教程正在上传中。正式版会提供手语演示、视觉步骤和材料清单，让每一种作品都能被看见。');
+      }
+    });
+
+    /* ============================================================
+       06. 课程详情弹层
+       ============================================================ */
+    function favoriteButtonHTML(course) {
+      const active = state.favorites.has(course.id);
+      return `
+        <button class="sheet-button" type="button" data-favorite="${course.id}" aria-pressed="${active}">
+          ${iconSvg('heart')} ${active ? '已收藏' : '收藏'}
+        </button>
+      `;
+    }
+
+    function courseSheetHTML(course) {
+      const tags = course.tags.map((tag, index) => (
+        `<span class="tag${index === 0 ? ' is-red' : ''}">${escapeHTML(tag)}</span>`
+      )).join('');
+
+      const materialNote = course.materialNote
+        ? `<p style="margin-top:7px;color:var(--soft);font-size:9.5px;line-height:1.65;">${escapeHTML(course.materialNote)}</p>`
+        : '';
+
+      return `
+        <div class="sheet-cover"><img src="${course.image}" alt="${escapeHTML(course.alt)}"></div>
+        <div class="sheet-body">
+          <div class="tag-row">${tags}</div>
+          <h2 class="sheet-title" id="sheetTitle">${escapeHTML(course.title)}</h2>
+          <p class="sheet-summary">${escapeHTML(course.summary)}</p>
+
+          <div class="video-placeholder">
+            <span class="video-play" aria-hidden="true">${iconSvg('play')}</span>
+            <span class="video-copy">
+              <strong>手语视频 · 待上传</strong>
+              <span>正式版将提供手语讲解、字幕与分步视觉图示</span>
+            </span>
+          </div>
+
+          <section class="sheet-section">
+            <h3><span class="sheet-section-index">01</span>材料包里有什么</h3>
+            <ol class="material-list">
+              ${course.materials.map((item) => `<li>${escapeHTML(item)}</li>`).join('')}
+            </ol>
+            ${materialNote}
+          </section>
+
+          <section class="sheet-section">
+            <h3><span class="sheet-section-index">02</span>无障碍设计亮点</h3>
+            <p>${escapeHTML(course.highlight)}</p>
+          </section>
+
+          <div class="sheet-actions">
+            ${favoriteButtonHTML(course)}
+            <button class="sheet-button primary" type="button" data-start="${course.id}">开始学习</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function openCourseSheet(courseId, trigger) {
+      const course = findCourse(courseId);
+      if (!course) {
+        return;
+      }
+
+      state.history = [course.id, ...state.history.filter((id) => id !== course.id)].slice(0, 10);
+      writeStorage(HISTORY_KEY, state.history);
+      renderProfile();
+
+      openSheet(courseSheetHTML(course), trigger);
+      window.setTimeout(() => {
+        const title = document.getElementById('sheetTitle');
+        if (title) {
+          title.setAttribute('tabindex', '-1');
+        }
+      }, 0);
+    }
+
+    function toggleFavorite(courseId) {
+      if (state.favorites.has(courseId)) {
+        state.favorites.delete(courseId);
+        showToast('已取消收藏');
+      } else {
+        state.favorites.add(courseId);
+        showToast('已加入我的收藏');
+      }
+
+      writeStorage(FAVORITES_KEY, [...state.favorites]);
+      const favoriteButton = els.sheetContent.querySelector(`[data-favorite="${courseId}"]`);
+      const course = findCourse(courseId);
+      if (favoriteButton && course) {
+        favoriteButton.setAttribute('aria-pressed', String(state.favorites.has(courseId)));
+        favoriteButton.innerHTML = `${iconSvg('heart')} ${state.favorites.has(courseId) ? '已收藏' : '收藏'}`;
+      }
+      renderProfile();
+    }
+
+    /* ============================================================
+       07. 通用弹层
+       ============================================================ */
+    function openSheet(contentHTML, trigger) {
+      state.lastFocused = trigger || document.activeElement;
+      if (!state.sheetOpen) {
+        setAppInert(true);
+      }
+
+      state.sheetOpen = true;
+      els.sheetLayer.hidden = false;
+      els.sheetLayer.setAttribute('aria-hidden', 'false');
+      els.sheetContent.innerHTML = contentHTML;
+      els.sheetScroll.scrollTop = 0;
+
+      requestAnimationFrame(() => {
+        els.sheetLayer.classList.add('is-open');
+      });
+
+      const closeButton = els.sheetLayer.querySelector('[data-autofocus]');
+      if (closeButton) {
+        closeButton.focus({ preventScroll: true });
+      }
+    }
+
+    function closeSheet() {
+      if (!state.sheetOpen) {
+        return;
+      }
+
+      state.sheetOpen = false;
+      els.sheetLayer.classList.remove('is-open');
+      els.sheetLayer.setAttribute('aria-hidden', 'true');
+      setAppInert(false);
+
+      if (state.lastFocused && document.contains(state.lastFocused)) {
+        state.lastFocused.focus({ preventScroll: true });
+      }
+
+      window.setTimeout(() => {
+        if (!state.sheetOpen) {
+          els.sheetLayer.hidden = true;
+        }
+      }, 270);
+    }
+
+    function openPlaceholder(title, text) {
+      openSheet(`
+        <div class="placeholder">
+          <div class="placeholder-icon">${iconSvg('learn')}</div>
+          <h2 id="sheetTitle">${escapeHTML(title)}</h2>
+          <p>${escapeHTML(text)}</p>
+          <button class="sheet-button" type="button" data-close-sheet>先去逛现有材料包</button>
+        </div>
+      `);
+    }
+
+    document.addEventListener('click', (event) => {
+      if (event.target.closest('[data-close-sheet]')) {
+        closeSheet();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (!state.sheetOpen) {
+        return;
+      }
+
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeSheet();
+        return;
+      }
+
+      if (event.key !== 'Tab') {
+        return;
+      }
+
+      const focusable = [...els.sheetLayer.querySelectorAll(
+        'button:not([disabled]), [href], input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )].filter((element) => element.offsetParent !== null);
+
+      if (focusable.length === 0) {
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    /* ============================================================
+       08. 商城与购物车
+       ============================================================ */
+    function renderShop() {
+      els.shopList.innerHTML = courses.map((course) => `
+        <div class="shop-item">
+          <button class="product-main" type="button" data-course-id="${course.id}" aria-label="查看${escapeHTML(course.title)}">
+            <span class="product-thumb"><img src="${course.image}" alt="${escapeHTML(course.alt)}" loading="lazy"></span>
+            <span class="product-copy">
+              <span class="product-craft">${escapeHTML(course.craft)} · 材料包</span>
+              <span class="product-title">${escapeHTML(course.title)}</span>
+              <span class="product-price">价格待标价</span>
+            </span>
+          </button>
+          <button class="add-cart-button" type="button" data-add-cart="${course.id}" aria-label="将${escapeHTML(course.title)}加入购物车">
+            ${iconSvg('plus')}
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function updateCartBadges() {
+      const count = Object.values(state.cart).reduce((sum, quantity) => sum + quantity, 0);
+      const topBadge = document.getElementById('navCartBadge');
+
+      if (els.cartBadge) {
+        els.cartBadge.hidden = count === 0;
+        els.cartBadge.textContent = String(count);
+      }
+      if (topBadge) {
+        topBadge.hidden = count === 0;
+        topBadge.textContent = String(count);
+      }
+      if (els.cartButton) {
+        els.cartButton.setAttribute('aria-label', `打开购物车，当前 ${count} 件`);
+      }
+    }
+
+    function saveCart() {
+      writeStorage(CART_KEY, state.cart);
+    }
+
+    function addToCart(courseId) {
+      if (!findCourse(courseId)) {
+        return;
+      }
+      state.cart[courseId] = (state.cart[courseId] || 0) + 1;
+      saveCart();
+      updateCartBadges();
+      openCartSheet();
+    }
+
+    function cartRowsHTML() {
+      return Object.entries(state.cart).map(([id, quantity]) => {
+        const course = findCourse(id);
+        if (!course) {
+          return '';
+        }
+        return `
+          <div class="cart-row">
+            <span class="cart-thumb"><img src="${course.image}" alt="${escapeHTML(course.alt)}"></span>
+            <span class="cart-copy">
+              <strong>${escapeHTML(course.title)}</strong>
+              <span>价格待标定 · 内测意向</span>
+            </span>
+            <span class="qty-control">
+              <button class="qty-button" type="button" data-cart-action="dec" data-id="${id}" data-focus-key="dec-${id}" aria-label="减少${escapeHTML(course.title)}数量">${iconSvg('minus')}</button>
+              <span class="qty-number" aria-label="数量">${quantity}</span>
+              <button class="qty-button" type="button" data-cart-action="inc" data-id="${id}" data-focus-key="inc-${id}" aria-label="增加${escapeHTML(course.title)}数量">${iconSvg('plus')}</button>
+            </span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function cartSheetHTML() {
+      const entries = Object.entries(state.cart);
+      const total = entries.reduce((sum, [, quantity]) => sum + quantity, 0);
+
+      return `
+        <div class="list-sheet">
+          <div class="cart-heading">
+            <div>
+              <h2 id="sheetTitle">采购意向车</h2>
+              <p style="margin:5px 0 0;color:var(--muted);font-size:10.5px;">内测阶段仅记录意向，不产生支付。</p>
+            </div>
+            <span class="cart-count-label">${total} 件</span>
+          </div>
+          ${entries.length ? `
+            <div class="cart-list">${cartRowsHTML()}</div>
+            <div class="cart-summary">
+              <span>合计</span>
+              <strong>价格待标定</strong>
+            </div>
+            <button class="cart-submit" type="button" data-cart-submit>提交采购意向（演示）</button>
+            <p class="cart-note">正式版将接入材料包预订、门店自取与全国邮寄。</p>
+          ` : `
+            <div class="empty-sheet">购物车还是空的。<br>去商城挑一套喜欢的材料包吧。</div>
+            <button class="sheet-button primary" type="button" data-close-sheet>继续逛逛</button>
+          `}
+        </div>
+      `;
+    }
+
+    function openCartSheet() {
+      openSheet(cartSheetHTML());
+    }
+
+    function refreshCartSheet(focusKey) {
+      if (!state.sheetOpen) {
+        return;
+      }
+      els.sheetContent.innerHTML = cartSheetHTML();
+      if (focusKey) {
+        const target = els.sheetContent.querySelector(`[data-focus-key="${focusKey}"]`);
+        if (target) {
+          target.focus({ preventScroll: true });
+        }
+      }
+      const close = els.sheetLayer.querySelector('[data-autofocus]');
+      if (!focusKey) {
+        if (close) {
+          close.focus({ preventScroll: true });
+        }
+      } else if (!els.sheetContent.querySelector(`[data-focus-key="${focusKey}"]`)) {
+        if (close) {
+          close.focus({ preventScroll: true });
+        }
+      }
+    }
+
+    document.addEventListener('click', (event) => {
+      const addButton = event.target.closest('[data-add-cart]');
+      if (addButton) {
+        addToCart(addButton.dataset.addCart);
+        return;
+      }
+
+      const cartButton = event.target.closest('[data-cart-action]');
+      if (cartButton) {
+        const id = cartButton.dataset.id;
+        const action = cartButton.dataset.cartAction;
+        if (action === 'inc') {
+          state.cart[id] = (state.cart[id] || 0) + 1;
+        } else if (action === 'dec') {
+          state.cart[id] = (state.cart[id] || 0) - 1;
+          if (state.cart[id] <= 0) {
+            delete state.cart[id];
+          }
+        }
+        saveCart();
+        updateCartBadges();
+        refreshCartSheet(cartButton.dataset.focusKey);
+        return;
+      }
+
+      if (event.target.closest('[data-cart-submit]')) {
+        showToast('采购意向已记录（演示），正式版将开放预订');
+      }
+    });
+
+    els.cartButton.addEventListener('click', openCartSheet);
+
+    /* ============================================================
+       09. 收藏、浏览与个人页
+       ============================================================ */
+    function profileMenuHTML() {
+      const items = [
+        { label: '我的收藏', icon: 'heart', action: 'favorites', meta: `${state.favorites.size} 套` },
+        { label: '浏览记录', icon: 'clock', action: 'history', meta: `${state.history.length} 条` },
+        { label: '我的预约', icon: 'calendar', action: 'booking', meta: '待开放' },
+        { label: '资料来源与设置', icon: 'settings', action: 'settings', meta: '' }
+      ];
+
+      return items.map((item) => `
+        <button class="menu-row" type="button" data-menu-action="${item.action}">
+          <span class="menu-icon">${iconSvg(item.icon)}</span>
+          <span class="menu-label">${item.label}</span>
+          <span class="menu-meta">${item.meta}</span>
+          <span class="menu-chevron" aria-hidden="true">›</span>
+        </button>
+      `).join('');
+    }
+
+    function recentCourse() {
+      return findCourse(state.history[0]) || courses[0];
+    }
+
+    function renderProfile() {
+      const recent = recentCourse();
+      els.favoriteStat.textContent = String(state.favorites.size);
+      els.historyStat.textContent = String(state.history.length);
+
+      els.recentCard.innerHTML = `
+        <span class="recent-thumb"><img src="${recent.image}" alt="${escapeHTML(recent.alt)}"></span>
+        <span class="recent-copy">
+          <small>最近浏览 · ${state.history.length ? '继续看看' : '推荐从这套开始'}</small>
+          <strong>${escapeHTML(recent.title)}</strong>
+        </span>
+        <span class="recent-arrow" aria-hidden="true">›</span>
+      `;
+      els.recentCard.dataset.courseId = recent.id;
+      els.profileMenu.innerHTML = profileMenuHTML();
+    }
+
+    function courseListSheetHTML(title, subtitle, list) {
+      return `
+        <div class="list-sheet">
+          <div class="list-sheet-head">
+            <h2 id="sheetTitle">${escapeHTML(title)}</h2>
+            <p>${escapeHTML(subtitle)}</p>
+          </div>
+          ${list.length ? `
+            <div class="sheet-course-list">
+              ${list.map((course) => `
+                <button class="sheet-course-row" type="button" data-course-id="${course.id}">
+                  <img src="${course.image}" alt="${escapeHTML(course.alt)}">
+                  <span class="sheet-course-copy">
+                    <strong>${escapeHTML(course.title)}</strong>
+                    <span>${escapeHTML(course.craft)} · ${escapeHTML(course.tags[0])}</span>
+                  </span>
+                  <span class="menu-chevron" aria-hidden="true">›</span>
+                </button>
+              `).join('')}
+            </div>
+          ` : `<div class="empty-sheet">这里还没有内容。<br>去看看材料包，遇见喜欢的作品。</div>`}
+        </div>
+      `;
+    }
+
+    function openSettingsSheet() {
+      openSheet(`
+        <div class="list-sheet">
+          <div class="list-sheet-head">
+            <h2 id="sheetTitle">资料与设置</h2>
+            <p>这是一份概念预览，真实数据与正式服务将在后续版本接入。</p>
+          </div>
+          <div class="settings-list">
+            <div class="setting-row">
+              <span class="setting-copy">
+                <strong>大字模式</strong>
+                <span>放大页面中的主要文字</span>
+              </span>
+              <button class="switch-button" id="settingsTextSwitch" type="button" data-setting="largeText" aria-pressed="${state.largeText}" aria-label="切换大字模式"></button>
+            </div>
+            <div class="setting-row">
+              <span class="setting-copy">
+                <strong>轻震反馈</strong>
+                <span>${'vibrate' in navigator ? '当前设备支持（冥想时启用）' : '当前设备未提供震动能力'}</span>
+              </span>
+            </div>
+          </div>
+          <div class="settings-credit">
+            共创微光 · 听障友好的非遗手作学习<br>
+            概念预览 · V0.4<br>
+            内容整理：范俊辰、祈盐牙兽兽、TvTing<br>
+            <a class="settings-link" href="index.html">查看完整项目资料</a>
+          </div>
+        </div>
+      `);
+    }
+
+    els.profileMenu.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-menu-action]');
+      if (!button) {
+        return;
+      }
+
+      const action = button.dataset.menuAction;
+      if (action === 'favorites') {
+        const favorites = courses.filter((course) => state.favorites.has(course.id));
+        openSheet(courseListSheetHTML('我的收藏', '你收下的作品会出现在这里。', favorites), button);
+        return;
+      }
+
+      if (action === 'history') {
+        const history = state.history.map(findCourse).filter(Boolean);
+        openSheet(courseListSheetHTML('浏览记录', '最近看过的材料包，会在这里留下痕迹。', history), button);
+        return;
+      }
+
+      if (action === 'booking') {
+        openPlaceholder('我的预约', '线下体验和材料包领取即将开放。正式版会在这里显示预约记录与门店信息。');
+        return;
+      }
+
+      if (action === 'settings') {
+        openSettingsSheet();
+      }
+    });
+
+    // 详情弹层内部操作
+    document.addEventListener('click', (event) => {
+      const favorite = event.target.closest('[data-favorite]');
+      if (favorite) {
+        toggleFavorite(favorite.dataset.favorite);
+        return;
+      }
+
+      const start = event.target.closest('[data-start]');
+      if (start) {
+        showToast('手语教程视频正在上传，正式版开放学习');
+        return;
+      }
+
+      const setting = event.target.closest('[data-setting="largeText"]');
+      if (setting) {
+        applyLargeText(!state.largeText);
+      }
+    });
+
+    /* ============================================================
+       10. 静心冥想
+       ============================================================ */
+    function startMeditation() {
+      state.meditationOn = true;
+      els.meditationButton.setAttribute('aria-pressed', 'true');
+      els.meditationButton.classList.add('is-active');
+      els.meditationState.textContent = '呼吸引导中 · 再触停止';
+      els.meditationHint.textContent = '吸气…';
+
+      let phase = 0;
+      state.breathTimer = window.setInterval(() => {
+        phase = phase === 0 ? 1 : 0;
+        els.meditationHint.textContent = phase === 0 ? '吸气…' : '呼气…';
+      }, 4000);
+
+      state.meditationTimer = window.setTimeout(() => {
+        stopMeditation(true);
+      }, 16000);
+
+      try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          if (!state.audioContext) {
+            state.audioContext = new AudioContextClass();
+          }
+          const context = state.audioContext;
+          if (context.state === 'suspended') {
+            context.resume();
+          }
+          [528, 396].forEach((frequency, index) => {
+            const oscillator = context.createOscillator();
+            const gain = context.createGain();
+            const start = context.currentTime + index * 0.18;
+            oscillator.type = 'sine';
+            oscillator.frequency.value = frequency;
+            gain.gain.setValueAtTime(0.0001, start);
+            gain.gain.exponentialRampToValueAtTime(0.08, start + 0.12);
+            gain.gain.exponentialRampToValueAtTime(0.0001, start + 3.6);
+            oscillator.connect(gain);
+            gain.connect(context.destination);
+            oscillator.start(start);
+            oscillator.stop(start + 3.7);
+          });
+        }
+      } catch (error) {
+        /* 音频不可用时仍保留视觉呼吸和震动 */
+      }
+
+      let vibrated = false;
+      if ('vibrate' in navigator) {
+        try {
+          vibrated = navigator.vibrate([90, 50, 120]);
+        } catch (error) {
+          vibrated = false;
+        }
+      }
+      showToast(vibrated ? '静心模式已开启 · 音效与轻震' : '静心模式已开启 · 可跟随光圈呼吸');
+    }
+
+    function stopMeditation(notify = false) {
+      if (!state.meditationOn && !els.meditationButton.classList.contains('is-active')) {
+        return;
+      }
+
+      state.meditationOn = false;
+      window.clearTimeout(state.meditationTimer);
+      window.clearInterval(state.breathTimer);
+      els.meditationButton.setAttribute('aria-pressed', 'false');
+      els.meditationButton.classList.remove('is-active');
+      els.meditationState.textContent = '轻触开始';
+      els.meditationHint.textContent = '给自己三分钟，慢慢进入手作状态';
+
+      if (notify) {
+        showToast('静心练习结束，慢慢回到手作吧');
+      }
+    }
+
+    els.meditationButton.addEventListener('click', () => {
+      if (state.meditationOn) {
+        stopMeditation(false);
+        showToast('已结束静心练习');
+      } else {
+        startMeditation();
+      }
+    });
+
+    /* ============================================================
+       11. 大字模式
+       ============================================================ */
+    function applyLargeText(enabled) {
+      state.largeText = enabled;
+      els.shell.classList.toggle('is-large-text', enabled);
+      els.textSizeButton.setAttribute('aria-pressed', String(enabled));
+      els.textSizeButton.setAttribute('aria-label', enabled ? '关闭大字模式' : '开启大字模式');
+      els.textSizeButton.textContent = enabled ? 'Aa' : 'Aa';
+
+      const settingSwitch = document.getElementById('settingsTextSwitch');
+      if (settingSwitch) {
+        settingSwitch.setAttribute('aria-pressed', String(enabled));
+      }
+
+      writeStorage(LARGE_TEXT_KEY, enabled);
+      showToast(enabled ? '已开启大字模式' : '已恢复标准字号');
+    }
+
+    els.textSizeButton.addEventListener('click', () => {
+      applyLargeText(!state.largeText);
+    });
+
+    /* ============================================================
+       12. 初始化
+       ============================================================ */
+    function init() {
+      const savedFavorites = readStorage(FAVORITES_KEY, []);
+      if (Array.isArray(savedFavorites)) {
+        state.favorites = new Set(savedFavorites.filter((id) => findCourse(id)));
+      }
+
+      const savedHistory = readStorage(HISTORY_KEY, []);
+      if (Array.isArray(savedHistory)) {
+        state.history = savedHistory.filter((id) => findCourse(id)).slice(0, 10);
+      }
+
+      const savedCart = readStorage(CART_KEY, {});
+      if (savedCart && typeof savedCart === 'object' && !Array.isArray(savedCart)) {
+        state.cart = Object.fromEntries(
+          Object.entries(savedCart).filter(([id, quantity]) => findCourse(id) && Number.isFinite(quantity) && quantity > 0)
+        );
+      }
+
+      state.largeText = readStorage(LARGE_TEXT_KEY, false) === true;
+
+      renderNav();
+      renderHomeRail();
+      renderCategories();
+      renderCourses();
+      renderShop();
+      renderProfile();
+      updateCartBadges();
+
+      if (state.largeText) {
+        els.shell.classList.add('is-large-text');
+        els.textSizeButton.setAttribute('aria-pressed', 'true');
+        els.textSizeButton.setAttribute('aria-label', '关闭大字模式');
+      }
+
+      initSplash();
+    }
+
+    init();
+  </script>
+</body>
+</html>
