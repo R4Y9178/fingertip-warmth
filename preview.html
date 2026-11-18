@@ -2343,6 +2343,19 @@
       transform: translateX(18px);
     }
 
+    .setting-test-button {
+      flex: 0 0 auto;
+      min-height: var(--tap);
+      padding: 0 12px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--green-deep);
+      font-size: 10.5px;
+      font-weight: 650;
+      line-height: 1.4;
+    }
+
     .settings-credit {
       margin-top: 14px;
       padding-top: 12px;
@@ -2469,6 +2482,10 @@
     .app-shell.is-large-text .menu-row {
       font-size: 14px;
       min-height: 54px;
+    }
+
+    .app-shell.is-large-text .setting-test-button {
+      font-size: 12px;
     }
 
     .app-shell.is-large-text .menu-meta {
@@ -3830,6 +3847,7 @@
     }
 
     function openSettingsSheet() {
+      const vibrationSupported = canVibrate();
       openSheet(`
         <div class="list-sheet">
           <div class="list-sheet-head">
@@ -3847,8 +3865,9 @@
             <div class="setting-row">
               <span class="setting-copy">
                 <strong>轻震反馈</strong>
-                <span>${'vibrate' in navigator ? '当前设备支持（冥想时启用）' : '当前设备未提供震动能力'}</span>
+                <span>${vibrationSupported ? '浏览器已提供震动接口，实际效果取决于系统震动设置' : '当前设备不支持网页震动，冥想时会使用视觉引导'}</span>
               </span>
+              <button class="setting-test-button" type="button" data-test-vibrate>测试</button>
             </div>
           </div>
           <div class="settings-credit">
@@ -3907,12 +3926,36 @@
       const setting = event.target.closest('[data-setting="largeText"]');
       if (setting) {
         applyLargeText(!state.largeText);
+        return;
+      }
+
+      const testVibrate = event.target.closest('[data-test-vibrate]');
+      if (testVibrate) {
+        const vibrated = triggerVibration([160, 70, 220]);
+        showToast(vibrated ? '已发送测试震动' : '当前设备不支持网页震动');
       }
     });
 
     /* ============================================================
        10. 静心冥想
        ============================================================ */
+    function canVibrate() {
+      const hasApi = typeof navigator.vibrate === 'function';
+      const isMobileDevice = window.matchMedia('(pointer: coarse)').matches || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+      return hasApi && isMobileDevice;
+    }
+
+    function triggerVibration(pattern) {
+      if (!canVibrate()) {
+        return false;
+      }
+      try {
+        return navigator.vibrate(pattern);
+      } catch (error) {
+        return false;
+      }
+    }
+
     function startMeditation() {
       state.meditationOn = true;
       els.meditationButton.setAttribute('aria-pressed', 'true');
@@ -3920,10 +3963,20 @@
       els.meditationState.textContent = '呼吸引导中 · 再触停止';
       els.meditationHint.textContent = '吸气…';
 
+      // 先触发震动，避免被后续音频初始化打断用户手势
+      const vibrated = triggerVibration([180, 60, 180, 60, 260]);
+
       let phase = 0;
       state.breathTimer = window.setInterval(() => {
         phase = phase === 0 ? 1 : 0;
         els.meditationHint.textContent = phase === 0 ? '吸气…' : '呼气…';
+        if (canVibrate()) {
+          try {
+            navigator.vibrate(45);
+          } catch (error) {
+            /* 忽略单次震动失败 */
+          }
+        }
       }, 4000);
 
       state.meditationTimer = window.setTimeout(() => {
@@ -3959,15 +4012,7 @@
         /* 音频不可用时仍保留视觉呼吸和震动 */
       }
 
-      let vibrated = false;
-      if ('vibrate' in navigator) {
-        try {
-          vibrated = navigator.vibrate([90, 50, 120]);
-        } catch (error) {
-          vibrated = false;
-        }
-      }
-      showToast(vibrated ? '静心模式已开启 · 音效与轻震' : '静心模式已开启 · 可跟随光圈呼吸');
+      showToast(vibrated ? '静心模式已开启 · 音效与轻震' : '当前设备未提供震动，已切换为视觉与音效引导');
     }
 
     function stopMeditation(notify = false) {
@@ -4055,6 +4100,13 @@
         els.shell.classList.add('is-large-text');
         els.textSizeButton.setAttribute('aria-pressed', 'true');
         els.textSizeButton.setAttribute('aria-label', '关闭大字模式');
+      }
+
+      if (!canVibrate()) {
+        const eyebrow = document.querySelector('.meditation-eyebrow');
+        if (eyebrow) {
+          eyebrow.textContent = '轻触 · 视觉与音效';
+        }
       }
 
       initSplash();
