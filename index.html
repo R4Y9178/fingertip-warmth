@@ -1128,65 +1128,21 @@
       position: relative;
       display: block;
       width: 100%;
-      min-height: 153px;
       overflow: hidden;
       margin-top: 16px;
       padding: 0;
       border: 0;
       border-radius: 16px;
       background: #e5d8c7;
-      color: #fffaf1;
       text-align: left;
+      aspect-ratio: 764 / 314;
     }
 
     .learn-banner img {
       width: 100%;
-      height: 153px;
+      height: 100%;
       object-fit: cover;
       object-position: center;
-    }
-
-    .learn-banner::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, rgba(34, 34, 28, 0.78), rgba(34, 34, 28, 0.12));
-    }
-
-    .learn-banner-copy {
-      position: absolute;
-      left: 17px;
-      bottom: 16px;
-      z-index: 1;
-      display: block;
-      max-width: 240px;
-    }
-
-    .learn-banner-kicker {
-      display: block;
-      color: #f1ddbe;
-      font-size: 8.5px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      line-height: 1.5;
-    }
-
-    .learn-banner-title {
-      display: block;
-      margin-top: 3px;
-      font-family: var(--font-serif);
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      line-height: 1.4;
-    }
-
-    .learn-banner-note {
-      display: block;
-      margin-top: 2px;
-      color: rgba(255, 250, 241, 0.8);
-      font-size: 9.5px;
-      line-height: 1.5;
     }
 
     .object-grid {
@@ -2804,7 +2760,7 @@
 
         <div class="section-head">
           <h3>非遗精选</h3>
-          <button class="text-link" type="button" data-go="learn">全部 6 套</button>
+          <button class="text-link" type="button" data-go="learn">全部 3 套</button>
         </div>
         <div class="home-rail" id="homeRail"></div>
 
@@ -2843,30 +2799,19 @@
           <input class="search-input" id="courseSearch" type="search" placeholder="搜索非遗工艺 / 材料包" autocomplete="off">
         </div>
 
-        <div class="section-head">
-          <h3>工艺分类</h3>
-          <span class="section-head-note">8 个方向</span>
-        </div>
-        <div class="category-grid" id="craftCategories"></div>
-
         <button class="learn-banner" type="button" data-course-id="coaster-prototype" aria-label="进入掐丝珐琅手作课堂：掐丝珐琅与螺钿木质杯垫">
-          <img src="assets/item5.jpg" alt="" aria-hidden="true">
-          <span class="learn-banner-copy">
-            <span class="learn-banner-kicker">手作课堂 · 听障友好</span>
-            <span class="learn-banner-title">掐丝珐琅手作课堂</span>
-            <span class="learn-banner-note">以指尖技艺，传承非遗温度</span>
-          </span>
+          <img src="assets/learn-banner.jpg" alt="" aria-hidden="true">
         </button>
 
         <div class="section-head">
-          <h3>想做点什么？</h3>
-          <span class="section-head-note">教程待上传</span>
+          <h3>工艺分类</h3>
+          <span class="section-head-note">书签 · 冰箱贴 · 杯垫 · 耳钉</span>
         </div>
         <div class="object-grid" id="objectCategories"></div>
 
         <div class="section-head">
           <h3>非遗工艺</h3>
-          <span class="section-head-note" id="courseCount">6 套</span>
+          <span class="section-head-note" id="courseCount">3 套</span>
         </div>
         <div class="course-grid" id="courseGrid" aria-live="polite"></div>
 
@@ -2919,7 +2864,7 @@
 
         <div class="profile-stats" aria-label="学习数据">
           <div class="profile-stat">
-            <strong>6</strong>
+            <strong>3</strong>
             <span>材料包</span>
           </div>
           <div class="profile-stat">
@@ -3145,7 +3090,7 @@
         materialNote: '聊天记录中暂未提供完整的 1—9 项材料清单；以上为现有资料明确列出的组件。',
         highlight: '无障碍适配固定卡扣，加大握持段，圆润边缘处理；结构层级清晰，以黑檀木、奶白蝶贝与粉白蝶贝形成易识别的造型。'
       }
-    ];
+    ].filter((course) => !['bamboo-hairclip', 'shell-flower-hairpin', 'wooden-hairpin'].includes(course.id));
 
     const craftCategories = [
       { label: '汉服', icon: 'hanfu' },
@@ -3415,12 +3360,14 @@
     }
 
     function renderCategories() {
-      els.craftCategories.innerHTML = craftCategories.map((category) => `
-        <button class="category-button" type="button" data-craft="${escapeHTML(category.label)}">
-          <span class="category-icon">${iconSvg(category.icon)}</span>
-          <span>${escapeHTML(category.label)}</span>
-        </button>
-      `).join('');
+      if (els.craftCategories) {
+        els.craftCategories.innerHTML = craftCategories.map((category) => `
+          <button class="category-button" type="button" data-craft="${escapeHTML(category.label)}">
+            <span class="category-icon">${iconSvg(category.icon)}</span>
+            <span>${escapeHTML(category.label)}</span>
+          </button>
+        `).join('');
+      }
 
       els.objectCategories.innerHTML = objectCategories.map((category) => `
         <button class="object-button" type="button" data-object="${escapeHTML(category.label)}">
@@ -3445,7 +3392,7 @@
       els.courseCount.textContent = `${filtered.length} 套`;
       els.courseGrid.innerHTML = filtered.length
         ? filtered.map(courseCardHTML).join('')
-        : `<div class="empty-state">没有找到相关的非遗材料包。<br>试试搜索“香牌”“杯垫”或“发夹”。</div>`;
+        : `<div class="empty-state">没有找到相关的非遗材料包。<br>试试搜索“香牌”“杯垫”或“绣球”。</div>`;
     }
 
     els.courseSearch.addEventListener('input', (event) => {
@@ -3462,7 +3409,7 @@
 
       const craftTrigger = event.target.closest('[data-craft]');
       if (craftTrigger) {
-        openPlaceholder(`${craftTrigger.dataset.craft}课程`, '这个方向的视频课程正在整理中，正式版会加入手语讲解、字幕与分步图示；先去看看现有的六套材料包吧。');
+        openPlaceholder(`${craftTrigger.dataset.craft}课程`, '这个方向的视频课程正在整理中，正式版会加入手语讲解、字幕与分步图示；先去看看现有的材料包吧。');
         return;
       }
 
