@@ -4,11 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f6efe3">
-  <meta name="description" content="匠心工坊 · 听障友好的非遗手作学习 App 概念预览。">
+  <meta name="description" content="匠心工坊 · 听障友好的非遗手作学习 App 内测版。">
   <link rel="preload" as="image" href="assets/opening-bg.jpg">
-  <link rel="preload" as="video" href="assets/opening-sign.mp4?v=3" type="video/mp4">
-  <link rel="preload" as="image" href="assets/opening-poster.jpg">
-  <link rel="preload" as="image" href="assets/opening-sign.webp">
+  <link rel="preload" as="image" href="assets/opening-poster.png?v=4">
   <title>匠心工坊 · 听障友好的非遗手作学习</title>
 
   <style>
@@ -371,9 +369,13 @@
       line-height: 1.3;
     }
 
-    .nav-button .icon {
-      width: 22px;
-      height: 22px;
+    .nav-button .nav-icon {
+      display: block;
+      width: 26px;
+      height: 26px;
+      object-fit: contain;
+      opacity: 0.78;
+      transition: opacity 200ms ease, transform 200ms ease;
     }
 
     .nav-button[aria-current="page"] {
@@ -390,8 +392,8 @@
       background: var(--red);
     }
 
-    .nav-button[aria-current="page"] .icon {
-      stroke-width: 2;
+    .nav-button[aria-current="page"] .nav-icon {
+      opacity: 1;
     }
 
     .nav-badge {
@@ -413,8 +415,94 @@
     }
 
     /* ============================================================
-       04. 开屏动效
+       04. 启动加载层与开屏动效
        ============================================================ */
+    .boot-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 140;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(255, 252, 246, 0.9) 0%, rgba(246, 239, 227, 0.6) 46%, transparent 72%),
+        #f6efe3;
+      transition: opacity 480ms ease, visibility 480ms ease;
+      text-align: center;
+    }
+
+    .boot-layer.is-done {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .boot-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 260px;
+    }
+
+    .boot-seal {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(155, 61, 41, 0.35);
+      border-radius: 50%;
+      background: rgba(255, 250, 241, 0.7);
+      color: var(--red);
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0;
+      animation: boot-seal 2.4s ease-in-out infinite;
+    }
+
+    .boot-text {
+      margin: 0;
+      color: var(--muted-strong);
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      line-height: 1.7;
+    }
+
+    .boot-track {
+      width: 132px;
+      height: 3px;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(47, 76, 63, 0.12);
+    }
+
+    .boot-track span {
+      display: block;
+      width: 6%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, rgba(155, 61, 41, 0.55), var(--red));
+      transition: width 320ms ease;
+    }
+
+    .boot-percent {
+      margin: 9px 0 0;
+      color: var(--soft);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      line-height: 1.6;
+    }
+
+    @keyframes boot-seal {
+      0%, 100% { transform: scale(1); opacity: 0.75; }
+      50% { transform: scale(1.06); opacity: 1; }
+    }
+
     .splash {
       position: absolute;
       inset: 0;
@@ -424,11 +512,15 @@
       overflow: hidden;
       padding: 26px;
       background:
-        radial-gradient(circle at 50% 46%, rgba(255, 250, 241, 0.5) 0%, rgba(255, 250, 241, 0.2) 44%, transparent 70%),
         url("assets/opening-bg.jpg") center / cover no-repeat,
         #f4eadc;
-      transition: opacity 420ms ease, visibility 420ms ease;
+      opacity: 0;
+      transition: opacity 520ms ease, visibility 520ms ease;
       text-align: center;
+    }
+
+    .splash.is-ready {
+      opacity: 1;
     }
 
     .splash.is-leaving {
@@ -438,8 +530,9 @@
     }
 
     .splash-inner {
+      /* 注意：这里不能加 z-index，否则会建立堆叠上下文，
+         把手语图层与开屏底图之间的 mix-blend-mode 隔离掉，出现白色方块 */
       position: relative;
-      z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -463,7 +556,6 @@
       width: 280px;
       height: 280px;
       margin: 20px 0 12px;
-      border-radius: 50%;
     }
 
     .hand-poster,
@@ -471,11 +563,6 @@
     .hand-video-wrap {
       position: absolute;
       inset: 0;
-      overflow: hidden;
-      border-radius: 50%;
-      mix-blend-mode: multiply;
-      -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 90%, transparent 100%);
-      mask-image: radial-gradient(circle at 50% 50%, #000 90%, transparent 100%);
       pointer-events: none;
     }
 
@@ -484,8 +571,8 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      filter: brightness(1.06) saturate(0.9) sepia(0.08);
+      object-fit: contain;
+      mix-blend-mode: multiply;
       transition: opacity 320ms ease;
     }
 
@@ -494,8 +581,8 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      filter: brightness(1.06) saturate(0.9) sepia(0.08);
+      object-fit: contain;
+      mix-blend-mode: multiply;
       transition: opacity 320ms ease;
     }
 
@@ -506,6 +593,9 @@
 
     .hand-video-wrap {
       z-index: 3;
+      /* Chromium 不会对 <video> 本身应用 mix-blend-mode，
+         所以正片叠底加在包裹容器上，视频只负责播放 */
+      mix-blend-mode: multiply;
       opacity: 0;
       transition: opacity 420ms ease;
     }
@@ -524,8 +614,7 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      filter: brightness(1.06) saturate(0.9) sepia(0.08);
+      object-fit: contain;
     }
 
     .splash-title {
@@ -1230,6 +1319,86 @@
       text-align: center;
     }
 
+    .home-rail-empty,
+    .shop-empty {
+      width: 100%;
+      padding: 30px 16px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 13px;
+      background: rgba(255, 250, 241, 0.55);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.75;
+      text-align: center;
+    }
+
+    .shop-empty {
+      margin-bottom: 2px;
+    }
+
+    .inline-empty {
+      margin: 6px 0 0;
+      padding: 22px 16px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 13px;
+      background: rgba(255, 250, 241, 0.55);
+      color: var(--muted);
+      font-size: 11.5px;
+      line-height: 1.75;
+      text-align: center;
+    }
+
+    /* 分享二维码 */
+    .share-sheet {
+      padding: 2px 0 8px;
+      text-align: center;
+    }
+
+    .share-sheet h2 {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      line-height: 1.5;
+    }
+
+    .share-sheet p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    .share-qr {
+      margin: 14px auto 0;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .share-qr img {
+      display: block;
+      width: 100%;
+      max-width: 260px;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 8px;
+    }
+
+    .share-sheet .sheet-button {
+      width: 100%;
+      margin-top: 14px;
+    }
+
+    .share-url {
+      word-break: break-all;
+      color: var(--green) !important;
+      font-weight: 600;
+    }
+
     .learn-continue {
       margin-top: 10px;
     }
@@ -1621,6 +1790,15 @@
       font-size: 8.5px;
       line-height: 1.7;
       text-align: center;
+    }
+
+    .recent-card.is-empty {
+      cursor: default;
+    }
+
+    .recent-card.is-empty .recent-copy strong {
+      color: var(--muted);
+      font-weight: 600;
     }
 
     /* ============================================================
@@ -2608,16 +2786,26 @@
 
 <body>
   <div class="app-shell" id="appShell">
-    <!-- ==================== 手语概念开屏 ==================== -->
-    <div class="splash" id="splash" role="dialog" aria-modal="true" aria-labelledby="splashTitle">
+    <!-- ==================== 启动加载层 ==================== -->
+    <div class="boot-layer" id="bootLayer" role="status" aria-live="polite" aria-label="正在准备手作空间">
+      <div class="boot-inner">
+        <div class="boot-seal" aria-hidden="true">光</div>
+        <p class="boot-text" id="bootText">正在准备手作空间…</p>
+        <div class="boot-track" aria-hidden="true"><span id="bootBar"></span></div>
+        <p class="boot-percent" id="bootPercent">加载中 0%</p>
+      </div>
+    </div>
+
+    <!-- ==================== 手语开屏 ==================== -->
+    <div class="splash" id="splash" role="dialog" aria-modal="true" aria-labelledby="splashTitle" hidden>
       <div class="splash-inner">
         <p class="splash-kicker">手语开屏 · 你好</p>
         <div class="hand-stage" aria-hidden="true">
-          <img class="hand-poster" src="assets/opening-poster.jpg" alt="" width="300" height="300">
-          <img class="hand-webp" src="assets/opening-sign.webp" alt="" width="300" height="300">
+          <img class="hand-poster" src="assets/opening-poster.png?v=4" alt="" width="300" height="300">
+          <img class="hand-webp" src="assets/opening-sign.webp?v=4" alt="" width="300" height="300">
           <div class="hand-video-wrap">
             <video class="hand-video" id="openingVideo" muted playsinline preload="auto" disablepictureinpicture tabindex="-1" aria-hidden="true">
-              <source src="assets/opening-sign.mp4?v=3" type="video/mp4">
+              <source src="assets/opening-sign.mp4?v=4" type="video/mp4">
             </video>
           </div>
         </div>
@@ -2702,26 +2890,9 @@
 
         <div class="section-head">
           <h3>非遗精选</h3>
-          <button class="text-link" type="button" data-go="learn">全部 3 套</button>
+          <button class="text-link" type="button" data-go="learn">去学艺看看</button>
         </div>
         <div class="home-rail" id="homeRail"></div>
-
-        <div class="section-head">
-          <h3>继续探索</h3>
-          <span class="section-head-note">上次看到这里</span>
-        </div>
-        <button class="continue-card" type="button" data-course-id="paper-ball">
-          <span class="continue-thumb"><img src="assets/item1.jpg" alt="非遗纸艺绣球挂件"></span>
-          <span class="continue-copy">
-            <span class="continue-kicker">学艺进度 · 第 1 步 / 共 3 步</span>
-            <span class="continue-title">非遗纸艺绣球挂件</span>
-            <span class="continue-progress">
-              <span class="continue-track" aria-hidden="true"><span></span></span>
-              <small>33%</small>
-            </span>
-          </span>
-          <span class="continue-arrow" aria-hidden="true">›</span>
-        </button>
       </section>
 
       <!-- 学艺 -->
@@ -2741,7 +2912,7 @@
           <input class="search-input" id="courseSearch" type="search" placeholder="搜索非遗工艺 / 材料包" autocomplete="off">
         </div>
 
-        <button class="learn-banner" type="button" data-course-id="coaster-prototype" aria-label="进入掐丝珐琅手作课堂：掐丝珐琅与螺钿木质杯垫">
+        <button class="learn-banner" type="button" data-classroom="掐丝珐琅手作课堂" aria-label="进入掐丝珐琅手作课堂">
           <img src="assets/learn-banner.jpg" alt="" aria-hidden="true">
         </button>
 
@@ -2753,24 +2924,9 @@
 
         <div class="section-head">
           <h3>非遗工艺</h3>
-          <span class="section-head-note" id="courseCount">3 套</span>
+          <span class="section-head-note" id="courseCount">筹备中</span>
         </div>
         <div class="course-grid" id="courseGrid" aria-live="polite"></div>
-
-        <div class="learn-continue">
-          <button class="continue-card" type="button" data-course-id="paper-ball">
-            <span class="continue-thumb"><img src="assets/item1.jpg" alt="非遗纸艺绣球挂件"></span>
-            <span class="continue-copy">
-              <span class="continue-kicker">继续探索 · 33%</span>
-              <span class="continue-title">非遗纸艺绣球挂件</span>
-              <span class="continue-progress">
-                <span class="continue-track" aria-hidden="true"><span></span></span>
-                <small>第 1 / 3 步</small>
-              </span>
-            </span>
-            <span class="continue-arrow" aria-hidden="true">›</span>
-          </button>
-        </div>
       </section>
 
       <!-- 商城 -->
@@ -2779,7 +2935,7 @@
           <div>
             <p class="page-kicker">商城 · SHOP</p>
             <h2 id="shopTitle" tabindex="-1">材料包商城</h2>
-            <p>内测定价中。先看看材料包，正式版将开放预订与配送。</p>
+            <p>内测定价中。新的材料包正在筹备，正式版将开放预订与配送。</p>
           </div>
           <button class="cart-button" id="cartButton" type="button" aria-label="打开购物车，当前 0 件">
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
@@ -2790,7 +2946,7 @@
           </button>
         </div>
         <div class="shop-list" id="shopList"></div>
-        <p class="shop-note">所有价格均为待标价 · 点击加号可先加入采购意向车</p>
+        <p class="shop-note" id="shopNote">所有价格均为待标价 · 点击加号可先加入采购意向车</p>
       </section>
 
       <!-- 我的 -->
@@ -2800,13 +2956,13 @@
           <div class="profile-copy">
             <h2 id="profileTitle" tabindex="-1">林也</h2>
             <p>在手作里，慢慢认识非遗</p>
-            <span class="profile-demo">体验用户 · 概念预览</span>
+            <span class="profile-demo">体验用户 · 内测版</span>
           </div>
         </div>
 
         <div class="profile-stats" aria-label="学习数据">
           <div class="profile-stat">
-            <strong>3</strong>
+            <strong id="packageStat">0</strong>
             <span>材料包</span>
           </div>
           <div class="profile-stat">
@@ -2825,11 +2981,7 @@
         <div class="profile-section-title">我的</div>
         <div class="menu-list" id="profileMenu"></div>
 
-        <div class="profile-links">
-          <a class="profile-link" href="project.html#feedbackSection">意见反馈 / 讨论区</a>
-          <a class="profile-link" href="project.html">查看完整项目资料</a>
-        </div>
-        <p class="preview-note">匠心工坊 · 听障友好的非遗手作学习<br>概念预览版 · 内容整理：范俊辰、祈盐牙兽兽、TvTing</p>
+        <p class="preview-note">匠心工坊 · 听障友好的非遗手作学习<br>内测版 · 内容整理：范俊辰、祈盐牙兽兽、TvTing</p>
       </section>
     </main>
 
@@ -2858,7 +3010,7 @@
 
   <noscript>
     <p style="position:fixed;left:16px;right:16px;bottom:16px;z-index:999;padding:13px 16px;border-radius:10px;background:#29231d;color:#fff;font-size:13px;line-height:1.6;text-align:center;">
-      本概念预览需要开启 JavaScript 才能使用导航、学艺搜索与购物车。
+      本内测版需要开启 JavaScript 才能使用导航、学艺搜索与购物车。
     </p>
   </noscript>
 
@@ -2875,6 +3027,7 @@
       heart: '<path d="M12 20.3c-3.7-2.35-6.55-4.9-6.55-8.03 0-2.08 1.5-3.65 3.42-3.65 1.23 0 2.36.62 3.13 1.63.77-1.01 1.9-1.63 3.13-1.63 1.92 0 3.42 1.57 3.42 3.65 0 3.13-2.85 5.68-6.55 8.03Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>',
       clock: '<circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
       calendar: '<rect x="4" y="5.5" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 3.5v4M16 3.5v4M4 10h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+      share: '<rect x="3.5" y="9.5" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.6"/><rect x="14.5" y="3.5" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.6"/><rect x="14.5" y="14.5" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.6"/><path d="m9.5 11.5 5-4M9.5 13l5 3.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
       settings: '<circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/><path d="M19 12a7 7 0 0 0-.12-1.26l2-1.53-2-3.46-2.34.94a7.2 7.2 0 0 0-2.18-1.26L14 3h-4l-.36 2.43a7.2 7.2 0 0 0-2.18 1.26l-2.34-.94-2 3.46 2 1.53A7 7 0 0 0 5 12c0 .43.04.85.12 1.26l-2 1.53 2 3.46 2.34-.94c.65.54 1.38.96 2.18 1.26L10 21h4l.36-2.43a7.2 7.2 0 0 0 2.18-1.26l2.34.94 2-3.46-2-1.53c.08-.41.12-.83.12-1.26Z" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/>',
       chat: '<path d="M4.2 5.8h15.6v10.3H9.7L4.2 19V5.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 9.5h8M8 12.6h5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
       plus: '<path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
@@ -2900,139 +3053,8 @@
       return `<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">${iconPaths[name] || ''}</svg>`;
     }
 
-    const courses = [
-      {
-        id: 'paper-ball',
-        title: '非遗纸艺绣球挂件',
-        craft: '纸艺',
-        craftIcon: 'paper',
-        tags: ['视障友好', '触觉定位', '语音讲解'],
-        image: 'assets/item1.jpg',
-        alt: '蓝底国风纹样纸艺绣球挂件',
-        summary: '本绣球手工材料包专为视障人群设计，将视觉图纸转化为触觉标识，依靠压纹、凸点定位搭配语音讲解，无需依靠视力，独立完成绣球拼装。',
-        materials: [
-          '盲文+大字参考卡，附带语音讲解二维码',
-          '预裁纸片，纸片边缘压不同纹理用来区分内外层',
-          '带凸线的折叠模板，触摸即可找准折叠位置',
-          '带凸起定位卡点的球形骨架',
-          '预打结的挂绳与流苏',
-          '预贴好的圆点背胶，无需挤胶水',
-          '半球防滑底座，防止球体滚动',
-          '粗柄压痕棒、防滑操作垫',
-          '盲文+大字步骤卡，配套语音指引'
-        ],
-        highlight: '纸片依靠触感纹理分层，骨架凸点定位插片位置，半球底座固定绣球，全程以触觉、语音引导，视障者可以独立完成绣球挂件。'
-      },
-      {
-        id: 'bamboo-hairclip',
-        title: '竹编彩韵发夹',
-        craft: '竹编',
-        craftIcon: 'weaving',
-        tags: ['肢体 / 单手友好', '磁吸对位', '竹编预制'],
-        image: 'assets/item2.jpg',
-        alt: '浅色背景上的多枚彩色竹编发夹',
-        summary: '竹编发夹材料包专为手部力量减弱、单手操作人群设计，提前完成复杂编织，磁吸结构简化对位，减少精细用力动作，单手可独立完成组装。',
-        materials: [
-          '成品参考卡，标注单手可操作',
-          '预先编织定型好的竹编花片，背面预贴背胶',
-          '可固定在桌边的夹持模板',
-          '磁吸式发夹底座，对位简单',
-          '加厚背胶固定片',
-          '预串好的装饰珠组件',
-          '弹簧助力安全圆头剪刀',
-          '腕托垫、加重压片',
-          '大字图文步骤卡'
-        ],
-        highlight: '核心编织花纹提前预制，磁吸底座自动对位，弹簧剪刀省力，搭配桌夹解放另一只手，单手就可以完成组装。'
-      },
-      {
-        id: 'incense-pendant',
-        title: '青釉云纹合香牌',
-        craft: '合香',
-        craftIcon: 'ceramic',
-        tags: ['听障友好', '手语视频', '分镜图示'],
-        image: 'assets/item3.jpg',
-        alt: '青绿色云纹合香牌，配流苏与玉珠',
-        summary: '合香牌材料包面向听障人群设计，以分镜图示、色彩标识替代口头讲解，配套手语教学视频，依靠视觉信息完成压模、打磨、串配全过程。',
-        materials: [
-          '成品参考卡，附带手语教学二维码',
-          '分袋装好、贴有色标标签的预制香泥团',
-          '印有方向箭头的云纹硅胶模具',
-          '带按压方向标识的弹簧打孔器',
-          '贴有色彩标签的不同目数打磨砂条',
-          '分装贴图标签的主绳扣、宫铃、流苏配件',
-          '印有穿绳指引箭头的挂绳',
-          '辅助工具，工具手柄带有对应色标',
-          '分镜式图示步骤卡，搭配手语视频二维码'
-        ],
-        highlight: '全材料色标配对，步骤使用连续分镜图画表达，扫码观看手语教学视频，不需要听觉指导，听障使用者可以看懂流程、独立制作。'
-      },
-      {
-        id: 'shell-flower-hairpin',
-        title: '蝶贝珍珠山茶发饰',
-        craft: '首饰',
-        craftIcon: 'embroidery',
-        tags: ['肢体 / 单手友好', '磁吸花托', '蝶贝预制'],
-        image: 'assets/item4.jpg',
-        alt: '陈列盒中的四枚蝶贝山茶花发夹',
-        summary: '山茶蝶贝发簪材料包适配手指灵活度不足、单手操作人群，提前完成铜丝缠绕、花瓣编组，磁吸结构简化组装，降低精细操作门槛。',
-        materials: [
-          '成品参考卡，标注单手可操作',
-          '已经预绕好铜丝、分层组合好的蝶贝花瓣组',
-          '预先粘好珍珠的花心组件',
-          '可以固定在桌边的发簪夹持底座',
-          '磁吸卡扣式花托，一碰锁紧花瓣',
-          '预串完成、带磁吸流苏扣的流苏坠',
-          '备用加重柄圆嘴钳',
-          '腕托支撑垫',
-          '大字图文步骤卡'
-        ],
-        highlight: '省去最难的铜丝缠绕、穿珠步骤，磁吸花托、磁吸流苏扣，不需要精细夹持、绕圈，固定簪杆后单手即可组装完成。'
-      },
-      {
-        id: 'coaster-prototype',
-        title: '掐丝珐琅 / 螺钿木质杯垫',
-        craft: '掐丝',
-        craftIcon: 'ceramic',
-        tags: ['听障友好', '手语视频', '色标图示'],
-        image: 'assets/item5.jpg',
-        alt: '木质杯垫中的掐丝珐琅宝相花纹样',
-        summary: '本掐丝螺钿杯垫材料包专为听障人群设计，预制高难度掐丝轮廓，采用色标与分镜图示替代口头教学，配套手语教学视频，依靠视觉即可独立完成填料封胶制作。',
-        materials: [
-          '成品参考卡，附带手语教学二维码',
-          '预完成掐丝铜丝轮廓/木胚杯垫底座（凹槽限位，无需自行弯丝）',
-          '分装封装、贴大色块标签的珐琅颜料/螺钿碎片',
-          '填料辅助刮铲（手柄印对应色标）',
-          '定量按压式封胶瓶，瓶身印有涂抹方向箭头',
-          '防滑固定底座垫，印有分区定位线稿',
-          '分装配件袋，表面印有配件实物图示',
-          '加粗手柄辅助工具组',
-          '纯分镜图示步骤卡，搭配手语讲解二维码'
-        ],
-        highlight: '铜丝轮廓、螺钿裁切全部预制完成，无需精细弯折裁切；全套材料采用色彩编码+实物图示，无需听觉讲解；扫码观看手语教学视频，听障使用者依靠视觉信息，独立完成填料、封胶、组装全部流程。'
-      },
-      {
-        id: 'wooden-hairpin',
-        title: '木簪生花 · 国风木质发簪',
-        craft: '木作',
-        craftIcon: 'carving',
-        tags: ['肢体 / 单手友好', '固定卡扣', '可拆卸花头'],
-        image: 'assets/item6.jpg',
-        alt: '黑檀木发簪，簪头为粉白山茶花与蝶贝叶片',
-        summary: '以山茶花为灵感，结合木簪纹理与可拆卸花头结构，做成可替换、可日常佩戴的国风发饰。',
-        materials: [
-          '黑檀木木簪主体（含木簪纹理）',
-          '茶花托座（正面）',
-          '蝶贝花瓣',
-          '珍珠花蕊',
-          '贝叶装饰',
-          '古铜连接件',
-          '固定卡扣'
-        ],
-        materialNote: '聊天记录中暂未提供完整的 1—9 项材料清单；以上为现有资料明确列出的组件。',
-        highlight: '无障碍适配固定卡扣，加大握持段，圆润边缘处理；结构层级清晰，以黑檀木、奶白蝶贝与粉白蝶贝形成易识别的造型。'
-      }
-    ].filter((course) => !['bamboo-hairclip', 'shell-flower-hairpin', 'wooden-hairpin'].includes(course.id));
+    // 内测版暂未上架材料包：列表统一走「新品筹备」空状态，详见 renderCourses / renderShop
+    const courses = [];
 
     const craftCategories = [
       { label: '汉服', icon: 'hanfu' },
@@ -3053,11 +3075,29 @@
     ];
 
     const navItems = [
-      { key: 'home', label: '首页', icon: 'home' },
-      { key: 'learn', label: '学艺', icon: 'learn' },
-      { key: 'shop', label: '商城', icon: 'shop' },
-      { key: 'profile', label: '我的', icon: 'user' }
+      { key: 'home', label: '首页', icon: 'home', image: 'assets/nav-home-v2.png' },
+      { key: 'learn', label: '学艺', icon: 'learn', image: 'assets/nav-learn-v2.png' },
+      { key: 'shop', label: '商城', icon: 'shop', image: 'assets/nav-shop-v2.png' },
+      { key: 'profile', label: '我的', icon: 'user', image: 'assets/nav-profile-v2.png' }
     ];
+
+    // 启动界面前需要预加载的关键资源
+    const VIDEO_URL = 'assets/opening-sign.mp4?v=4';
+    const BOOT_IMAGES = [
+      'assets/opening-bg.jpg',
+      'assets/opening-poster.png?v=4',
+      'assets/opening-sign.webp?v=4',
+      'assets/learn-banner.jpg',
+      'assets/object-bookmark-final.png',
+      'assets/object-magnet-final.png',
+      'assets/object-coaster-final.png',
+      'assets/object-earrings-final.png',
+      'assets/nav-home-v2.png',
+      'assets/nav-learn-v2.png',
+      'assets/nav-shop-v2.png',
+      'assets/nav-profile-v2.png'
+    ];
+    const BOOT_TIMEOUT = 6000;
 
     const FAVORITES_KEY = 'gcxw-preview-favorites-v1';
     const HISTORY_KEY = 'gcxw-preview-history-v1';
@@ -3076,11 +3116,18 @@
       meditationOn: false,
       audioContext: null,
       splashTimer: null,
+      bootDone: false,
+      bootTimer: null,
+      videoBlobUrl: null,
       largeText: false
     };
 
     const els = {
       shell: document.getElementById('appShell'),
+      bootLayer: document.getElementById('bootLayer'),
+      bootText: document.getElementById('bootText'),
+      bootBar: document.getElementById('bootBar'),
+      bootPercent: document.getElementById('bootPercent'),
       splash: document.getElementById('splash'),
       splashEnter: document.getElementById('splashEnter'),
       splashSkip: document.getElementById('splashSkip'),
@@ -3108,6 +3155,7 @@
       cartBadge: document.getElementById('cartBadge'),
       favoriteStat: document.getElementById('favoriteStat'),
       historyStat: document.getElementById('historyStat'),
+      packageStat: document.getElementById('packageStat'),
       recentCard: document.getElementById('recentCard'),
       profileMenu: document.getElementById('profileMenu')
     };
@@ -3163,8 +3211,18 @@
     }
 
     /* ============================================================
-       03. 开屏
+       03. 启动加载层 → 开屏
        ============================================================ */
+    function setBootProgress(ratio) {
+      const percent = Math.max(4, Math.min(100, Math.round(ratio * 100)));
+      if (els.bootBar) {
+        els.bootBar.style.width = `${percent}%`;
+      }
+      if (els.bootPercent) {
+        els.bootPercent.textContent = percent >= 100 ? '准备完成' : `加载中 ${percent}%`;
+      }
+    }
+
     function closeSplash() {
       window.clearTimeout(state.splashTimer);
       if (els.openingVideo) {
@@ -3181,38 +3239,141 @@
       }
     }
 
-    function initSplash() {
-      setAppInert(true);
-      els.splashEnter.focus({ preventScroll: true });
+    function playOpeningHandSign() {
+      if (!els.openingVideo) {
+        return;
+      }
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      if (els.openingVideo) {
-        if (reduced) {
-          els.openingVideo.pause();
-        } else {
-          els.openingVideo.muted = true;
-          els.openingVideo.addEventListener('playing', () => {
-            const revealVideo = () => {
-              if (els.openingVideo.videoWidth > 0 && !els.openingVideo.error) {
-                els.splash.classList.add('has-hand-video');
-              }
-            };
-            if (typeof els.openingVideo.requestVideoFrameCallback === 'function') {
-              els.openingVideo.requestVideoFrameCallback(revealVideo);
-            } else {
-              window.setTimeout(revealVideo, 80);
-            }
-          }, { once: true });
-          const playAttempt = els.openingVideo.play();
-          if (playAttempt && typeof playAttempt.catch === 'function') {
-            playAttempt.catch(() => {
-              /* 自动播放被拦截时保留静态手语图示 */
-            });
-          }
-        }
+      if (reduced) {
+        els.openingVideo.pause();
+        return;
       }
 
-      state.splashTimer = window.setTimeout(closeSplash, reduced ? 2600 : 5400);
+      // iOS / iPadOS 上 Safari 对含 <video> 元素的混合模式支持不稳定，
+      // 直接使用真透明的 animated WebP，避免视频白底露出
+      const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent)
+        || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      if (isIOS) {
+        return;
+      }
+
+      els.openingVideo.muted = true;
+      els.openingVideo.addEventListener('playing', () => {
+        const revealVideo = () => {
+          if (els.openingVideo.videoWidth > 0 && !els.openingVideo.error) {
+            els.splash.classList.add('has-hand-video');
+          }
+        };
+        if (typeof els.openingVideo.requestVideoFrameCallback === 'function') {
+          els.openingVideo.requestVideoFrameCallback(revealVideo);
+        } else {
+          window.setTimeout(revealVideo, 80);
+        }
+      }, { once: true });
+
+      try {
+        els.openingVideo.currentTime = 0;
+      } catch (error) {
+        /* 元数据未就绪时忽略 */
+      }
+
+      const playAttempt = els.openingVideo.play();
+      if (playAttempt && typeof playAttempt.catch === 'function') {
+        playAttempt.catch(() => {
+          /* 自动播放被拦截时保留透明底手语动画与静态图 */
+        });
+      }
+    }
+
+    function revealSplash() {
+      if (state.bootDone) {
+        return;
+      }
+      state.bootDone = true;
+      window.clearTimeout(state.bootTimer);
+      setBootProgress(1);
+
+      if (els.bootLayer) {
+        els.bootLayer.classList.add('is-done');
+        window.setTimeout(() => {
+          els.bootLayer.hidden = true;
+        }, 520);
+      }
+
+      els.splash.hidden = false;
+      requestAnimationFrame(() => {
+        els.splash.classList.add('is-ready');
+      });
+
+      playOpeningHandSign();
+
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      state.splashTimer = window.setTimeout(closeSplash, reduced ? 3200 : 5400);
+
+      window.setTimeout(() => {
+        if (!els.splash.hidden) {
+          els.splashEnter.focus({ preventScroll: true });
+        }
+      }, 120);
+    }
+
+    function preloadImage(url) {
+      return new Promise((resolve) => {
+        const image = new Image();
+        image.onload = () => resolve(true);
+        image.onerror = () => resolve(false);
+        image.src = url;
+        if (image.decode) {
+          image.decode().then(() => resolve(true)).catch(() => {});
+        }
+      });
+    }
+
+    function preloadVideo(url) {
+      if (!window.fetch || !window.URL || typeof URL.createObjectURL !== 'function') {
+        return Promise.resolve(false);
+      }
+      return window.fetch(url, { cache: 'force-cache' })
+        .then((response) => (response.ok ? response.blob() : Promise.reject(new Error('video fetch failed'))))
+        .then((blob) => {
+          state.videoBlobUrl = URL.createObjectURL(blob);
+          if (els.openingVideo) {
+            els.openingVideo.src = state.videoBlobUrl;
+            els.openingVideo.load();
+          }
+          return true;
+        })
+        .catch(() => false);
+    }
+
+    function initBoot() {
+      setAppInert(true);
+      setBootProgress(0.04);
+
+      const jobs = BOOT_IMAGES.map(preloadImage);
+      jobs.push(preloadVideo(VIDEO_URL));
+
+      let settled = 0;
+      const total = jobs.length;
+      jobs.forEach((job) => {
+        const step = () => {
+          settled += 1;
+          setBootProgress(0.06 + (settled / total) * 0.9);
+          if (settled === total) {
+            revealSplash();
+          }
+        };
+        job.then(step).catch(step);
+      });
+
+      // 弱网兜底：6 秒后无论资源是否就绪都放行，避免永久卡在加载页
+      state.bootTimer = window.setTimeout(() => {
+        if (els.bootText) {
+          els.bootText.textContent = '正在准备手作空间…';
+        }
+        revealSplash();
+      }, BOOT_TIMEOUT);
+
       els.splashEnter.addEventListener('click', closeSplash);
       els.splashSkip.addEventListener('click', closeSplash);
     }
@@ -3223,7 +3384,7 @@
     function renderNav() {
       els.nav.innerHTML = navItems.map((item) => `
         <button class="nav-button" type="button" data-tab="${item.key}" aria-current="${item.key === state.tab ? 'page' : 'false'}">
-          ${iconSvg(item.icon)}
+          <img class="nav-icon" src="${item.image}" alt="" width="26" height="26" decoding="async">
           <span>${item.label}</span>
           ${item.key === 'shop' ? '<span class="nav-badge" id="navCartBadge" aria-hidden="true" hidden>0</span>' : ''}
         </button>
@@ -3306,8 +3467,12 @@
       `;
     }
 
+    const COMING_SOON_TEXT = '新品材料包筹备上新中，敬请期待';
+
     function renderHomeRail() {
-      els.homeRail.innerHTML = courses.slice(0, 3).map(miniCourseHTML).join('');
+      els.homeRail.innerHTML = courses.length
+        ? courses.slice(0, 3).map(miniCourseHTML).join('')
+        : `<div class="home-rail-empty">${COMING_SOON_TEXT}</div>`;
     }
 
     function renderCategories() {
@@ -3340,17 +3505,17 @@
           .includes(normalized);
       });
 
-      els.courseCount.textContent = `${filtered.length} 套`;
+      els.courseCount.textContent = filtered.length ? `${filtered.length} 套` : '筹备中';
       els.courseGrid.innerHTML = filtered.length
         ? filtered.map(courseCardHTML).join('')
-        : `<div class="empty-state">没有找到相关的非遗材料包。<br>试试搜索“香牌”“杯垫”或“绣球”。</div>`;
+        : `<div class="empty-state">${COMING_SOON_TEXT}</div>`;
     }
 
     els.courseSearch.addEventListener('input', (event) => {
       renderCourses(event.target.value);
     });
 
-    // 首页、学艺页中所有课程卡片、横幅、继续卡片共用事件委托
+    // 首页、学艺页中所有课程卡片、横幅、分类共用事件委托
     document.addEventListener('click', (event) => {
       const courseTrigger = event.target.closest('[data-course-id]');
       if (courseTrigger) {
@@ -3358,9 +3523,18 @@
         return;
       }
 
+      const classroomTrigger = event.target.closest('[data-classroom]');
+      if (classroomTrigger) {
+        openPlaceholder(
+          classroomTrigger.dataset.classroom,
+          '掐丝珐琅手作课堂的视频与分步图示正在录制中，上线后会配套手语讲解与字幕。'
+        );
+        return;
+      }
+
       const craftTrigger = event.target.closest('[data-craft]');
       if (craftTrigger) {
-        openPlaceholder(`${craftTrigger.dataset.craft}课程`, '这个方向的视频课程正在整理中，正式版会加入手语讲解、字幕与分步图示；先去看看现有的材料包吧。');
+        openPlaceholder(`${craftTrigger.dataset.craft}课程`, '这个方向的视频课程正在整理中，正式版会加入手语讲解、字幕与分步图示。');
         return;
       }
 
@@ -3567,7 +3741,8 @@
        08. 商城与购物车
        ============================================================ */
     function renderShop() {
-      els.shopList.innerHTML = courses.map((course) => `
+      els.shopList.innerHTML = courses.length
+        ? courses.map((course) => `
         <div class="shop-item">
           <button class="product-main" type="button" data-course-id="${course.id}" aria-label="查看${escapeHTML(course.title)}">
             <span class="product-thumb"><img src="${course.image}" alt="${escapeHTML(course.alt)}" loading="lazy"></span>
@@ -3581,7 +3756,13 @@
             ${iconSvg('plus')}
           </button>
         </div>
-      `).join('');
+      `).join('')
+        : `<div class="shop-empty">${COMING_SOON_TEXT}</div>`;
+
+      const shopNote = document.getElementById('shopNote');
+      if (shopNote) {
+        shopNote.hidden = courses.length === 0;
+      }
     }
 
     function updateCartBadges() {
@@ -3660,7 +3841,7 @@
             <button class="cart-submit" type="button" data-cart-submit>提交采购意向（演示）</button>
             <p class="cart-note">正式版将接入材料包预订、门店自取与全国邮寄。</p>
           ` : `
-            <div class="empty-sheet">购物车还是空的。<br>去商城挑一套喜欢的材料包吧。</div>
+            <div class="empty-sheet">购物车还是空的。<br>材料包上新后，可以从商城加入这里。</div>
             <button class="sheet-button primary" type="button" data-close-sheet>继续逛逛</button>
           `}
         </div>
@@ -3733,6 +3914,7 @@
       const items = [
         { label: '我的收藏', icon: 'heart', action: 'favorites', meta: `${state.favorites.size} 套` },
         { label: '浏览记录', icon: 'clock', action: 'history', meta: `${state.history.length} 条` },
+        { label: '分享二维码', icon: 'share', action: 'share', meta: '' },
         { label: '我的预约', icon: 'calendar', action: 'booking', meta: '待开放' },
         { label: '资料来源与设置', icon: 'settings', action: 'settings', meta: '' }
       ];
@@ -3748,23 +3930,39 @@
     }
 
     function recentCourse() {
-      return findCourse(state.history[0]) || courses[0];
+      return findCourse(state.history[0]) || courses[0] || null;
     }
 
     function renderProfile() {
       const recent = recentCourse();
       els.favoriteStat.textContent = String(state.favorites.size);
       els.historyStat.textContent = String(state.history.length);
+      if (els.packageStat) {
+        els.packageStat.textContent = String(courses.length);
+      }
 
-      els.recentCard.innerHTML = `
-        <span class="recent-thumb"><img src="${recent.image}" alt="${escapeHTML(recent.alt)}"></span>
-        <span class="recent-copy">
-          <small>最近浏览 · ${state.history.length ? '继续看看' : '推荐从这套开始'}</small>
-          <strong>${escapeHTML(recent.title)}</strong>
-        </span>
-        <span class="recent-arrow" aria-hidden="true">›</span>
-      `;
-      els.recentCard.dataset.courseId = recent.id;
+      if (recent) {
+        els.recentCard.hidden = false;
+        els.recentCard.innerHTML = `
+          <span class="recent-thumb"><img src="${recent.image}" alt="${escapeHTML(recent.alt)}"></span>
+          <span class="recent-copy">
+            <small>最近浏览 · ${state.history.length ? '继续看看' : '推荐从这套开始'}</small>
+            <strong>${escapeHTML(recent.title)}</strong>
+          </span>
+          <span class="recent-arrow" aria-hidden="true">›</span>
+        `;
+        els.recentCard.dataset.courseId = recent.id;
+      } else {
+        delete els.recentCard.dataset.courseId;
+        els.recentCard.hidden = false;
+        els.recentCard.classList.add('is-empty');
+        els.recentCard.innerHTML = `
+          <span class="recent-copy">
+            <small>最近记录</small>
+            <strong>${COMING_SOON_TEXT}</strong>
+          </span>
+        `;
+      }
       els.profileMenu.innerHTML = profileMenuHTML();
     }
 
@@ -3788,7 +3986,7 @@
                 </button>
               `).join('')}
             </div>
-          ` : `<div class="empty-sheet">这里还没有内容。<br>去看看材料包，遇见喜欢的作品。</div>`}
+          ` : `<div class="empty-sheet">这里还没有内容。<br>材料包上新后，这里会留下你的足迹。</div>`}
         </div>
       `;
     }
@@ -3799,7 +3997,7 @@
         <div class="list-sheet">
           <div class="list-sheet-head">
             <h2 id="sheetTitle">资料与设置</h2>
-            <p>这是一份概念预览，真实数据与正式服务将在后续版本接入。</p>
+            <p>这是内测版，真实数据与正式服务将在后续版本接入。</p>
           </div>
           <div class="settings-list">
             <div class="setting-row">
@@ -3819,10 +4017,23 @@
           </div>
           <div class="settings-credit">
             匠心工坊 · 听障友好的非遗手作学习<br>
-            概念预览 · V0.4<br>
-            内容整理：范俊辰、祈盐牙兽兽、TvTing<br>
-            <a class="settings-link" href="project.html">查看完整项目资料</a>
+            内测版 · V0.5<br>
+            内容整理：范俊辰、祈盐牙兽兽、TvTing
           </div>
+        </div>
+      `);
+    }
+
+    function openShareSheet() {
+      openSheet(`
+        <div class="share-sheet">
+          <h2 id="sheetTitle">分享匠心工坊</h2>
+          <p>长按二维码保存图片，或让同伴直接扫码进入。</p>
+          <div class="share-qr">
+            <img src="assets/share-qr.png" alt="匠心工坊内测版网页二维码，扫码进入 https://r4y9178.github.io/fingertip-warmth/" width="440" height="526">
+          </div>
+          <p class="share-url">https://r4y9178.github.io/fingertip-warmth/</p>
+          <button class="sheet-button primary" type="button" data-close-sheet>知道了</button>
         </div>
       `);
     }
@@ -3843,6 +4054,11 @@
       if (action === 'history') {
         const history = state.history.map(findCourse).filter(Boolean);
         openSheet(courseListSheetHTML('浏览记录', '最近看过的材料包，会在这里留下痕迹。', history), button);
+        return;
+      }
+
+      if (action === 'share') {
+        openShareSheet();
         return;
       }
 
@@ -4056,7 +4272,7 @@
         }
       }
 
-      initSplash();
+      initBoot();
     }
 
     init();
