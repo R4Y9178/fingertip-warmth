@@ -1579,7 +1579,197 @@
       color: var(--soft);
       font-size: 9.5px;
       line-height: 1.7;
-      text-align: center;
+    }
+
+    /* ---- 商品卡片 ---- */
+    .shop-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--surface);
+      box-shadow: 0 6px 16px rgba(64, 46, 29, 0.05);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .product-card:active {
+      transform: scale(0.985);
+    }
+
+    .product-media {
+      position: relative;
+      display: grid;
+      place-items: center;
+      aspect-ratio: 1 / 1;
+      background:
+        radial-gradient(circle at 50% 42%, #fdf6e9 0%, #f2e6d2 100%);
+    }
+
+    .product-media img {
+      width: 74%;
+      height: 74%;
+      object-fit: contain;
+    }
+
+    .product-tag {
+      position: absolute;
+      top: 7px;
+      left: 7px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(47, 76, 63, 0.9);
+      color: #fffaf1;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      line-height: 1.6;
+    }
+
+    .product-body {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      gap: 2px;
+      padding: 9px 10px 10px;
+    }
+
+    .product-name {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--font-serif);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: 0.02em;
+    }
+
+    .product-desc {
+      display: -webkit-box;
+      overflow: hidden;
+      margin: 0;
+      color: var(--muted);
+      font-size: 9.5px;
+      line-height: 1.55;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+    }
+
+    .product-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-top: auto;
+      padding-top: 8px;
+    }
+
+    .product-foot .product-price {
+      margin: 0;
+      font-size: 9.5px;
+    }
+
+    .product-foot .add-cart-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      width: auto;
+      height: 30px;
+      padding: 0 9px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1;
+      white-space: nowrap;
+      transition: transform 140ms ease, background 180ms ease;
+    }
+
+    .product-foot .add-cart-button .icon {
+      width: 13px;
+      height: 13px;
+    }
+
+    .add-cart-button.is-added {
+      background: var(--green);
+      transform: scale(0.92);
+    }
+
+    .add-cart-button.is-added .icon {
+      animation: add-cart-pop 460ms ease;
+    }
+
+    @keyframes add-cart-pop {
+      0% { transform: scale(1); }
+      45% { transform: scale(1.5); }
+      100% { transform: scale(1); }
+    }
+
+    /* ---- 悬浮购物车 ---- */
+    .cart-fab {
+      position: absolute;
+      right: 16px;
+      bottom: calc(78px + env(safe-area-inset-bottom));
+      z-index: 40;
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      border: 1px solid rgba(34, 57, 47, 0.9);
+      border-radius: 50%;
+      background: var(--green-deep);
+      color: #fffaf1;
+      box-shadow: 0 10px 24px rgba(31, 45, 38, 0.28);
+      transition: transform 180ms ease, opacity 200ms ease;
+    }
+
+    .cart-fab:active {
+      transform: scale(0.94);
+    }
+
+    .cart-fab .icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .cart-fab.is-bump {
+      animation: cart-bump 520ms ease;
+    }
+
+    @keyframes cart-bump {
+      0% { transform: scale(1); }
+      35% { transform: scale(1.14); }
+      70% { transform: scale(0.96); }
+      100% { transform: scale(1); }
+    }
+
+    .cart-fab-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      display: grid;
+      place-items: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 5px;
+      border: 2px solid var(--surface-strong);
+      border-radius: 999px;
+      background: var(--red);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 800;
+      line-height: 1;
+      animation: badge-in 260ms ease;
+    }
+
+    @keyframes badge-in {
+      from { transform: scale(0.4); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
     /* ============================================================
@@ -2339,6 +2529,139 @@
       text-align: center;
     }
 
+    .cart-remove {
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      width: 30px;
+      height: 30px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--soft);
+      transition: color 160ms ease, background 160ms ease;
+    }
+
+    .cart-remove:hover,
+    .cart-remove:focus-visible {
+      background: rgba(155, 61, 41, 0.08);
+      color: var(--red);
+    }
+
+    .cart-remove .icon {
+      width: 15px;
+      height: 15px;
+    }
+
+    .cart-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .cart-clear {
+      padding: 6px 10px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 650;
+      line-height: 1.5;
+    }
+
+    .cart-clear:hover,
+    .cart-clear:focus-visible {
+      border-color: #e3b9ac;
+      color: var(--red-deep);
+    }
+
+    .cart-total-note {
+      color: var(--soft);
+      font-size: 9px;
+      line-height: 1.5;
+      text-align: right;
+    }
+
+    /* 结算 */
+    .checkout-summary {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+    }
+
+    .checkout-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 5px 0;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .checkout-row + .checkout-row {
+      border-top: 1px dashed rgba(214, 196, 175, 0.75);
+    }
+
+    .checkout-row span {
+      color: var(--muted);
+    }
+
+    .checkout-row strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .checkout-done {
+      padding: 26px 6px 10px;
+      text-align: center;
+    }
+
+    .checkout-done .done-mark {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .checkout-done h2 {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .checkout-done p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.75;
+    }
+
+    .checkout-done .order-no {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 3px 9px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 6px;
+      color: var(--soft);
+      font-size: 9.5px;
+      letter-spacing: 0.08em;
+    }
+
     .list-sheet {
       padding: 15px 18px 0;
     }
@@ -2518,12 +2841,13 @@
       line-height: 1.6;
     }
 
+    /* 轻提示放在顶部：不会挡住悬浮购物车、抽屉底部按钮或底部导航 */
     .toast {
       position: absolute;
+      top: calc(76px + env(safe-area-inset-top));
       right: 18px;
-      bottom: calc(75px + env(safe-area-inset-bottom));
       left: 18px;
-      z-index: 130;
+      z-index: 160;
       max-width: 360px;
       margin: 0 auto;
       padding: 10px 14px;
@@ -2535,7 +2859,7 @@
       text-align: center;
       opacity: 0;
       pointer-events: none;
-      transform: translateY(8px);
+      transform: translateY(-8px);
       transition: opacity 180ms ease, transform 180ms ease;
       box-shadow: 0 9px 24px rgba(44, 31, 21, 0.22);
     }
@@ -2963,7 +3287,7 @@
           <div>
             <p class="page-kicker">商城 · SHOP</p>
             <h2 id="shopTitle" tabindex="-1">材料包商城</h2>
-            <p>内测定价中。新的材料包正在筹备，正式版将开放预订与配送。</p>
+            <p>四款非遗手作材料包已上架，价格统一定价后公布。</p>
           </div>
           <button class="cart-button" id="cartButton" type="button" aria-label="打开购物车，当前 0 件">
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
@@ -2974,7 +3298,7 @@
           </button>
         </div>
         <div class="shop-list" id="shopList"></div>
-        <p class="shop-note" id="shopNote">所有价格均为待标价 · 点击加号可先加入采购意向车</p>
+        <p class="shop-note" id="shopNote">所有商品均为待标价 · 加入购物车不产生费用</p>
       </section>
 
       <!-- 我的 -->
@@ -3012,6 +3336,15 @@
         <p class="preview-note">匠心工坊 · 听障友好的非遗手作学习<br>内测版 · 内容整理：范俊辰、祈盐牙兽兽、TvTing</p>
       </section>
     </main>
+
+    <!-- ==================== 悬浮购物车 ==================== -->
+    <button class="cart-fab" id="cartFab" type="button" aria-label="打开购物车，当前 0 件" hidden>
+      <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+        <path d="M4 9h16l-1.3 9.5a2 2 0 0 1-2 1.7H7.3a2 2 0 0 1-2-1.7L4 9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+        <path d="M8 9a4 4 0 0 1 8 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+      <span class="cart-fab-badge" id="cartFabBadge" aria-hidden="true" hidden>0</span>
+    </button>
 
     <!-- ==================== 底部导航 ==================== -->
     <nav class="bottom-nav" id="bottomNav" aria-label="主要导航"></nav>
@@ -3081,7 +3414,44 @@
       return `<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">${iconPaths[name] || ''}</svg>`;
     }
 
-    // 内测版暂未上架材料包：列表统一走「新品筹备」空状态，详见 renderCourses / renderShop
+    // 商城商品（内测阶段统一「待标价」，购物车只统计件数）
+    const products = [
+      {
+        id: 'bookmark',
+        name: '非遗书签',
+        craft: '书签 · 手作材料包',
+        desc: '掐丝纹样书签，预制铜丝加色标图示，零基础也能跟做。',
+        image: 'assets/object-bookmark-final.png?v=5',
+        alt: '非遗书签材料包示意图'
+      },
+      {
+        id: 'magnet',
+        name: '非遗冰箱贴',
+        craft: '冰箱贴 · 手作材料包',
+        desc: '螺钿拼贴冰箱贴，磁吸底座免胶，步骤卡全图示。',
+        image: 'assets/object-magnet-final.png?v=5',
+        alt: '非遗冰箱贴材料包示意图'
+      },
+      {
+        id: 'coaster',
+        name: '非遗杯垫',
+        craft: '杯垫 · 手作材料包',
+        desc: '掐丝珐琅木质杯垫，配分步手语视频与凹槽限位底座。',
+        image: 'assets/object-coaster-final.png?v=5',
+        alt: '非遗杯垫材料包示意图'
+      },
+      {
+        id: 'earrings',
+        name: '非遗耳钉',
+        craft: '耳钉 · 手作材料包',
+        desc: '点翠风耳钉，轻量配件单手友好，配色标分袋材料。',
+        image: 'assets/object-earrings-final.png?v=5',
+        alt: '非遗耳钉材料包示意图'
+      }
+    ];
+    const productMap = new Map(products.map((product) => [product.id, product]));
+
+    // 学艺页课程数据（内测版暂未上架）
     const courses = [];
 
     const craftCategories = [
@@ -3176,6 +3546,8 @@
       shopList: document.getElementById('shopList'),
       cartButton: document.getElementById('cartButton'),
       cartBadge: document.getElementById('cartBadge'),
+      cartFab: document.getElementById('cartFab'),
+      cartFabBadge: document.getElementById('cartFabBadge'),
       favoriteStat: document.getElementById('favoriteStat'),
       historyStat: document.getElementById('historyStat'),
       packageStat: document.getElementById('packageStat'),
@@ -3205,6 +3577,14 @@
 
     function findCourse(id) {
       return courses.find((course) => course.id === id);
+    }
+
+    function findProduct(id) {
+      return productMap.get(id) || null;
+    }
+
+    function cartCount() {
+      return Object.values(state.cart).reduce((sum, quantity) => sum + quantity, 0);
     }
 
     function escapeHTML(value) {
@@ -3376,6 +3756,10 @@
 
       els.main.scrollTo({ top: 0, behavior: options.instant ? 'auto' : 'smooth' });
       els.tabStatus.textContent = `已切换到${navItems.find((item) => item.key === tabKey).label}`;
+
+      if (els.cartFab) {
+        els.cartFab.hidden = tabKey !== 'shop';
+      }
 
       if (tabKey !== 'home') {
         stopMeditation(false);
@@ -3715,44 +4099,45 @@
        08. 商城与购物车
        ============================================================ */
     function renderShop() {
-      els.shopList.innerHTML = courses.length
-        ? courses.map((course) => `
-        <div class="shop-item">
-          <button class="product-main" type="button" data-course-id="${course.id}" aria-label="查看${escapeHTML(course.title)}">
-            <span class="product-thumb"><img src="${course.image}" alt="${escapeHTML(course.alt)}" loading="lazy"></span>
-            <span class="product-copy">
-              <span class="product-craft">${escapeHTML(course.craft)} · 材料包</span>
-              <span class="product-title">${escapeHTML(course.title)}</span>
+      els.shopList.innerHTML = products.map((product) => `
+        <article class="product-card">
+          <div class="product-media">
+            <img src="${product.image}" alt="${escapeHTML(product.alt)}" width="128" height="128" loading="lazy">
+            <span class="product-tag">内测</span>
+          </div>
+          <div class="product-body">
+            <p class="product-craft">${escapeHTML(product.craft)}</p>
+            <h3 class="product-name">${escapeHTML(product.name)}</h3>
+            <p class="product-desc">${escapeHTML(product.desc)}</p>
+            <div class="product-foot">
               <span class="product-price">价格待标价</span>
-            </span>
-          </button>
-          <button class="add-cart-button" type="button" data-add-cart="${course.id}" aria-label="将${escapeHTML(course.title)}加入购物车">
-            ${iconSvg('plus')}
-          </button>
-        </div>
-      `).join('')
-        : `<div class="shop-empty">${COMING_SOON_TEXT}</div>`;
-
-      const shopNote = document.getElementById('shopNote');
-      if (shopNote) {
-        shopNote.hidden = courses.length === 0;
-      }
+              <button class="add-cart-button" type="button" data-add-cart="${product.id}" aria-label="将${escapeHTML(product.name)}加入购物车">
+                ${iconSvg('plus')}<span>加入购物车</span>
+              </button>
+            </div>
+          </div>
+        </article>
+      `).join('');
     }
 
     function updateCartBadges() {
-      const count = Object.values(state.cart).reduce((sum, quantity) => sum + quantity, 0);
-      const topBadge = document.getElementById('navCartBadge');
+      const count = cartCount();
+      const navBadge = document.getElementById('navCartBadge');
+      const label = `打开购物车，当前 ${count} 件`;
 
-      if (els.cartBadge) {
-        els.cartBadge.hidden = count === 0;
-        els.cartBadge.textContent = String(count);
-      }
-      if (topBadge) {
-        topBadge.hidden = count === 0;
-        topBadge.textContent = String(count);
-      }
+      [els.cartBadge, navBadge, els.cartFabBadge].forEach((badge) => {
+        if (!badge) {
+          return;
+        }
+        badge.hidden = count === 0;
+        badge.textContent = count > 99 ? '99+' : String(count);
+      });
+
       if (els.cartButton) {
-        els.cartButton.setAttribute('aria-label', `打开购物车，当前 ${count} 件`);
+        els.cartButton.setAttribute('aria-label', label);
+      }
+      if (els.cartFab) {
+        els.cartFab.setAttribute('aria-label', label);
       }
     }
 
@@ -3760,34 +4145,68 @@
       writeStorage(CART_KEY, state.cart);
     }
 
-    function addToCart(courseId) {
-      if (!findCourse(courseId)) {
+    function bumpCartFab() {
+      if (!els.cartFab || els.cartFab.hidden) {
         return;
       }
-      state.cart[courseId] = (state.cart[courseId] || 0) + 1;
+      els.cartFab.classList.remove('is-bump');
+      // 强制重排，让动画能连续触发
+      void els.cartFab.offsetWidth;
+      els.cartFab.classList.add('is-bump');
+      window.setTimeout(() => els.cartFab.classList.remove('is-bump'), 560);
+    }
+
+    function addToCart(productId, trigger) {
+      const product = findProduct(productId);
+      if (!product) {
+        return;
+      }
+
+      state.cart[productId] = (state.cart[productId] || 0) + 1;
       saveCart();
       updateCartBadges();
-      openCartSheet();
+      bumpCartFab();
+
+      // 按钮微动效 + 文字短暂变成「已加入」
+      if (trigger) {
+        const label = trigger.querySelector('span');
+        const original = label ? label.textContent : '';
+        trigger.classList.add('is-added');
+        if (label) {
+          label.textContent = '已加入';
+        }
+        window.setTimeout(() => {
+          trigger.classList.remove('is-added');
+          if (label) {
+            label.textContent = original;
+          }
+        }, 900);
+      }
+
+      showToast(`已加入购物车：${product.name}（共 ${cartCount()} 件）`);
     }
 
     function cartRowsHTML() {
       return Object.entries(state.cart).map(([id, quantity]) => {
-        const course = findCourse(id);
-        if (!course) {
+        const product = findProduct(id);
+        if (!product) {
           return '';
         }
         return `
           <div class="cart-row">
-            <span class="cart-thumb"><img src="${course.image}" alt="${escapeHTML(course.alt)}"></span>
+            <span class="cart-thumb"><img src="${product.image}" alt="${escapeHTML(product.alt)}"></span>
             <span class="cart-copy">
-              <strong>${escapeHTML(course.title)}</strong>
-              <span>价格待标定 · 内测意向</span>
+              <strong>${escapeHTML(product.name)}</strong>
+              <span>价格待标价 · 内测意向</span>
             </span>
             <span class="qty-control">
-              <button class="qty-button" type="button" data-cart-action="dec" data-id="${id}" data-focus-key="dec-${id}" aria-label="减少${escapeHTML(course.title)}数量">${iconSvg('minus')}</button>
+              <button class="qty-button" type="button" data-cart-action="dec" data-id="${id}" data-focus-key="dec-${id}" aria-label="减少${escapeHTML(product.name)}数量">${iconSvg('minus')}</button>
               <span class="qty-number" aria-label="数量">${quantity}</span>
-              <button class="qty-button" type="button" data-cart-action="inc" data-id="${id}" data-focus-key="inc-${id}" aria-label="增加${escapeHTML(course.title)}数量">${iconSvg('plus')}</button>
+              <button class="qty-button" type="button" data-cart-action="inc" data-id="${id}" data-focus-key="inc-${id}" aria-label="增加${escapeHTML(product.name)}数量">${iconSvg('plus')}</button>
             </span>
+            <button class="cart-remove" type="button" data-cart-action="remove" data-id="${id}" data-focus-key="remove-${id}" aria-label="从购物车删除${escapeHTML(product.name)}">
+              ${iconSvg('close')}
+            </button>
           </div>
         `;
       }).join('');
@@ -3795,31 +4214,76 @@
 
     function cartSheetHTML() {
       const entries = Object.entries(state.cart);
-      const total = entries.reduce((sum, [, quantity]) => sum + quantity, 0);
+      const total = cartCount();
 
       return `
         <div class="list-sheet">
           <div class="cart-heading">
             <div>
-              <h2 id="sheetTitle">采购意向车</h2>
-              <p style="margin:5px 0 0;color:var(--muted);font-size:10.5px;">内测阶段仅记录意向，不产生支付。</p>
+              <h2 id="sheetTitle">购物车</h2>
+              <p style="margin:5px 0 0;color:var(--muted);font-size:10.5px;">内测阶段仅记录选购意向，不产生支付。</p>
             </div>
             <span class="cart-count-label">${total} 件</span>
           </div>
           ${entries.length ? `
             <div class="cart-list">${cartRowsHTML()}</div>
             <div class="cart-summary">
-              <span>合计</span>
-              <strong>价格待标定</strong>
+              <span>合计（待标定）</span>
+              <strong>${total} 件 · 价格待标定</strong>
             </div>
-            <button class="cart-submit" type="button" data-cart-submit>提交采购意向（演示）</button>
+            <button class="cart-submit" type="button" data-cart-checkout>去结算</button>
+            <div class="cart-toolbar">
+              <button class="cart-clear" type="button" data-cart-clear>清空购物车</button>
+              <span class="cart-total-note">价格将在内测定价后统一公布</span>
+            </div>
             <p class="cart-note">正式版将接入材料包预订、门店自取与全国邮寄。</p>
           ` : `
-            <div class="empty-sheet">购物车还是空的。<br>材料包上新后，可以从商城加入这里。</div>
+            <div class="empty-sheet">购物车还是空的。<br>去商城挑一件喜欢的手作材料包吧。</div>
             <button class="sheet-button primary" type="button" data-close-sheet>继续逛逛</button>
           `}
         </div>
       `;
+    }
+
+    function checkoutSheetHTML() {
+      const total = cartCount();
+      return `
+        <div class="list-sheet">
+          <div class="list-sheet-head">
+            <h2 id="sheetTitle">确认结算</h2>
+            <p>内测阶段为流程演示，不产生真实支付与发货。</p>
+          </div>
+          <div class="checkout-summary">
+            <div class="checkout-row"><span>商品件数</span><strong>${total} 件</strong></div>
+            <div class="checkout-row"><span>商品金额</span><strong>价格待标定</strong></div>
+            <div class="checkout-row"><span>配送方式</span><strong>正式版开放自取 / 邮寄</strong></div>
+          </div>
+          <button class="cart-submit" type="button" data-checkout-confirm>确认提交</button>
+          <button class="sheet-button" type="button" data-close-sheet style="width:100%;margin-top:9px;">再想想</button>
+          <p class="cart-note">提交后可在正式版查看订单状态。</p>
+        </div>
+      `;
+    }
+
+    function checkoutDoneHTML(count) {
+      const orderNo = 'SJ' + String(Date.now()).slice(-8);
+      return `
+        <div class="checkout-done">
+          <div class="done-mark" aria-hidden="true">✓</div>
+          <h2 id="sheetTitle">结算已提交</h2>
+          <p>共 ${count} 件手作材料包已记录为内测意向<br>稍后会有工作人员与你确认材料与体验时间</p>
+          <span class="order-no">意向单号 ${orderNo}</span>
+          <button class="sheet-button primary" type="button" data-close-sheet style="width:100%;margin-top:16px;">继续逛逛</button>
+        </div>
+      `;
+    }
+
+    function openCheckoutSheet() {
+      if (!cartCount()) {
+        showToast('购物车还是空的');
+        return;
+      }
+      openSheet(checkoutSheetHTML());
     }
 
     function openCartSheet() {
@@ -3852,7 +4316,7 @@
     document.addEventListener('click', (event) => {
       const addButton = event.target.closest('[data-add-cart]');
       if (addButton) {
-        addToCart(addButton.dataset.addCart);
+        addToCart(addButton.dataset.addCart, addButton);
         return;
       }
 
@@ -3860,12 +4324,18 @@
       if (cartButton) {
         const id = cartButton.dataset.id;
         const action = cartButton.dataset.cartAction;
+        const product = findProduct(id);
         if (action === 'inc') {
           state.cart[id] = (state.cart[id] || 0) + 1;
         } else if (action === 'dec') {
           state.cart[id] = (state.cart[id] || 0) - 1;
           if (state.cart[id] <= 0) {
             delete state.cart[id];
+          }
+        } else if (action === 'remove') {
+          delete state.cart[id];
+          if (product) {
+            showToast(`已移除：${product.name}`);
           }
         }
         saveCart();
@@ -3874,12 +4344,44 @@
         return;
       }
 
-      if (event.target.closest('[data-cart-submit]')) {
-        showToast('采购意向已记录（演示），正式版将开放预订');
+      if (event.target.closest('[data-cart-clear]')) {
+        if (!cartCount()) {
+          return;
+        }
+        state.cart = {};
+        saveCart();
+        updateCartBadges();
+        refreshCartSheet();
+        showToast('购物车已清空');
+        return;
+      }
+
+      if (event.target.closest('[data-cart-checkout]')) {
+        openCheckoutSheet();
+        return;
+      }
+
+      if (event.target.closest('[data-checkout-confirm]')) {
+        const count = cartCount();
+        state.cart = {};
+        saveCart();
+        updateCartBadges();
+        els.sheetContent.innerHTML = checkoutDoneHTML(count);
+        const focusTarget = els.sheetContent.querySelector('[data-close-sheet]');
+        if (focusTarget) {
+          focusTarget.focus({ preventScroll: true });
+        }
+        els.sheetScroll.scrollTop = 0;
+        showToast('结算已提交（内测演示）');
       }
     });
 
-    els.cartButton.addEventListener('click', openCartSheet);
+    if (els.cartButton) {
+      els.cartButton.addEventListener('click', openCartSheet);
+    }
+    if (els.cartFab) {
+      els.cartFab.addEventListener('click', openCartSheet);
+    }
 
     /* ============================================================
        09. 收藏、浏览与个人页
@@ -4219,7 +4721,7 @@
       const savedCart = readStorage(CART_KEY, {});
       if (savedCart && typeof savedCart === 'object' && !Array.isArray(savedCart)) {
         state.cart = Object.fromEntries(
-          Object.entries(savedCart).filter(([id, quantity]) => findCourse(id) && Number.isFinite(quantity) && quantity > 0)
+          Object.entries(savedCart).filter(([id, quantity]) => findProduct(id) && Number.isFinite(quantity) && quantity > 0)
         );
       }
 
