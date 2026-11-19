@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f6efe3">
   <meta name="description" content="共创微光 · 听障友好的非遗手作学习 App 概念预览。">
+  <link rel="preload" as="image" href="assets/opening-bg.jpg">
   <title>共创微光 · 听障友好的非遗手作学习</title>
 
   <style>
@@ -420,33 +421,11 @@
       overflow: hidden;
       padding: 26px;
       background:
-        radial-gradient(circle at 12% 12%, rgba(179, 138, 77, 0.16), transparent 28%),
-        radial-gradient(circle at 100% 90%, rgba(47, 76, 63, 0.1), transparent 34%),
+        radial-gradient(circle at 50% 46%, rgba(255, 250, 241, 0.5) 0%, rgba(255, 250, 241, 0.2) 44%, transparent 70%),
+        url("assets/opening-bg.jpg") center / cover no-repeat,
         #f4eadc;
       transition: opacity 420ms ease, visibility 420ms ease;
       text-align: center;
-    }
-
-    .splash::before {
-      content: "";
-      position: absolute;
-      top: -70px;
-      right: -90px;
-      width: 260px;
-      height: 260px;
-      border: 1px solid rgba(155, 61, 41, 0.14);
-      border-radius: 50%;
-    }
-
-    .splash::after {
-      content: "";
-      position: absolute;
-      bottom: -90px;
-      left: -80px;
-      width: 230px;
-      height: 230px;
-      border: 1px solid rgba(47, 76, 63, 0.14);
-      border-radius: 50%;
     }
 
     .splash.is-leaving {
