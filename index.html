@@ -8,6 +8,7 @@
   <link rel="preload" as="image" href="assets/opening-bg.jpg">
   <link rel="preload" as="video" href="assets/opening-sign.mp4?v=3" type="video/mp4">
   <link rel="preload" as="image" href="assets/opening-poster.jpg">
+  <link rel="preload" as="image" href="assets/opening-sign.webp">
   <title>匠心工坊 · 听障友好的非遗手作学习</title>
 
   <style>
@@ -466,6 +467,7 @@
     }
 
     .hand-poster,
+    .hand-webp,
     .hand-video-wrap {
       position: absolute;
       inset: 0;
@@ -487,18 +489,35 @@
       transition: opacity 320ms ease;
     }
 
-    .splash.has-hand-video .hand-poster {
+    .hand-webp {
+      z-index: 2;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(1.06) saturate(0.9) sepia(0.08);
+      transition: opacity 320ms ease;
+    }
+
+    .splash.has-hand-video .hand-poster,
+    .splash.has-hand-video .hand-webp {
       opacity: 0;
     }
 
     .hand-video-wrap {
-      z-index: 2;
+      z-index: 3;
       opacity: 0;
       transition: opacity 420ms ease;
     }
 
     .splash.has-hand-video .hand-video-wrap {
       opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hand-webp {
+        display: none;
+      }
     }
 
     .hand-video {
@@ -2595,6 +2614,7 @@
         <p class="splash-kicker">手语开屏 · 你好</p>
         <div class="hand-stage" aria-hidden="true">
           <img class="hand-poster" src="assets/opening-poster.jpg" alt="" width="300" height="300">
+          <img class="hand-webp" src="assets/opening-sign.webp" alt="" width="300" height="300">
           <div class="hand-video-wrap">
             <video class="hand-video" id="openingVideo" muted playsinline preload="auto" disablepictureinpicture tabindex="-1" aria-hidden="true">
               <source src="assets/opening-sign.mp4?v=3" type="video/mp4">
