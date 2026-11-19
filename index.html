@@ -3337,7 +3337,8 @@
         .then((response) => (response.ok ? response.blob() : Promise.reject(new Error('video fetch failed'))))
         .then((blob) => {
           state.videoBlobUrl = URL.createObjectURL(blob);
-          if (els.openingVideo) {
+          // 开屏已放行并开始播放时不再替换 src，避免视频被重置回第一帧
+          if (els.openingVideo && !state.bootDone) {
             els.openingVideo.src = state.videoBlobUrl;
             els.openingVideo.load();
           }
