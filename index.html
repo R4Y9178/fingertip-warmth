@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f6efe3">
   <meta name="description" content="匠心工坊 · 听障友好的非遗手作学习 App 内测版。">
+  <link rel="icon" type="image/png" href="assets/brand-logo-v1.png">
+  <link rel="apple-touch-icon" href="assets/brand-logo-v1.png">
+  <link rel="preload" as="image" href="assets/brand-logo-v1.png">
   <link rel="preload" as="image" href="assets/opening-bg.jpg">
   <link rel="preload" as="image" href="assets/opening-poster.png?v=4">
   <title>匠心工坊 · 听障友好的非遗手作学习</title>
@@ -167,20 +170,13 @@
       backdrop-filter: blur(14px);
     }
 
-    .brand-seal {
-      display: grid;
-      place-items: center;
+    .brand-logo {
+      display: block;
       flex: 0 0 auto;
       width: 38px;
       height: 38px;
-      border-radius: 10px;
-      background: var(--red);
-      color: #fff7ea;
-      font-family: var(--font-serif);
-      font-size: 21px;
-      font-weight: 700;
-      line-height: 1;
-      box-shadow: 0 4px 10px rgba(126, 47, 31, 0.2);
+      object-fit: contain;
+      filter: drop-shadow(0 3px 7px rgba(53, 63, 82, 0.16));
     }
 
     .brand-copy {
@@ -445,21 +441,14 @@
       max-width: 260px;
     }
 
-    .boot-seal {
-      display: grid;
-      place-items: center;
-      width: 46px;
-      height: 46px;
-      margin-bottom: 18px;
-      border: 1px solid rgba(155, 61, 41, 0.35);
-      border-radius: 50%;
-      background: rgba(255, 250, 241, 0.7);
-      color: var(--red);
-      font-family: var(--font-serif);
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 0;
-      animation: boot-seal 2.4s ease-in-out infinite;
+    .boot-logo {
+      display: block;
+      width: 58px;
+      height: 58px;
+      margin-bottom: 16px;
+      object-fit: contain;
+      filter: drop-shadow(0 5px 12px rgba(43, 54, 72, 0.12));
+      animation: boot-seal 2.6s ease-in-out infinite;
     }
 
     .boot-text {
@@ -540,22 +529,21 @@
       max-width: 310px;
     }
 
-    .splash-kicker {
-      margin: 0 0 2px;
-      color: var(--red);
-      font-size: 9.5px;
-      font-weight: 800;
-      letter-spacing: 0.18em;
-      line-height: 1.6;
+    .splash-logo {
+      display: block;
+      width: auto;
+      height: 92px;
+      margin: 0;
+      filter: drop-shadow(0 6px 14px rgba(43, 54, 72, 0.14));
     }
 
     .hand-stage {
       position: relative;
       display: grid;
       place-items: center;
-      width: 280px;
-      height: 280px;
-      margin: 20px 0 12px;
+      width: min(250px, 64vw);
+      height: min(250px, 64vw);
+      margin: 6px 0 4px;
     }
 
     .hand-poster,
@@ -621,41 +609,41 @@
       margin: 0;
       color: var(--ink);
       font-family: var(--font-serif);
-      font-size: 30px;
+      font-size: 27px;
       font-weight: 700;
       letter-spacing: 0.12em;
-      line-height: 1.4;
+      line-height: 1.35;
     }
 
     .splash-sub {
-      margin: 7px 0 0;
+      margin: 6px 0 0;
       color: var(--muted);
-      font-size: 12px;
-      line-height: 1.75;
+      font-size: 11.5px;
+      line-height: 1.7;
     }
 
     .splash-features {
       display: flex;
       gap: 7px;
-      margin-top: 16px;
+      margin-top: 12px;
     }
 
     .splash-features span {
-      padding: 4px 8px;
+      padding: 3px 8px;
       border: 1px solid rgba(47, 76, 63, 0.16);
       border-radius: 999px;
       background: rgba(255, 250, 241, 0.6);
       color: var(--green);
-      font-size: 9.5px;
+      font-size: 9px;
       line-height: 1.5;
     }
 
     .splash-actions {
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 5px;
       width: 100%;
-      margin-top: 23px;
+      margin-top: 16px;
     }
 
     .splash-enter {
@@ -663,7 +651,7 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      min-height: 48px;
+      min-height: 46px;
       border: 1px solid var(--green-deep);
       border-radius: 11px;
       background: var(--green-deep);
@@ -675,7 +663,7 @@
     }
 
     .splash-skip {
-      min-height: 36px;
+      min-height: 32px;
       border: 0;
       background: transparent;
       color: var(--soft);
@@ -686,7 +674,7 @@
     .splash-progress {
       width: 120px;
       height: 2px;
-      margin-top: 5px;
+      margin-top: 4px;
       overflow: hidden;
       border-radius: 999px;
       background: rgba(47, 76, 63, 0.12);
@@ -702,10 +690,93 @@
     }
 
     .splash-note {
-      margin: 10px 0 0;
+      margin: 8px 0 0;
       color: var(--soft);
-      font-size: 9px;
+      font-size: 8.5px;
       line-height: 1.6;
+    }
+
+    /* 矮屏（如 iPhone SE / 微信内较矮的可视区）：整体收一档，保证一屏装下 */
+    @media (max-height: 730px) {
+      .splash {
+        padding: 16px;
+      }
+
+      .splash-logo {
+        height: 68px;
+      }
+
+      .hand-stage {
+        width: min(198px, 56vw);
+        height: min(198px, 56vw);
+        margin: 2px 0 0;
+      }
+
+      .splash-title {
+        font-size: 23px;
+      }
+
+      .splash-sub {
+        font-size: 10.5px;
+        line-height: 1.6;
+      }
+
+      .splash-features {
+        margin-top: 9px;
+      }
+
+      .splash-actions {
+        margin-top: 11px;
+      }
+
+      .splash-enter {
+        min-height: 44px;
+      }
+
+      .splash-note {
+        margin-top: 5px;
+      }
+    }
+
+    @media (max-height: 640px) {
+      .splash-logo {
+        height: 56px;
+      }
+
+      .hand-stage {
+        width: min(160px, 46vw);
+        height: min(160px, 46vw);
+      }
+
+      .splash-title {
+        font-size: 20px;
+      }
+
+      .splash-features,
+      .splash-note {
+        display: none;
+      }
+
+      .splash-actions {
+        margin-top: 8px;
+      }
+    }
+
+    /* 高屏（如 430×932）：手语和 Logo 放大一点 */
+    @media (min-height: 860px) {
+      .splash-logo {
+        height: 100px;
+      }
+
+      .hand-stage {
+        width: min(272px, 68vw);
+        height: min(272px, 68vw);
+        margin: 10px 0 6px;
+      }
+
+      .splash-title {
+        font-size: 29px;
+      }
     }
 
     @keyframes splash-progress {
@@ -2657,10 +2728,9 @@
         font-size: 8.5px;
       }
 
-      .brand-seal {
+      .brand-logo {
         width: 35px;
         height: 35px;
-        font-size: 19px;
       }
 
       .meditation-card {
@@ -2789,7 +2859,7 @@
     <!-- ==================== 启动加载层 ==================== -->
     <div class="boot-layer" id="bootLayer" role="status" aria-live="polite" aria-label="正在准备手作空间">
       <div class="boot-inner">
-        <div class="boot-seal" aria-hidden="true">光</div>
+        <img class="boot-logo" src="assets/brand-logo-v1.png" alt="" width="58" height="58">
         <p class="boot-text" id="bootText">正在准备手作空间…</p>
         <div class="boot-track" aria-hidden="true"><span id="bootBar"></span></div>
         <p class="boot-percent" id="bootPercent">加载中 0%</p>
@@ -2799,7 +2869,7 @@
     <!-- ==================== 手语开屏 ==================== -->
     <div class="splash" id="splash" role="dialog" aria-modal="true" aria-labelledby="splashTitle" hidden>
       <div class="splash-inner">
-        <p class="splash-kicker">手语开屏 · 你好</p>
+        <img class="splash-logo" src="assets/brand-logo-v1.png" alt="匠心工坊" width="384" height="385">
         <div class="hand-stage" aria-hidden="true">
           <img class="hand-poster" src="assets/opening-poster.png?v=4" alt="" width="300" height="300">
           <img class="hand-webp" src="assets/opening-sign.webp?v=4" alt="" width="300" height="300">
@@ -2827,7 +2897,7 @@
 
     <!-- ==================== App 顶栏 ==================== -->
     <header class="app-header" id="appHeader">
-      <div class="brand-seal" aria-hidden="true">光</div>
+      <img class="brand-logo" src="assets/brand-logo-v1.png" alt="" width="38" height="38">
       <div class="brand-copy">
         <h1>匠心工坊</h1>
         <p>听障友好 · 非遗手作学习</p>
@@ -3084,6 +3154,7 @@
     // 启动界面前需要预加载的关键资源
     const VIDEO_URL = 'assets/opening-sign.mp4?v=4';
     const BOOT_IMAGES = [
+      'assets/brand-logo-v1.png',
       'assets/opening-bg.jpg',
       'assets/opening-poster.png?v=4',
       'assets/opening-sign.webp?v=4',
