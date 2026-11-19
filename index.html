@@ -3192,11 +3192,16 @@
         } else {
           els.openingVideo.muted = true;
           els.openingVideo.addEventListener('playing', () => {
-            window.setTimeout(() => {
+            const revealVideo = () => {
               if (els.openingVideo.videoWidth > 0 && !els.openingVideo.error) {
                 els.splash.classList.add('has-hand-video');
               }
-            }, 80);
+            };
+            if (typeof els.openingVideo.requestVideoFrameCallback === 'function') {
+              els.openingVideo.requestVideoFrameCallback(revealVideo);
+            } else {
+              window.setTimeout(revealVideo, 80);
+            }
           }, { once: true });
           const playAttempt = els.openingVideo.play();
           if (playAttempt && typeof playAttempt.catch === 'function') {
